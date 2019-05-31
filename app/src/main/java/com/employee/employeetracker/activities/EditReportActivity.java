@@ -136,11 +136,14 @@ public class EditReportActivity extends AppCompatActivity {
                     }).create().show();
 
 
-                } else if (TextUtils.isEmpty(txtTitle.getEditText().getText().toString())) {
+                }
+
+                if (TextUtils.isEmpty(txtTitle.getEditText().getText().toString())) {
                     txtTitle.setErrorEnabled(true);
                     txtTitle.setError("Title required");
 
-                } else if (TextUtils.isEmpty(txtContent.getEditText().getText().toString())) {
+                }
+                if (TextUtils.isEmpty(txtContent.getEditText().getText().toString())) {
                     txtContent.setErrorEnabled(true);
                     txtContent.setError("Report Content required");
 
