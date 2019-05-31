@@ -1,9 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activities.EditReportActivity">
 
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".activities.EditReportActivity">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolBarEditReport"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@color/fb"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintBottom_toTopOf="@+id/inputReportTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:title="@string/edit_your_report" />
+
+
+<android.support.design.widget.TextInputLayout
+    android:id="@+id/inputReportTitle"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    app:boxBackgroundMode="outline"
+    app:boxCornerRadiusBottomStart="10dp"
+    app:boxCornerRadiusTopEnd="20dp"
+    app:boxStrokeColor="@color/fb"
+    app:boxStrokeWidth="2dp"
+    app:errorEnabled="true"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/toolBarEditReport">
+
+    <android.support.design.widget.TextInputEditText
+        android:id="@+id/reportTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableEnd="@drawable/ic_mode"
+        android:drawableRight="@drawable/ic_mode"
+        android:drawablePadding="@dimen/eightDp"
+        android:hint="@string/report_title"
+        android:imeOptions="actionNext"
+        android:inputType="textPersonName"
+        android:saveEnabled="true"
+        android:singleLine="true">
+
+        <requestFocus />
+    </android.support.design.widget.TextInputEditText>
+</android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputReportContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:saveEnabled="true"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="20dp"
+        app:boxStrokeColor="@color/fb"
+        app:boxStrokeWidth="2dp"
+        app:errorEnabled="true"
+        app:layout_constraintBottom_toTopOf="@+id/btnUpdateReport"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputReportTitle">
+
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawablePadding="@dimen/eightDp"
+            android:hint="@string/edit_your_report"
+            android:gravity="top"
+            android:padding="@dimen/eightDp"
+            android:imeOptions="actionNext"
+            android:inputType="textMultiLine"
+            android:saveEnabled="true"
+            android:singleLine="true" />
+    </android.support.design.widget.TextInputLayout>
+
+
+    <Button
+
+        android:id="@+id/btnUpdateReport"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="24dp"
+        android:layout_weight="1"
+        android:background="@drawable/curvebotton"
+        android:text="@string/update_report"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgEditReportPhoto"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/abc"
+        app:layout_constraintBottom_toTopOf="@+id/inputReportTitle"
+        app:layout_constraintEnd_toEndOf="@+id/toolBarEditReport"
+        app:layout_constraintTop_toTopOf="@+id/toolBarEditReport" />
 </android.support.constraint.ConstraintLayout>

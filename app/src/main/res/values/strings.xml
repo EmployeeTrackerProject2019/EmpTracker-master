@@ -130,4 +130,6 @@
     <string name="nothingPosted">Nothing posted yet</string>
     <string name="numCheckIn">Number of check  in\'s %d</string>
     <string name="report_content">Report Content</string>
+    <string name="edit_your_report">Edit your report</string>
+    <string name="update_report">Update Report</string>
 </resources>
