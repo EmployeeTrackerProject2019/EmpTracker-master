@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/addPhotoBottomSheet"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fb"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="0dp"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <ProgressBar
+        android:id="@+id/progressBarCompleteSignUp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/eightDp"
+        android:background="@color/white"
+        android:indeterminate="true"
+        android:indeterminateBehavior="cycle"
+        android:indeterminateOnly="true"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewTap"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/eightDp"
+        android:text="@string/tap_on_the_camera_icon_to_add_a_photo"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBarCompleteSignUp" />
+
+    <ImageView
+        android:id="@+id/imageViewUploadPhotoToSignUp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="@dimen/eightDp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/finish"
+        android:cropToPadding="true"
+        app:layout_constraintBottom_toTopOf="@+id/btnFinishSignup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTap"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_camera" />
+
+    <Button
+        android:id="@+id/btnFinishSignup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/buttonstylelogin"
+        android:text="@string/finish"
+        android:textColor="@color/fb"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</android.support.constraint.ConstraintLayout>

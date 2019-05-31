@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.CheckInFragment">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarFragmentCheckIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="@string/checkIn"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbarFragmentCheckIn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/toolbarFragmentCheckIn"
+        app:layout_constraintTop_toTopOf="@+id/toolbarFragmentCheckIn" />
+
+    <ProgressBar
+        android:id="@+id/progressBarLoadingCheckInDetails"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:indeterminateBehavior="cycle"
+        android:indeterminateOnly="true"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarFragmentCheckIn" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewForCheckIn"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBarLoadingCheckInDetails">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Menu Layout is needed for the overlay to work -->
+        <jahirfiquitiva.libs.fabsmenu.FABsMenuLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            app:fabs_menu_clickableOverlay="true"
+            app:fabs_menu_overlayColor="#4d000000"
+            tools:layout_behavior="@string/fabs_menu_layout_behavior">
+
+            <!-- FABs Menu is the main view. It will contain all the items FABs and it create the menu fab itself -->
+            <jahirfiquitiva.libs.fabsmenu.FABsMenu
+                android:id="@+id/fabs_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:clipChildren="false"
+                app:fab_expandDirection="up"
+                app:fab_labelsPosition="left"
+                app:fab_menuMargins="16dp"
+                app:fab_moreButtonBackgroundColor="@color/white"
+                app:fab_moreButtonPlusIcon="@drawable/ic_event"
+                app:fab_moreButtonRippleColor="@color/pink"
+                app:fab_moreButtonSize="normal">
+
+                <!-- This is the item that appears at the top of the menu -->
+
+
+                <jahirfiquitiva.libs.fabsmenu.TitleFAB
+                    android:id="@+id/to_viewCheckOut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:backgroundTint="@color/white"
+                    app:fabSize="mini"
+                    app:fab_enableTitleClick="true"
+                    app:fab_title="View Check Out"
+                    app:fab_title_backgroundColor="@color/white"
+                    app:fab_title_textColor="@color/black"
+                    app:rippleColor="@color/colorBlue"
+                    app:srcCompat="@drawable/ic_view_attendance" />
+
+                <!-- This item will appear just above the menu FAB -->
+
+                <jahirfiquitiva.libs.fabsmenu.TitleFAB
+                    android:id="@+id/to_checkOut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:backgroundTint="@color/black"
+                    app:fabSize="mini"
+                    app:fab_enableTitleClick="true"
+                    app:fab_title="@string/checkOut"
+                    app:fab_title_backgroundColor="@color/black"
+                    app:fab_title_textColor="@color/white"
+                    app:rippleColor="@color/colorBlue"
+                    app:srcCompat="@drawable/ic_check_out" />
+
+                <jahirfiquitiva.libs.fabsmenu.TitleFAB
+                    android:id="@+id/to_checkIn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:backgroundTint="@color/amber"
+                    app:fabSize="mini"
+                    app:fab_enableTitleClick="true"
+                    app:fab_title="@string/checkIn"
+                    app:fab_title_backgroundColor="@color/amber"
+                    app:fab_title_textColor="@android:color/white"
+                    app:rippleColor="@color/colorBlue"
+                    app:srcCompat="@drawable/ic_check_in" />
+
+            </jahirfiquitiva.libs.fabsmenu.FABsMenu>
+
+        </jahirfiquitiva.libs.fabsmenu.FABsMenuLayout>
+
+    </RelativeLayout>
+
+    <include
+        layout="@layout/layout_empty_check_in"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBarLoadingCheckInDetails" />
+
+    <TextView
+        android:id="@+id/txtCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/progressBarLoadingCheckInDetails"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

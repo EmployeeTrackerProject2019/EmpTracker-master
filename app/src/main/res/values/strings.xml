@@ -1,0 +1,133 @@
+<resources>
+    <string name="app_name">Employee Tracker</string>
+    <item name="visible" type="id" />
+    <item name="masked" type="id" />
+    <string name="title_activity_maps">Map</string>
+    <string name="image_describing_the_flash_screen">Image describing the flash screen</string>
+    <string name="some_text_description">Some Text Description</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="login">Log in</string>
+    <string name="knowYou">Let us get to you know here…\nTell us your first and last name</string>
+    <string name="now_you_can_spend_less_time_on_attendance_and_manage_your_employees_with_few_clicks">Now you can spend less time on attendance and manage your employees with few clicks</string>
+    <string name="welcome_to_employee_tracker">Welcome to Employee tracker</string>
+
+    <string name="profile_name">Profile Name</string>
+    <string name="profile_email">Profile email</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="enter_email">Enter email</string>
+    <string name="enter_password">Enter password</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="registration">Registration</string>
+    <string name="done">Done</string>
+    <string name="we_will_send_a_link_to_your_email_once_you_submit_it">We will send a link to your email to change your password once it is submitted</string>
+    <string name="reset">Reset</string>
+    <string name="cancel">Cancel</string>
+    <string name="enter_firstname">Enter first name</string>
+    <string name="enter_lastname">Enter last name</string>
+    <string name="to_complete">Enter the verification code sent to you here!!!</string>
+    <string name="enter_code_here">Enter code here</string>
+    <string name="verify">Verify</string>
+    <string name="about">About</string>
+    <string name="almostDone">That\'s alright for you…\nAlmost done with the process.\nAdd
+        a profile photo that will enable your supervisor to easily find you.\nWe recommend
+        using your real photo</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="cont">Continue</string>
+    <string name="haveEmail">Have an email? \nTell us and set a password</string>
+    <string name="don_t_have_an_account_yet_sign_up_now">Don\'t have an account yet? Sign up now</string>
+    <string name="loading_please_wait">Loading please wait…</string>
+    <string name="phone_number">mobile number</string>
+    <string name="register_as_admin">Register As Admin</string>
+    <string name="register_as_employee">Register As Employee</string>
+    <string name="task">Task</string>
+    <string name="leaves">Leaves</string>
+    <string name="reports">Reports</string>
+    <string name="attendance">Attendance</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="viewAttendance">View your attendance</string>
+    <string name="checkOut">Check out</string>
+    <string name="checkIn">Check in</string>
+    <string name="signed_in_at">Signed in at :</string>
+    <string name="checked_in_at_monday_8_00_pm">Checked in at: Monday 8:00 am</string>
+    <string name="checked_out_at_monday_6_00_pm">Checked out at: Monday 6:00 pm</string>
+    <string name="hours_worked_8">Hours worked: 8</string>
+    <string name="firstname">First name</string>
+    <string name="email">Email</string>
+    <string name="mobile_number">Phone number</string>
+    <string name="location">Location</string>
+    <string name="last_name">Last name</string>
+    <string name="take_photo">Take a photo</string>
+    <string name="profile">Profile</string>
+    <string name="_15">15</string>
+    <string name="_150">150</string>
+    <string name="total_number_of_check_in_s">Total number of check in\'s</string>
+    <string name="total_number_of_check_out_s">Total number of check out\'s</string>
+    <string name="more">More</string>
+    <string name="monday_25_2019">Monday 25,2019</string>
+    <string name="view_attendance">View Attendance</string>
+    <string name="view_map">View Map</string>
+    <string name="duty_post">Duty Post</string>
+    <string name="tap_on_the_camera_icon_to_add_a_photo">To complete the registration process please add a photo.\nTap on the camera icon to add a photo</string>
+
+
+    <!--string array for working shift-->
+    <string-array name="shifts">
+        <item>Day shift</item>
+        <item>Night shift</item>
+    </string-array>
+
+    <!--string array for duty post-->
+    <string-array name="dutyPost">
+        <item>Block C</item>
+        <item>COLT</item>
+        <item>Duty Officer</item>
+        <item>Executive wing</item>
+        <item>Hostel block A</item>
+        <item>Hostel block B</item>
+        <item>Library</item>
+        <item>Northern gate</item>
+        <item>Southern gate</item>
+        <item>Western gate</item>
+
+    </string-array>
+    <string name="title_activity_maps2">Map</string>
+    <string name="log_out">Log out</string>
+    <string name="save">Save</string>
+    <string name="upload_photo">upload photo</string>
+    <string name="eg_024_xxxxxxx">Eg. 024 XXXXXXX</string>
+    <string name="name_of_user">Name of User</string>
+    <string name="working_shift">Working shift</string>
+    <string name="edit">Edit</string>
+    <string name="account">Account</string>
+    <string name="submit">Submit</string>
+    <string name="write_report_here">Write report here</string>
+    <string name="report_title">Report title</string>
+    <string name="message">Message</string>
+    <string name="state_a_reason_for_leave">State a reason for leave</string>
+    <string name="start_date">Start Date</string>
+    <string name="end_date">End Date</string>
+    <string name="submit_request">Submit Request</string>
+    <string name="you_requested_a_leave">You requested a leave on</string>
+    <string name="view">View</string>
+    <string name="chkout">Check outs are shown here</string>
+    <string name="check_ins_are_shown_here">Check ins are shown here</string>
+    <string name="awww_snap_checkin">Awww! Snap… \nYou have not
+        made any check in yet.\nTo proceed please tap on the icon below to check in</string>
+    <string name="awww_snap_checkout">Awww! Snap… \nYou have not
+        made any check out yet.\nTo proceed please tap on the icon below to check out</string>
+    <string name="awww_snap_make_report">Make your first report before , after and at the
+        end of your task.Simply tap the icon…</string>
+    <string name="awww_snap_send_leave">Want to go on leave?\n Simply send a leave request
+        and wait for it to be approved…</string>
+    <string name="delete">Delete</string>
+    <string name="dateVal">EEEE</string>
+    <string name="sorry">sorry</string>
+    <string name="edit_phone_number">Edit Phone Number</string>
+    <string name="next">Next</string>
+    <string name="finish">Finish</string>
+    <string name="nothingPosted">Nothing posted yet</string>
+    <string name="numCheckIn">Number of check  in\'s %d</string>
+    <string name="report_content">Report Content</string>
+</resources>

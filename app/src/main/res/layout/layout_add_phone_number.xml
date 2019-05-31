@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ProgressBar
+        android:id="@+id/progressBarVerify"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:indeterminate="true"
+        android:indeterminateDuration="@android:integer/config_shortAnimTime"
+        android:indeterminateOnly="false"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.hbb20.CountryCodePicker
+        android:id="@+id/ccp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sixteenDp"
+        app:ccpDialog_showFlag="true"
+        app:ccpDialog_showNameCode="true"
+        app:ccp_areaCodeDetectedCountry="false"
+        app:ccp_autoDetectCountry="false"
+        app:ccp_autoFormatNumber="false"
+        app:ccp_defaultNameCode="GH"
+        app:ccp_showFlag="false"
+        app:ccp_showNameCode="true"
+        app:ccp_showPhoneCode="true"
+        app:ccp_textGravity="LEFT"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBarVerify" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputLayoutPhone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ccp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ccp"
+        app:layout_constraintTop_toTopOf="@+id/ccp">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/txtInputRegisterPhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/eg_024_xxxxxxx"
+            android:inputType="phone"
+            android:maxLength="10"
+            android:selectAllOnFocus="true"
+            android:singleLine="true" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnRegisterPhoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/buttonstyleblue"
+        android:text="@string/done"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPhone" />
+
+
+</android.support.constraint.ConstraintLayout>

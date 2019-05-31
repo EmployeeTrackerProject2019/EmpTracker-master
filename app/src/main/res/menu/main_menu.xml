@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_location"
+        android:icon="@drawable/ic_location"
+        android:orderInCategory="1"
+        android:title="@string/location" />
+    <!--<item-->
+    <!--android:id="@+id/action_task"-->
+    <!--android:orderInCategory="2"-->
+    <!--android:title="@string/task"-->
+    <!--android:icon="@drawable/ic_assignment"/>-->
+    <item
+        android:id="@+id/action_attendance"
+        android:icon="@drawable/ic_recent_actors"
+        android:orderInCategory="2"
+        android:title="@string/attendance" />
+    <item
+        android:id="@+id/action_reports"
+        android:icon="@drawable/ic_mode"
+        android:orderInCategory="3"
+        android:title="@string/reports" />
+    <item
+        android:id="@+id/action_leaves"
+        android:icon="@drawable/ic_wc_black"
+        android:orderInCategory="4"
+        android:title="@string/leaves" />
+
+
+    <item
+        android:id="@+id/action_profile"
+        android:icon="@drawable/ic_person_ash"
+        android:orderInCategory="5"
+        android:title="@string/profile" />
+</menu>

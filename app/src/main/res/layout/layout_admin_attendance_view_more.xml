@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/moreBottomSheetAdmin"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/fb"
+    app:behavior_hideable="true"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <TextView
+        android:id="@+id/btnAdminViewAttendance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/eightDp"
+        android:drawableStart="@drawable/ic_view_list"
+        android:drawableLeft="@drawable/ic_view_list"
+        android:drawablePadding="@dimen/eightDp"
+        android:padding="@dimen/eightDp"
+        android:text="@string/view_attendance"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/btnAdminViewUsersOnMap"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/eightDp"
+        android:layout_marginBottom="8dp"
+        android:drawableStart="@drawable/ic_map"
+        android:drawableLeft="@drawable/ic_map"
+        android:drawablePadding="@dimen/eightDp"
+        android:padding="@dimen/eightDp"
+        android:text="@string/view_map"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnAdminViewAttendance" />
+
+
+</android.support.constraint.ConstraintLayout>

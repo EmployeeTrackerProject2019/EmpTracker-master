@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fourDp"
+        app:cardCornerRadius="@dimen/fourDp"
+        app:cardElevation="@dimen/fourDp"
+        app:cardPreventCornerOverlap="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageViewCheckOut"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="@dimen/eightDp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:adjustViewBounds="false"
+                android:cropToPadding="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/selfie"
+                app:civ_border_color="#000"
+                app:civ_border_width="1dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/textViewCheckOutName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fourDp"
+                android:layout_marginLeft="@dimen/fourDp"
+                android:layout_marginEnd="@dimen/fourDp"
+                android:layout_marginRight="@dimen/fourDp"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imageViewCheckOut"
+                app:layout_constraintTop_toTopOf="@+id/imageViewCheckOut" />
+
+            <TextView
+                android:id="@+id/txtViewAttendanceCheckOut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fourDp"
+                android:layout_marginLeft="@dimen/fourDp"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewCheckOut"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imageViewCheckOut"
+                app:layout_constraintTop_toBottomOf="@+id/textViewCheckOutName"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/textViewDutyPost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fourDp"
+                android:layout_marginLeft="@dimen/fourDp"
+                android:layout_marginTop="@dimen/fourDp"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toEndOf="@+id/imageViewCheckOut"
+                app:layout_constraintTop_toBottomOf="@+id/txtViewAttendanceCheckOut" />
+
+            <TextView
+                android:id="@+id/txtViewAttendeeLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fourDp"
+                android:layout_marginEnd="@dimen/fourDp"
+                android:layout_marginRight="@dimen/fourDp"
+                android:layout_marginBottom="@dimen/fourDp"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/textViewDutyPost"
+                app:layout_constraintTop_toBottomOf="@+id/textViewWorkShift" />
+
+            <TextView
+                android:id="@+id/textViewWorkShift"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fourDp"
+                android:layout_marginLeft="@dimen/fourDp"
+                android:layout_marginTop="@dimen/fourDp"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toEndOf="@+id/imageViewCheckOut"
+                app:layout_constraintTop_toBottomOf="@+id/textViewDutyPost" />
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+</android.support.constraint.ConstraintLayout>

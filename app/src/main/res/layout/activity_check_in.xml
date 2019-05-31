@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".activities.CheckInActivity">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/checkInToolBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ToolBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title=" " />
+
+        <TextView
+            android:id="@+id/textViewCheckIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/eightDp"
+            android:text="@string/checkIn"
+            android:textColor="@color/white"
+            android:textSize="@dimen/twentyFourSp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/checkInToolBar"
+            app:layout_constraintEnd_toEndOf="@+id/checkInToolBar"
+            app:layout_constraintStart_toStartOf="@+id/checkInToolBar"
+            app:layout_constraintTop_toTopOf="@+id/checkInToolBar" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/circleImageViewCheckInPhoto"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:adjustViewBounds="false"
+            android:cropToPadding="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/abc"
+            app:civ_border_color="#000"
+            app:civ_border_width="1dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkInToolBar" />
+
+        <ImageView
+            android:id="@+id/imageViewCheckIn"
+            android:layout_width="80dp"
+            android:layout_height="75dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:adjustViewBounds="false"
+            android:contentDescription="@string/checkIn"
+            app:layout_constraintBottom_toBottomOf="@+id/circleImageViewCheckInPhoto"
+            app:layout_constraintEnd_toEndOf="@+id/circleImageViewCheckInPhoto"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/circleImageViewCheckInPhoto"
+            app:layout_constraintTop_toBottomOf="@+id/circleImageViewCheckInPhoto"
+            app:layout_constraintVertical_bias="0.71000004"
+            app:srcCompat="@drawable/ic_photo_camera_black" />
+
+
+        <Spinner
+            android:id="@+id/spinnerForShifs"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:entries="@array/shifts"
+            android:spinnerMode="dropdown"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider3" />
+
+        <Spinner
+            android:id="@+id/spinnerForDutyPost"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:entries="@array/dutyPost"
+            android:spinnerMode="dialog"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerForShifs" />
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="32dp"
+            android:background="@color/lightAsh"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewCheckIn" />
+
+        <Button
+            android:id="@+id/btnCheckIn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/eightDp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/buttonstyleblue"
+            android:text="@string/checkIn"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerForDutyPost"
+            app:layout_constraintVertical_bias="1.0" />
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.ReportFragment">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewForReport"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <RelativeLayout xmlns:fab="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Menu Layout is needed for the overlay to work -->
+        <jahirfiquitiva.libs.fabsmenu.FABsMenuLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            fab:fabs_menu_clickableOverlay="true"
+            fab:fabs_menu_overlayColor="#4d000000"
+            tools:layout_behavior="@string/fabs_menu_layout_behavior">
+
+            <!-- FABs Menu is the main view. It will contain all the items FABs and it create the menu fab itself -->
+            <jahirfiquitiva.libs.fabsmenu.FABsMenu
+                android:id="@+id/fabs_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:clipChildren="false"
+                fab:fab_expandDirection="up"
+                fab:fab_labelsPosition="left"
+                fab:fab_menuMargins="16dp"
+                fab:fab_moreButtonBackgroundColor="@color/fb"
+                fab:fab_moreButtonPlusIcon="@drawable/ic_today"
+                fab:fab_moreButtonRippleColor="@color/pink"
+                fab:fab_moreButtonSize="normal">
+
+
+                <!-- This item will appear just above the menu FAB -->
+
+                <jahirfiquitiva.libs.fabsmenu.TitleFAB
+                    android:id="@+id/to_viewReport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    fab:backgroundTint="@color/black"
+                    fab:fabSize="mini"
+                    fab:fab_enableTitleClick="true"
+                    fab:fab_title="View Report"
+                    fab:fab_title_backgroundColor="@color/black"
+                    fab:fab_title_textColor="@color/white"
+                    fab:rippleColor="@color/colorBlue"
+                    fab:srcCompat="@drawable/ic_check_out" />
+
+                <jahirfiquitiva.libs.fabsmenu.TitleFAB
+                    android:id="@+id/to_makeReport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    fab:backgroundTint="@color/amber"
+                    fab:fabSize="mini"
+                    fab:fab_enableTitleClick="true"
+                    fab:fab_title="Make Report"
+                    fab:fab_title_backgroundColor="@color/amber"
+                    fab:fab_title_textColor="@android:color/white"
+                    fab:rippleColor="@color/colorBlue"
+                    fab:srcCompat="@drawable/ic_check_in" />
+
+            </jahirfiquitiva.libs.fabsmenu.FABsMenu>
+
+        </jahirfiquitiva.libs.fabsmenu.FABsMenuLayout>
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

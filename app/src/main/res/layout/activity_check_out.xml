@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.CheckOutActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/checkOutToolBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ToolBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title=" " />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circleImageViewCheckOut"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:adjustViewBounds="false"
+        android:contentDescription="@string/checkIn"
+        android:cropToPadding="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/abc"
+        app:civ_border_color="#000"
+        app:civ_border_width="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkOutToolBar" />
+
+    <ImageView
+        android:id="@+id/imageViewCheckOut"
+        android:layout_width="80dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:adjustViewBounds="false"
+        android:contentDescription="@string/checkIn"
+        app:layout_constraintBottom_toBottomOf="@+id/circleImageViewCheckOut"
+        app:layout_constraintEnd_toEndOf="@+id/circleImageViewCheckOut"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/circleImageViewCheckOut"
+        app:layout_constraintTop_toBottomOf="@+id/circleImageViewCheckOut"
+        app:layout_constraintVertical_bias="0.71000004"
+        app:srcCompat="@drawable/ic_photo_camera" />
+
+    <Button
+        android:id="@+id/btnCheckOut"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/eightDp"
+        android:background="@drawable/buttonstyleblue"
+        android:text="@string/checkOut"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewCheckOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/checkOut"
+        android:textColor="@color/white"
+        android:textSize="@dimen/twentyFourSp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/checkOutToolBar"
+        app:layout_constraintEnd_toEndOf="@+id/checkOutToolBar"
+        app:layout_constraintStart_toStartOf="@+id/checkOutToolBar"
+        app:layout_constraintTop_toTopOf="@+id/checkOutToolBar" />
+
+    <TextView
+        android:id="@+id/textViewSignedInTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/eightDp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/buttonstyletransparent"
+        android:padding="@dimen/eightDp"
+        android:text="@string/signed_in_at"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewCheckOut" />
+</android.support.constraint.ConstraintLayout>

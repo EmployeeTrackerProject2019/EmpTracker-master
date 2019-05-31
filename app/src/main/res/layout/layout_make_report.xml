@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/eightDp"
+    android:background="@drawable/curvedbuttonstyle"
+    android:orientation="vertical">
+
+
+    <ProgressBar
+        android:id="@+id/progressBarLoadingReport"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/eightDp"
+        android:indeterminate="true"
+        android:indeterminateDuration="@android:integer/config_shortAnimTime"
+        android:indeterminateOnly="false"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputLayoutReportTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/eightDp"
+        android:layout_marginTop="8dp"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="20dp"
+        app:boxStrokeColor="@color/fb"
+        app:boxStrokeWidth="2dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="100"
+        app:hintAnimationEnabled="true"
+        app:hintEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBarLoadingReport">
+
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/report_title"
+            android:inputType="text" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputLayoutReportDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/eightDp"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="20dp"
+        app:boxStrokeColor="@color/fb"
+        app:boxStrokeWidth="2dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="1000"
+        app:hintAnimationEnabled="true"
+        app:hintEnabled="true"
+        app:layout_constraintBottom_toTopOf="@+id/btnSubmitReport"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutReportTitle"
+        app:layout_constraintVertical_bias="0.0">
+
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/write_report_here"
+            android:inputType="textMultiLine" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnSubmitReport"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/eightDp"
+        android:background="@drawable/curvebotton"
+        android:text="@string/submit"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

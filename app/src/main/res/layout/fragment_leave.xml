@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.LeaveFragment">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewLeave"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_anchorGravity="top|start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.48000002">
+
+        <!-- Menu Layout is needed for the overlay to work -->
+        <jahirfiquitiva.libs.fabsmenu.FABsMenuLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="0dp"
+            app:fabs_menu_clickableOverlay="true"
+            app:fabs_menu_overlayColor="#4d000000"
+            tools:layout_behavior="@string/fabs_menu_layout_behavior">
+
+            <!-- FABs Menu is the main view. It will contain all the items FABs and it create the menu fab itself -->
+            <jahirfiquitiva.libs.fabsmenu.FABsMenu
+                android:id="@+id/fabs_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:clipChildren="false"
+                app:fab_expandDirection="up"
+                app:fab_labelsPosition="left"
+                app:fab_menuMargins="16dp"
+                app:fab_moreButtonBackgroundColor="@color/fb"
+                app:fab_moreButtonPlusIcon="@drawable/ic_add"
+                app:fab_moreButtonRippleColor="@color/pink"
+                app:fab_moreButtonSize="normal">
+
+
+                <jahirfiquitiva.libs.fabsmenu.TitleFAB
+                    android:id="@+id/to_requestLeave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:backgroundTint="@color/black"
+                    app:fabSize="mini"
+                    app:fab_enableTitleClick="true"
+                    app:fab_title="Request Leave"
+                    app:fab_title_backgroundColor="@color/black"
+                    app:fab_title_textColor="@color/white"
+                    app:rippleColor="@color/colorBlue"
+                    app:srcCompat="@drawable/ic_check_in" />
+
+            </jahirfiquitiva.libs.fabsmenu.FABsMenu>
+
+        </jahirfiquitiva.libs.fabsmenu.FABsMenuLayout>
+
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>

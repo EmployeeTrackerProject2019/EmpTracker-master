@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".fragments.PhotoFragment">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageViewEditFragmentPhoto"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:adjustViewBounds="false"
+        android:contentDescription="@string/edit_profile"
+        android:scaleType="centerCrop"
+        android:src="@drawable/abc"
+        app:civ_border_color="#000"
+        app:civ_border_width="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabAddFragmentPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:backgroundTint="@color/fb"
+        app:elevation="@dimen/eightDp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewEditFragmentPhoto"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewEditFragmentPhoto"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/imageViewEditFragmentPhoto"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewEditFragmentPhoto"
+        app:layout_constraintVertical_bias="0.0"
+        app:rippleColor="@color/fb"
+        app:srcCompat="@drawable/ic_camera"
+        app:useCompatPadding="true" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/eightDp"
+        android:padding="@dimen/eightDp"
+        android:text="@string/almostDone"
+        android:textColor="@color/fb"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnFinishProcess"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/curvebotton"
+        android:text="@string/finish"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fabAddFragmentPhoto"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+</android.support.constraint.ConstraintLayout>
