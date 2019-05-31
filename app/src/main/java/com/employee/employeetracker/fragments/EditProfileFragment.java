@@ -51,6 +51,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
@@ -73,7 +74,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
 
 
     private Button btnSave;
-    private DatabaseReference historyDbRef;
+    private final AtomicReference<DatabaseReference> historyDbRef = new AtomicReference<DatabaseReference>();
     //User id , get Phone number from the user , send verification code
     private String getEmail, mVerificationCode;
     private Uri resultUri;
@@ -134,7 +135,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         userDbRef.keepSynced(true);
 
 
-        historyDbRef = FirebaseDatabase.getInstance().getReference().child("History");
+        historyDbRef.set(FirebaseDatabase.getInstance().getReference().child("History"));
 
         //creates a storage like data for check in photos to be stored into
         mStorageReferenceForPhoto = FirebaseStorage.getInstance().getReference().child(
@@ -321,14 +322,14 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         //add to history database
 
         history.put("history", historyBuilder);
-        final String historyID = historyDbRef.push().getKey();
+        final String historyID = historyDbRef.get().push().getKey();
 
         userDbRef.updateChildren(userDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     assert historyID != null;
-                    historyDbRef.child(log).child(historyID).setValue(history);
+                    historyDbRef.get().child(log).child(historyID).setValue(history);
                     progressDialog.dismiss();
                     Toast.makeText(getContext(), "Profile Successfully changed", Toast.LENGTH_SHORT).show();
                 } else {
@@ -442,7 +443,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
                         //add to history database
                         //history = new HashMap<>();
                         history.put("history", historyBuilder);
-                        final String historyID = historyDbRef.push().getKey();
+                        final String historyID = historyDbRef.get().push().getKey();
 
 
                         userDbRef.updateChildren(userPhoto).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -451,7 +452,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
                                 if (task.isSuccessful()) {
                                     //add to history
                                     assert historyID != null;
-                                    historyDbRef.child(log).child(historyID).setValue(history);
+                                    historyDbRef.get().child(log).child(historyID).setValue(history);
                                     progressDialog.dismiss();
                                     Toast toast = Toast.makeText(getContext(), "Successfully posted",
                                             Toast.LENGTH_LONG);

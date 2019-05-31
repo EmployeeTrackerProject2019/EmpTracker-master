@@ -18,9 +18,7 @@ import com.employee.employeetracker.utils.GetDateTime;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -55,7 +53,7 @@ final String getAdapterPosition = getRef(position).getKey();
                 openEditReportActivity.putExtra("position",getAdapterPosition);
                 openEditReportActivity.putExtra("title",model.getTitle());
                 openEditReportActivity.putExtra("image",model.getImage());
-                openEditReportActivity.putExtra("content",model.getDescription());
+                openEditReportActivity.putExtra("description", model.getDescription());
 
                 v.getContext().startActivity(openEditReportActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 

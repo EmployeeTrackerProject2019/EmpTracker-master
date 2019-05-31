@@ -89,6 +89,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "342992167439-j2m4f5n8algpq3mvl1ua4s1knjha8d72.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.employee.administratoremployeetracker",
+            "certificate_hash": "82b4402c06e4f557b70a2d6e48e162ab9786e52b"
+          }
+        },
+        {
           "client_id": "342992167439-e048ip213hsbh8161n2rc5iq1h4g92qg.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -133,6 +141,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "342992167439-j2crgbrovu59gmm66mbatrmbioqpmvb7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.employee.employeetracker",
+            "certificate_hash": "82b4402c06e4f557b70a2d6e48e162ab9786e52b"
+          }
+        },
         {
           "client_id": "342992167439-jasi5lj9vv3n26lnjpambl0nsssr0ho8.apps.googleusercontent.com",
           "client_type": 1,
