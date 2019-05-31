@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide;
 import com.employee.employeetracker.R;
 import com.employee.employeetracker.adapters.CheckOutViewHolderAdapter.ShowCheckOutAttendanceViewHolder;
 import com.employee.employeetracker.bottomsheets.CheckOutDetailsBottomSheet;
-import com.employee.employeetracker.models.Attendance;
+import com.employee.employeetracker.models.Employee;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
@@ -26,7 +26,7 @@ import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CheckOutViewHolderAdapter extends FirebaseRecyclerAdapter<Attendance,
+public class CheckOutViewHolderAdapter extends FirebaseRecyclerAdapter<Employee,
         ShowCheckOutAttendanceViewHolder> {
     private Context context;
 
@@ -37,13 +37,13 @@ public class CheckOutViewHolderAdapter extends FirebaseRecyclerAdapter<Attendanc
      *
      * @param options
      */
-    public CheckOutViewHolderAdapter(@NonNull FirebaseRecyclerOptions<Attendance> options) {
+    public CheckOutViewHolderAdapter(@NonNull FirebaseRecyclerOptions<Employee> options) {
         super(options);
     }
 
 
     @Override
-    protected void onBindViewHolder(@NonNull ShowCheckOutAttendanceViewHolder holder, int position, @NonNull Attendance model) {
+    protected void onBindViewHolder(@NonNull ShowCheckOutAttendanceViewHolder holder, int position, @NonNull Employee model) {
 
         holder.showCheckOutDate(model.getCheckOutTimeStamp());
 //        holder.showCheckOutPhoto(model.getCheckOutPhoto());

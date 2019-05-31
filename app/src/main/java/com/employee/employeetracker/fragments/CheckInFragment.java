@@ -35,7 +35,7 @@ import com.employee.employeetracker.activities.CheckOutActivity;
 import com.employee.employeetracker.bottomsheets.CheckInDetailsBottomSheet;
 import com.employee.employeetracker.interfaces.RecyclerItemTouchHelperCheckIn;
 import com.employee.employeetracker.interfaces.RecyclerItemTouchHelperCheckIn.RecyclerItemTouchHelperListenerCheckIn;
-import com.employee.employeetracker.models.Attendance;
+import com.employee.employeetracker.models.Employee;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -61,12 +61,12 @@ import jahirfiquitiva.libs.fabsmenu.TitleFAB;
  */
 @SuppressWarnings("ALL")
 public class CheckInFragment extends Fragment implements RecyclerItemTouchHelperListenerCheckIn {
-    private static final String TAG = "Attendance ";
+    private static final String TAG = "Employee ";
     private String getUsersId;
     private DatabaseReference mAttendanceDbRef;
     private TextView txtCount;
     private View view;
-    private FirebaseRecyclerAdapter<Attendance, ShowAttendanceViewHolder> adapter;
+    private FirebaseRecyclerAdapter<Employee, ShowAttendanceViewHolder> adapter;
     private ProgressBar loading;
     private ConstraintLayout mShowEmptyLayout;
     private int childCount = 0;
@@ -245,13 +245,13 @@ public class CheckInFragment extends Fragment implements RecyclerItemTouchHelper
         checkEmptyDb();
 
 
-        FirebaseRecyclerOptions<Attendance> options =
-                new FirebaseRecyclerOptions.Builder<Attendance>().setQuery(query, Attendance.class).build();
+        FirebaseRecyclerOptions<Employee> options =
+                new FirebaseRecyclerOptions.Builder<Employee>().setQuery(query, Employee.class).build();
 
-        adapter = new FirebaseRecyclerAdapter<Attendance, ShowAttendanceViewHolder>(options) {
+        adapter = new FirebaseRecyclerAdapter<Employee, ShowAttendanceViewHolder>(options) {
 
             @Override
-            protected void onBindViewHolder(@NonNull ShowAttendanceViewHolder holder, int position, @NonNull Attendance model) {
+            protected void onBindViewHolder(@NonNull ShowAttendanceViewHolder holder, int position, @NonNull Employee model) {
 
                 holder.showCheckInDate(model.getCheckInTimeStamp());
                 // holder.showCheckInPhoto(model.getCheckInPhoto());

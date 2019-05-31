@@ -70,6 +70,7 @@
     <string name="view_map">View Map</string>
     <string name="duty_post">Duty Post</string>
     <string name="tap_on_the_camera_icon_to_add_a_photo">To complete the registration process please add a photo.\nTap on the camera icon to add a photo</string>
+    <string name="nameOfPerson">Name of Person</string>
 
 
     <!--string array for working shift-->
@@ -132,4 +133,7 @@
     <string name="report_content">Report Content</string>
     <string name="edit_your_report">Edit your report</string>
     <string name="update_report">Update Report</string>
+    <string name="shtfType">Shift</string>
+    <string name="duty_Post">Duty Post</string>
+    <string name="duty_roster">Duty Roster</string>
 </resources>

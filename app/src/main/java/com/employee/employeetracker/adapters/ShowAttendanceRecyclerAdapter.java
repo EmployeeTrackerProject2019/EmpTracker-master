@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.employee.employeetracker.R;
-import com.employee.employeetracker.models.Attendance;
+import com.employee.employeetracker.models.Employee;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.Locale;
 
 
-public class ShowAttendanceRecyclerAdapter extends FirebaseRecyclerAdapter<Attendance, ShowAttendanceRecyclerAdapter.ShowAttendanceAdapter> {
+public class ShowAttendanceRecyclerAdapter extends FirebaseRecyclerAdapter<Employee, ShowAttendanceRecyclerAdapter.ShowAttendanceAdapter> {
 
 
     /**
@@ -26,12 +26,12 @@ public class ShowAttendanceRecyclerAdapter extends FirebaseRecyclerAdapter<Atten
      *
      * @param options
      */
-    public ShowAttendanceRecyclerAdapter(@NonNull FirebaseRecyclerOptions<Attendance> options) {
+    public ShowAttendanceRecyclerAdapter(@NonNull FirebaseRecyclerOptions<Employee> options) {
         super(options);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ShowAttendanceAdapter holder, int position, @NonNull Attendance model) {
+    protected void onBindViewHolder(@NonNull ShowAttendanceAdapter holder, int position, @NonNull Employee model) {
         holder.showCheckInEmployeeName(model.getUserName());
         holder.showCheckInDate(model.getCheckInTimeStamp());
     }

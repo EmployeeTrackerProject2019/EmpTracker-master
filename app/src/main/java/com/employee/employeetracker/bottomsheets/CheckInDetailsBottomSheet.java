@@ -56,7 +56,7 @@ public class CheckInDetailsBottomSheet extends BottomSheetDialogFragment {
         getPositionBundle = bundle.getString("position");
 
         attendanceDbRef =
-                FirebaseDatabase.getInstance().getReference().child("Attendance").child("CheckIn").child(getPositionBundle);
+                FirebaseDatabase.getInstance().getReference().child("Employee").child("CheckIn").child(getPositionBundle);
         attendanceDbRef.keepSynced(true);
 
         initViews();

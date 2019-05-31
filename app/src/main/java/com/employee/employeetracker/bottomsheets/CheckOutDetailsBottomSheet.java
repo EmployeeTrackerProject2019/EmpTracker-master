@@ -55,7 +55,7 @@ public class CheckOutDetailsBottomSheet extends BottomSheetDialogFragment implem
         getPositionBundle = bundle.getString("position");
 
         attendanceDbRef =
-                FirebaseDatabase.getInstance().getReference().child("Attendance").child("CheckOut").child(getPositionBundle);
+                FirebaseDatabase.getInstance().getReference().child("Employee").child("CheckOut").child(getPositionBundle);
         attendanceDbRef.keepSynced(true);
 
         initViews();

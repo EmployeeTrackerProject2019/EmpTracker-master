@@ -112,13 +112,13 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         DatabaseReference usersDbRef = FirebaseDatabase.getInstance().getReference().child("Employee").child(uid);
         usersDbRef.keepSynced(true);
 
-        DatabaseReference checkInDbRef = FirebaseDatabase.getInstance().getReference().child("Attendance").child(
+        DatabaseReference checkInDbRef = FirebaseDatabase.getInstance().getReference().child("Employee").child(
                 "CheckIn");
         checkInDbRef.keepSynced(true);
 
 //creates a node for check out
         checkOutDbRef =
-                FirebaseDatabase.getInstance().getReference().child("Attendance");
+                FirebaseDatabase.getInstance().getReference().child("Employee");
         checkOutDbRef.keepSynced(true);
 
         historyDbRef = FirebaseDatabase.getInstance().getReference().child(log);

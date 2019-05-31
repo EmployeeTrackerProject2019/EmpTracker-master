@@ -1,6 +1,6 @@
 package com.employee.employeetracker.models;
 
-public class Attendance {
+public class Employee {
     private String userId;
     private String userName;
     private Long checkInTimeStamp;
@@ -98,11 +98,11 @@ public class Attendance {
         this.getCheckOutCount = getCheckOutCount;
     }
 
-    public Attendance() {
+    public Employee() {
     }
 
-    public Attendance(String userId, String userName, Long checkInTimeStamp, String checkInPhoto,
-                      Long checkOutTimeStamp, String checkOutPhoto, String typeOfShift, String dutyPost, String location) {
+    public Employee(String userId, String userName, Long checkInTimeStamp, String checkInPhoto,
+                    Long checkOutTimeStamp, String checkOutPhoto, String typeOfShift, String dutyPost, String location) {
         this.userId = userId;
         this.userName = userName;
         this.checkInTimeStamp = checkInTimeStamp;

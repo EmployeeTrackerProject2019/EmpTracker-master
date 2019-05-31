@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.employee.employeetracker.models.Attendance;
+import com.employee.employeetracker.models.Employee;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,11 +27,11 @@ import java.util.Locale;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ViewAllActivity extends AppCompatActivity {
-    private static final String TAG = "Attendance ";
+    private static final String TAG = "Employee ";
     private DatabaseReference mAttendanceDbRef;
     String getUsersId;
     FirebaseUser mUser;
-    private FirebaseRecyclerAdapter<Attendance, ShowAttendanceViewHolder> adapter;
+    private FirebaseRecyclerAdapter<Employee, ShowAttendanceViewHolder> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,19 +68,19 @@ public class ViewAllActivity extends AppCompatActivity {
         }
 
         mAttendanceDbRef =
-                FirebaseDatabase.getInstance().getReference().child("Attendance").child("CheckIn");
+                FirebaseDatabase.getInstance().getReference().child("Employee").child("CheckIn");
         mAttendanceDbRef.keepSynced(true);
 
 
         //querying the database base of the time posted
         Query query = mAttendanceDbRef.orderByChild("timeStamp");
 
-        FirebaseRecyclerOptions<Attendance> options =
-                new FirebaseRecyclerOptions.Builder<Attendance>().setQuery(query, Attendance.class).build();
+        FirebaseRecyclerOptions<Employee> options =
+                new FirebaseRecyclerOptions.Builder<Employee>().setQuery(query, Employee.class).build();
 
-        adapter = new FirebaseRecyclerAdapter<Attendance, ViewAllActivity.ShowAttendanceViewHolder>(options) {
+        adapter = new FirebaseRecyclerAdapter<Employee, ViewAllActivity.ShowAttendanceViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull ViewAllActivity.ShowAttendanceViewHolder holder, int position, @NonNull Attendance model) {
+            protected void onBindViewHolder(@NonNull ViewAllActivity.ShowAttendanceViewHolder holder, int position, @NonNull Employee model) {
                 holder.showUserName(model.getUserName());
                 holder.showCheckInPhoto(model.getCheckInPhoto());
                 holder.showCheckInDate(model.getCheckInTimeStamp());

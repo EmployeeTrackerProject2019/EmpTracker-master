@@ -31,10 +31,10 @@ import com.employee.employeetracker.bottomsheets.CheckOutDetailsBottomSheet.Chec
 import com.employee.employeetracker.bottomsheets.MakeAReportBottomSheet.MakeReportListener;
 import com.employee.employeetracker.bottomsheets.PhoneNumberBottomSheet.PhoneNumberBottomSheetListener;
 import com.employee.employeetracker.bottomsheets.RequestALeaveBottomSheet.RequestLeaveListener;
+import com.employee.employeetracker.fragments.DutyRosterFragment;
 import com.employee.employeetracker.fragments.EditProfileFragment;
 import com.employee.employeetracker.fragments.EmployeeCheckInFragment;
 import com.employee.employeetracker.fragments.LeaveFragment;
-import com.employee.employeetracker.fragments.LocationFragment;
 import com.employee.employeetracker.fragments.ReportFragment;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements MakeReportListene
     private final FragmentManager fragmentManager = getSupportFragmentManager();
 
     // fragments here
-    private final Fragment locationFragment = new LocationFragment();
+    private final Fragment dutyRosterFragment = new DutyRosterFragment();
     private final Fragment attendanceFragment = new EmployeeCheckInFragment();
     private final Fragment reportFragment = new ReportFragment();
     private final Fragment leaveFragment = new LeaveFragment();
@@ -146,8 +146,8 @@ public class MainActivity extends AppCompatActivity implements MakeReportListene
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 Fragment fragment = null;
                 switch (menuItem.getItemId()) {
-                    case R.id.action_location:
-                        fragment = locationFragment;
+                    case R.id.action_dutyPost:
+                        fragment = dutyRosterFragment;
                         break;
                     case R.id.action_attendance:
                         fragment = attendanceFragment;
@@ -275,6 +275,7 @@ public class MainActivity extends AppCompatActivity implements MakeReportListene
 
     }
 
+    //method to return to welcome screen if user id is null
     private void returnToWelcomePage() {
         startActivity(new Intent(MainActivity.this, SplashScreenActivity.class));
         finish();

@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_location"
-        android:icon="@drawable/ic_location"
+        android:id="@+id/action_dutyPost"
+        android:icon="@drawable/ic_duty"
         android:orderInCategory="1"
-        android:title="@string/location" />
+        android:title="@string/duty_roster" />
     <!--<item-->
     <!--android:id="@+id/action_task"-->
     <!--android:orderInCategory="2"-->

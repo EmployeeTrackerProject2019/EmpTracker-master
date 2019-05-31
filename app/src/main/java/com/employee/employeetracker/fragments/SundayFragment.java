@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 
 import com.employee.employeetracker.R;
 import com.employee.employeetracker.adapters.ShowAttendanceRecyclerAdapter;
-import com.employee.employeetracker.models.Attendance;
+import com.employee.employeetracker.models.Employee;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -101,13 +101,13 @@ public class SundayFragment extends Fragment {
         //querying the database base of the time posted
         Query query = checkedInDb.orderByChild("userId").equalTo(uid);
 
-        FirebaseRecyclerOptions<Attendance> options =
-                new FirebaseRecyclerOptions.Builder<Attendance>().setQuery(query,
-                        Attendance.class)
+        FirebaseRecyclerOptions<Employee> options =
+                new FirebaseRecyclerOptions.Builder<Employee>().setQuery(query,
+                        Employee.class)
                         .build();
         adapter = new ShowAttendanceRecyclerAdapter(options);
 /*
- adapter = new FirebaseRecyclerAdapter<Attendance, ShowAttendanceAdapter>(options) {
+ adapter = new FirebaseRecyclerAdapter<Employee, ShowAttendanceAdapter>(options) {
 @NonNull
 @Override
 public ShowAttendanceAdapter onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -117,7 +117,7 @@ return new ShowAttendanceAdapter(getLayoutInflater()
 
 @Override
 protected void onBindViewHolder(@NonNull ShowAttendanceAdapter holder, int position,
-@NonNull Attendance model) {
+@NonNull Employee model) {
 
 holder.showCheckInEmployeeName(model.getUserName());
 holder.showCheckInDate(model.getCheckInTimeStamp());

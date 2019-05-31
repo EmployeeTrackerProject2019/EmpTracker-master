@@ -30,7 +30,7 @@ import com.employee.employeetracker.R;
 import com.employee.employeetracker.bottomsheets.CheckOutDetailsBottomSheet;
 import com.employee.employeetracker.interfaces.RecyclerItemTouchHelperCheckOut;
 import com.employee.employeetracker.interfaces.RecyclerItemTouchHelperCheckOut.RecyclerItemTouchHelperListenerCheckOut;
-import com.employee.employeetracker.models.Attendance;
+import com.employee.employeetracker.models.Employee;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -56,7 +56,7 @@ public class CheckOutFragment extends Fragment implements RecyclerItemTouchHelpe
     private ProgressBar loading;
     private ConstraintLayout mShowEmptyLayout;
     private int childCount = 0;
-    private FirebaseRecyclerAdapter<Attendance, ShowAttendanceViewHolder> adapter;
+    private FirebaseRecyclerAdapter<Employee, ShowAttendanceViewHolder> adapter;
     private FragmentActivity mActivity;
     private TextView txtDescription;
 
@@ -127,7 +127,7 @@ public class CheckOutFragment extends Fragment implements RecyclerItemTouchHelpe
                 new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
 
         checkOutDbRef =
-                FirebaseDatabase.getInstance().getReference().child("Attendance").child("CheckOut").child(getUsersId);
+                FirebaseDatabase.getInstance().getReference().child("Employee").child("CheckOut").child(getUsersId);
         checkOutDbRef.keepSynced(true);
 
         //querying the database base of the USER who  checked out
@@ -135,13 +135,13 @@ public class CheckOutFragment extends Fragment implements RecyclerItemTouchHelpe
 
         checkEmptyDb();
 
-        FirebaseRecyclerOptions<Attendance> options =
-                new FirebaseRecyclerOptions.Builder<Attendance>().setQuery(query, Attendance.class).build();
+        FirebaseRecyclerOptions<Employee> options =
+                new FirebaseRecyclerOptions.Builder<Employee>().setQuery(query, Employee.class).build();
 
 
-        adapter = new FirebaseRecyclerAdapter<Attendance, ShowAttendanceViewHolder>(options) {
+        adapter = new FirebaseRecyclerAdapter<Employee, ShowAttendanceViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull ShowAttendanceViewHolder holder, int position, @NonNull Attendance model) {
+            protected void onBindViewHolder(@NonNull ShowAttendanceViewHolder holder, int position, @NonNull Employee model) {
 
                 holder.showCheckOutDate(model.getCheckOutTimeStamp());
 
