@@ -72,22 +72,27 @@ public class MainActivity extends AppCompatActivity implements MakeReportListene
     private static final int ACCESS_FINE_LOCATION_INTENT_ID = 3;
     private static final String BROADCAST_ACTION = "android.location.PROVIDERS_CHANGED";
     private static GoogleApiClient mGoogleApiClient;
-    private final FragmentManager fragmentManager = getSupportFragmentManager();
+
 
     // fragments here
+    private final FragmentManager fragmentManager = getSupportFragmentManager();
     private final Fragment dutyRosterFragment = new DutyRosterFragment();
     private final Fragment attendanceFragment = new EmployeeCheckInFragment();
     private final Fragment reportFragment = new ReportFragment();
     private final Fragment leaveFragment = new LeaveFragment();
     private final Fragment profileFragment = new EditProfileFragment();
+    //database
     private DatabaseReference reportDbRef;
     private DatabaseReference leaveDbRef;
+    private DatabaseReference usersDbRef;
+    //Strings
     private String getPhoneNumber, getReportTitle, getReportDescription;
     private String userId, userName, getImageUri, fullName;
     private String notApproved = "Not yet Approved";
-    private FirebaseUser mFirebaseUser;
-    private DatabaseReference usersDbRef;
     private String getLeaveMsg, getStartDate, getEndDate;
+    //auths
+    private FirebaseUser mFirebaseUser;
+
 
     //Run on UI
     private Runnable sendUpdatesToUI = new Runnable() {
@@ -169,8 +174,8 @@ public class MainActivity extends AppCompatActivity implements MakeReportListene
                 fragmentManager.beginTransaction()
                         .setCustomAnimations(R.anim.enter_from_right,
                                 R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
-                        .replace(R.id.fragmentContainer,
-                                fragment)
+                        .replace(R.id.fragmentContainer, fragment)
+                        .addToBackStack(null)
                         .commit();
                 return true;
 
@@ -179,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements MakeReportListene
 
 
         });
-        // Set datePosted selection
+
         mBottomNavigationView.setSelectedItemId(R.id.action_attendance);
 
     }

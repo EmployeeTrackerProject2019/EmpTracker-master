@@ -36,11 +36,17 @@ public class ShowAttendanceRecyclerAdapter extends FirebaseRecyclerAdapter<Emplo
         holder.showCheckInDate(model.getCheckInTimeStamp());
     }
 
+
     @NonNull
     @Override
     public ShowAttendanceAdapter onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         return new ShowAttendanceAdapter(LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.layout_view_employee_check_in, viewGroup, false));
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     public class ShowAttendanceAdapter extends RecyclerView.ViewHolder {

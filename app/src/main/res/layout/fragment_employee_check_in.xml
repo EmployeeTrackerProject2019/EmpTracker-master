@@ -42,7 +42,7 @@
 
     <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
         app:layout_anchor="@id/viewPager"
         app:layout_anchorGravity="end|bottom"
         app:layout_constraintBottom_toTopOf="@id/fabAddPhoto"
@@ -54,7 +54,7 @@
         <!-- Menu Layout is needed for the overlay to work -->
         <jahirfiquitiva.libs.fabsmenu.FABsMenuLayout
             android:layout_width="wrap_content"
-            android:layout_height="300dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentEnd="true"
@@ -80,59 +80,28 @@
                 app:fab_moreButtonSize="normal">
 
                 <jahirfiquitiva.libs.fabsmenu.TitleFAB
-                    android:id="@+id/to_assignDuty"
+                    android:id="@+id/to_checkIn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:backgroundTint="@color/colorRed"
+                    app:backgroundTint="@color/colorBlue"
                     app:fabSize="mini"
                     app:fab_enableTitleClick="true"
-                    app:fab_title="Assign Duty"
-                    app:fab_title_backgroundColor="@color/colorRed"
+                    app:fab_title="Check In"
+                    app:fab_title_backgroundColor="@color/colorBlue"
                     app:fab_title_textColor="@android:color/white"
-                    app:rippleColor="@color/colorBlue"
                     app:srcCompat="@drawable/ic_mode" />
 
                 <jahirfiquitiva.libs.fabsmenu.TitleFAB
-                    android:id="@+id/to_viewCheckIn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:backgroundTint="@color/amber"
-                    app:fabSize="mini"
-                    app:fab_enableTitleClick="true"
-                    app:fab_title="View Check In"
-                    app:fab_title_backgroundColor="@color/amber"
-                    app:fab_title_textColor="@color/white"
-                    app:rippleColor="@color/colorBlue"
-                    app:srcCompat="@drawable/ic_check_in" />
-
-
-                <jahirfiquitiva.libs.fabsmenu.TitleFAB
-                    android:id="@+id/to_viewCheckOut"
+                    android:id="@+id/to_checkOut"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:backgroundTint="@color/black"
                     app:fabSize="mini"
                     app:fab_enableTitleClick="true"
-                    app:fab_title="View Check Out"
+                    app:fab_title="Check Out"
                     app:fab_title_backgroundColor="@color/black"
                     app:fab_title_textColor="@color/white"
-                    app:rippleColor="@color/colorBlue"
                     app:srcCompat="@drawable/ic_check_in" />
-
-                <jahirfiquitiva.libs.fabsmenu.TitleFAB
-                    android:id="@+id/to_viewHistory"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:backgroundTint="@color/amber"
-                    app:fabSize="mini"
-                    app:fab_enableTitleClick="true"
-                    app:fab_title="View History"
-                    app:fab_title_backgroundColor="@color/amber"
-                    app:fab_title_textColor="@android:color/white"
-                    app:rippleColor="@color/colorBlue"
-
-
-                    />
 
             </jahirfiquitiva.libs.fabsmenu.FABsMenu>
 

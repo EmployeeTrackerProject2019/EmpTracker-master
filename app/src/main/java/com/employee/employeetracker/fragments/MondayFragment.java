@@ -38,6 +38,8 @@ public class MondayFragment extends Fragment {
     private ShowAttendanceRecyclerAdapter adapter;
     private View view;
     private String uid;
+
+
     public MondayFragment() {
         // Required empty public constructor
     }
@@ -95,10 +97,11 @@ public class MondayFragment extends Fragment {
         Query query = checkedInDb.orderByChild("userId").equalTo(uid);
 
         FirebaseRecyclerOptions<Employee> options =
-                new FirebaseRecyclerOptions.Builder<Employee>().setQuery(query,
-                        Employee.class)
+                new FirebaseRecyclerOptions.Builder<Employee>().setQuery(query, Employee.class)
+                        .setLifecycleOwner(this)
                         .build();
         adapter = new ShowAttendanceRecyclerAdapter(options);
+        adapter.setHasStableIds(true);
 /*
         adapter = new FirebaseRecyclerAdapter<Employee, ShowAttendanceAdapter>(options) {
             @NonNull
@@ -144,7 +147,11 @@ public class MondayFragment extends Fragment {
         super.onStop();
         Log.i(TAG, "onStop: ");
         adapter.stopListening();
+        adapter.notifyDataSetChanged();
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 }

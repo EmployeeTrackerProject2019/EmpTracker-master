@@ -105,6 +105,7 @@ public class SaturdayFragment extends Fragment {
         FirebaseRecyclerOptions<Employee> options =
                 new FirebaseRecyclerOptions.Builder<Employee>().setQuery(query,
                         Employee.class)
+                        .setLifecycleOwner(this)
                         .build();
         adapter = new ShowAttendanceRecyclerAdapter(options);
 /*

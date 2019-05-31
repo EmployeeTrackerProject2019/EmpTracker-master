@@ -210,7 +210,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //link to go to sign up activity
     public void gotoSignUP(View view) {
-        startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
+        startActivity(new Intent(LoginActivity.this, NameActivity.class));
     }
 
     //Method from the on click interface

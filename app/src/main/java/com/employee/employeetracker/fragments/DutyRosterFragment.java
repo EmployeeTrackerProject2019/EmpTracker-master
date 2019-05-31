@@ -102,4 +102,12 @@ public class DutyRosterFragment extends Fragment {
 
 
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
+    }
 }
