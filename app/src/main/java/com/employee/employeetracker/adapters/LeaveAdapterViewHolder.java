@@ -12,12 +12,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.employee.employeetracker.R;
 import com.employee.employeetracker.models.Leave;
+import com.employee.employeetracker.utils.GetDateTime;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -76,11 +75,11 @@ public class LeaveAdapterViewHolder extends FirebaseRecyclerAdapter<Leave,
         void showDate(Long date) {
 
             TextView txtDate = view.findViewById(R.id.txtShowLeaveDate);
-            SimpleDateFormat sfd = new SimpleDateFormat("'Sent on ' dd-MM-yyyy '@' hh:mm aa",
-                    Locale.US);
+//            SimpleDateFormat sfd = new SimpleDateFormat("'Sent on ' dd-MM-yyyy '@' hh:mm aa",
+//                    Locale.US);
 
             try {
-                txtDate.setText(sfd.format(new Date(date)));
+                txtDate.setText(GetDateTime.getFormattedDate(new Date(date)));
             } catch (Exception e) {
                 e.printStackTrace();
             }

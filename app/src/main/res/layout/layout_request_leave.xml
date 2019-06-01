@@ -28,6 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/eightDp"
         android:layout_marginTop="8dp"
+        android:saveEnabled="true"
         app:boxBackgroundMode="outline"
         app:boxCornerRadiusBottomStart="10dp"
         app:boxCornerRadiusTopEnd="10dp"
@@ -44,7 +45,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/state_a_reason_for_leave"
-            android:inputType="textMultiLine" />
+            android:inputType="textMultiLine"
+            android:selectAllOnFocus="true" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout

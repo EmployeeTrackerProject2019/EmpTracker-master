@@ -19,9 +19,11 @@ import android.widget.DatePicker;
 import android.widget.ProgressBar;
 
 import com.employee.employeetracker.R;
+import com.employee.employeetracker.utils.GetDateTime;
 
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class RequestALeaveBottomSheet extends BottomSheetDialogFragment implements View.OnClickListener {
     private static final String TAG = "RequestALeaveBottomShee";
@@ -38,6 +40,7 @@ public class RequestALeaveBottomSheet extends BottomSheetDialogFragment implemen
     private ProgressBar loading;
     private Button btnSubmit, btnStartDate, btnEndDate;
     private View view;
+    private Date date;
 
     @Nullable
     @Override
@@ -51,6 +54,9 @@ public class RequestALeaveBottomSheet extends BottomSheetDialogFragment implemen
         btnSubmit = view.findViewById(R.id.btnSubmitLeaveReport);
         btnStartDate = view.findViewById(R.id.btnStartDate);
         btnEndDate = view.findViewById(R.id.btnEndDate);
+
+        date = calendar.getTime();
+        Log.i(TAG, "onCreateView: " + GetDateTime.getFormattedDate(new Date(String.valueOf(date))));
 
         initListeners();
 
@@ -85,18 +91,29 @@ public class RequestALeaveBottomSheet extends BottomSheetDialogFragment implemen
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 try {
 
-                    Calendar calendar = Calendar.getInstance();
+                    //  Calendar calendar = Calendar.getInstance();
                     calendar.set(Calendar.YEAR, year);
                     calendar.set(Calendar.MONTH, month);
                     calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
                     currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
 
-                    txtEndDate.getEditText().setText(currentDate);
-                    getEndDate = txtEndDate.getEditText().getText().toString();
 
-                    Log.d(TAG, "onDateSet: " + getEndDate);
-                    Log.d(TAG, "txtEndDate: " + txtEndDate.getEditText().getText().toString());
+                    if (date.before(new Date(currentDate))) {
+                        checkSuccessEndDate();
+
+
+                    } else if (date.after(new Date(currentDate))) {
+                        // Log.i(TAG, "onDateSet: " + " today: " + date + " date selected: " + currentDate);
+                        displayErrorOnEndDateSelected();
+                    }
+
+
+                    //  txtEndDate.getEditText().setText(GetDateTime.getFormattedDate(new Date(currentDate)));
+                    //   getEndDate = txtEndDate.getEditText().getText().toString();
+
+                    Log.i(TAG, "onDateSet: " + getEndDate);
+                    Log.i(TAG, "txtEndDate: " + txtEndDate.getEditText().getText().toString());
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -122,11 +139,19 @@ public class RequestALeaveBottomSheet extends BottomSheetDialogFragment implemen
 
                     currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
 
-                    txtStartDate.getEditText().setText(currentDate);
-                    getStartDate = txtStartDate.getEditText().getText().toString();
 
-                    Log.d(TAG, "onDateSet: " + getStartDate);
-                    Log.d(TAG, "txtStartDate: " + txtStartDate.getEditText().getText().toString());
+                    if (date.before(new Date(currentDate))) {
+                        checkSuccessSelectStartDate();
+
+
+                    } else if (date.after(new Date(currentDate))) {
+                        // Log.i(TAG, "onDateSet: " + " today: " + date + " date selected: " + currentDate);
+                        displayErrorOnStartDateSelected();
+                    }
+
+
+                    Log.i(TAG, "onDateSet: " + getStartDate);
+                    Log.i(TAG, "txtStartDate: " + txtStartDate.getEditText().getText().toString());
 
 
                 } catch (Exception e) {
@@ -139,6 +164,37 @@ public class RequestALeaveBottomSheet extends BottomSheetDialogFragment implemen
 
         datePicker.show();
     }
+
+    //checks corresponding date from the user and allows them to proceed
+    void checkSuccessSelectStartDate() {
+        txtStartDate.setError("");
+        txtStartDate.setErrorEnabled(false);
+        txtStartDate.getEditText().setText(GetDateTime.getFormattedDate(new Date(currentDate)));
+        getStartDate = txtStartDate.getEditText().getText().toString();
+    }
+
+    //if date selected is before the current date ... display error
+    void displayErrorOnStartDateSelected() {
+        txtStartDate.setErrorEnabled(true);
+        txtStartDate.setError("Start date is not valid");
+        txtStartDate.getEditText().getText().clear();
+    }
+
+    //Same for end date
+    void checkSuccessEndDate() {
+        txtEndDate.setError("");
+        txtEndDate.setErrorEnabled(false);
+        txtEndDate.getEditText().setText(GetDateTime.getFormattedDate(new Date(currentDate)));
+        getEndDate = txtStartDate.getEditText().getText().toString();
+    }
+
+    //display error when wrong date is selected
+    void displayErrorOnEndDateSelected() {
+        txtEndDate.setErrorEnabled(true);
+        txtEndDate.setError("End date is not valid");
+        txtEndDate.getEditText().getText().clear();
+    }
+
 
     private void validateInputs() {
 
