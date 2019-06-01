@@ -64,10 +64,14 @@ public class EmployeeCheckInFragment extends Fragment implements View.OnClickLis
         sectionPagerAdapter.addFragment(new SaturdayFragment(), "Saturday");
         sectionPagerAdapter.addFragment(new SundayFragment(), "Sunday");
 
-
-        viewPager.setAdapter(sectionPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
-        viewPager.getCurrentItem();
+        viewPager.setAdapter(sectionPagerAdapter);
+
+
+        //viewPager.getCurrentItem();
+
+        // viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        //tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
 
         //viewPager.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
@@ -100,7 +104,6 @@ public class EmployeeCheckInFragment extends Fragment implements View.OnClickLis
             case R.id.to_checkOut:
                 // startActivity(new Intent(getContext(), Main2Activity.class));
                 break;
-
 
 
         }

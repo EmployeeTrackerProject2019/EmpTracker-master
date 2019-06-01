@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.employee.employeetracker.R;
 import com.employee.employeetracker.models.Users;
+import com.employee.employeetracker.utils.GetDateTime;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -45,11 +46,9 @@ import com.theartofdev.edmodo.cropper.CropImageView.Guidelines;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -238,7 +237,7 @@ public class PhotoFragment extends Fragment implements View.OnClickListener {
                                 Calendar calendar = Calendar.getInstance();
                                 Date today = calendar.getTime();
 //                SimpleDateFormat sfd = new SimpleDateFormat("EEEE dd/MMMM/yyyy", Locale.US);
-                                datePosted = getFormattedDate(today);
+                                datePosted = GetDateTime.getFormattedDate(today);
                                 //datePosted = sfd.format(new Date(today.toString()));
 
 
@@ -314,24 +313,25 @@ public class PhotoFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    private String getFormattedDate(Date date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        int day = cal.get(Calendar.DATE);
+    /*
+        private String getFormattedDate(Date date) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            int day = cal.get(Calendar.DATE);
 
-        switch (day % 10) {
-            case 1:
-                return new SimpleDateFormat("EEEE MMMM d'st', yyyy", Locale.US).format(date);
-            case 2:
-                return new SimpleDateFormat("EEEE MMMM d'nd', yyyy", Locale.US).format(date);
-            case 3:
-                return new SimpleDateFormat("EEEE MMMM d'rd', yyyy", Locale.US).format(date);
-            default:
-                return new SimpleDateFormat("EEEE MMMM d'th', yyyy", Locale.US).format(date);
+            switch (day % 10) {
+                case 1:
+                    return new SimpleDateFormat("EEEE MMMM d'st', yyyy", Locale.US).format(date);
+                case 2:
+                    return new SimpleDateFormat("EEEE MMMM d'nd', yyyy", Locale.US).format(date);
+                case 3:
+                    return new SimpleDateFormat("EEEE MMMM d'rd', yyyy", Locale.US).format(date);
+                default:
+                    return new SimpleDateFormat("EEEE MMMM d'th', yyyy", Locale.US).format(date);
+            }
+
         }
-
-    }
-
+    */
     private void openGallery() {
         CropImage.activity()
                 .setGuidelines(Guidelines.ON)

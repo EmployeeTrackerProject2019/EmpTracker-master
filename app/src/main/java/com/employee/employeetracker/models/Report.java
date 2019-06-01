@@ -8,6 +8,7 @@ public class Report {
     private Long timeStamp;
     private String title;
     private String description;
+    private String comments;
 
     public Report() {
     }
@@ -58,5 +59,13 @@ public class Report {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 }

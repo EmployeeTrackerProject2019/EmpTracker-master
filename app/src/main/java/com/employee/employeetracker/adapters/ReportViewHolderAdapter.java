@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.employee.employeetracker.R;
+import com.employee.employeetracker.activities.CommentsActivity;
 import com.employee.employeetracker.activities.EditReportActivity;
 import com.employee.employeetracker.adapters.ReportViewHolderAdapter.ShowReportViewHolder;
 import com.employee.employeetracker.models.Report;
@@ -23,7 +24,7 @@ import java.util.Date;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ReportViewHolderAdapter extends FirebaseRecyclerAdapter<Report, ShowReportViewHolder> {
-
+    private Intent intent;
 
     /**
      * Initialize a {@link android.support.v7.widget.RecyclerView.Adapter} that listens to a Firebase query. See
@@ -43,20 +44,35 @@ public class ReportViewHolderAdapter extends FirebaseRecyclerAdapter<Report, Sho
         holder.showUserPhoto(model.getImage());
         holder.showUserName(model.getFullName());
 
-final String getAdapterPosition = getRef(position).getKey();
+        final String getAdapterPosition = getRef(position).getKey();
 
+
+//passes the data to edit report activity using the holder of the image
         holder.imgEditReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent openEditReportActivity = new Intent(v.getContext(), EditReportActivity.class);
-                openEditReportActivity.putExtra("position",getAdapterPosition);
-                openEditReportActivity.putExtra("title",model.getTitle());
-                openEditReportActivity.putExtra("image",model.getImage());
-                openEditReportActivity.putExtra("description", model.getDescription());
+                intent = new Intent(v.getContext(), EditReportActivity.class);
+                intent.putExtra("position", getAdapterPosition);
+                intent.putExtra("title", model.getTitle());
+                intent.putExtra("image", model.getImage());
+                intent.putExtra("description", model.getDescription());
 
-                v.getContext().startActivity(openEditReportActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                v.getContext().startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 
+            }
+        });
+
+        //passes the data to comment activity using the holder of the text view
+        holder.txtComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(v.getContext(), CommentsActivity.class);
+                intent.putExtra("position", getAdapterPosition);
+                intent.putExtra("image", model.getImage());
+                intent.putExtra("name", model.getFullName());
+                intent.putExtra("description", model.getDescription());
+                v.getContext().startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             }
         });
 
@@ -74,12 +90,14 @@ final String getAdapterPosition = getRef(position).getKey();
     public class ShowReportViewHolder extends RecyclerView.ViewHolder {
         View view;
         ImageButton imgEditReport;
+        TextView txtComment;
 
 
         ShowReportViewHolder(@NonNull View itemView) {
             super(itemView);
             view = itemView;
             imgEditReport = view.findViewById(R.id.imgEditReport);
+            txtComment = view.findViewById(R.id.txtComment);
         }
 
 
@@ -93,7 +111,7 @@ final String getAdapterPosition = getRef(position).getKey();
         void showDateReported(Long date) {
 
             TextView txtReportDate = view.findViewById(R.id.txtShowReportDate);
-           // SimpleDateFormat sfd = new SimpleDateFormat("EEEE dd-MM-yyyy '@' hh:mm aa", Locale.US);
+            // SimpleDateFormat sfd = new SimpleDateFormat("EEEE dd-MM-yyyy '@' hh:mm aa", Locale.US);
 
             try {
                 txtReportDate.setText(String.format("Sent a report on : %s",

@@ -35,6 +35,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     public void addFragment(Fragment fragment, String title) {
         fragments.add(fragment);
+        //  fragments.retainAll(Collections.singleton(true));
         titles.add(title);
     }
+
+
 }

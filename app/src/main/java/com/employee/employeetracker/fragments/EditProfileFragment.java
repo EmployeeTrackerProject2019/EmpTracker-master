@@ -1,7 +1,6 @@
 package com.employee.employeetracker.fragments;
 
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,7 +9,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -30,7 +28,6 @@ import com.bumptech.glide.Glide;
 import com.employee.employeetracker.R;
 import com.employee.employeetracker.activities.WelcomeActivity;
 import com.employee.employeetracker.bottomsheets.PhoneNumberBottomSheet;
-import com.employee.employeetracker.constants.Constants;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -45,6 +42,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask.TaskSnapshot;
 import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -121,7 +119,6 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         assert mFirebaseUser != null;
         uid = mFirebaseUser.getUid();
         getEmail = mFirebaseUser.getEmail();
-
 
 
         txtfullName = view.findViewById(R.id.txtDisplayUserName);
@@ -343,14 +340,19 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
 
 
     private void openGallery() {
-        Intent pickPhotoIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(pickPhotoIntent, Constants.GALLERY_REQUEST_CODE);
+        CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .start(getActivity(), this);
+
+
+        // Intent pickPhotoIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        // getActivity().startActivityForResult(pickPhotoIntent, Constants.GALLERY_REQUEST_CODE);
     }
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+/*
         getActivity();
         if (requestCode == Constants.GALLERY_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
             Uri uri = data.getData();
@@ -374,10 +376,28 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
 
             }
         }
-
+*/
         super.onActivityResult(requestCode, resultCode, data);
 
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
+            if (resultCode == getActivity().RESULT_OK) {
+                assert result != null;
+                resultUri = result.getUri();
+                //  userImage.setImageURI(uri);
+
+                Glide.with(view).load(resultUri).into(userImage);
+                uploadFile();
+                //insertDetailsIntoDatabase();
+
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                progressDialog.dismiss();
+                assert result != null;
+                String error = result.getError().getMessage();
+                Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void uploadFile() {

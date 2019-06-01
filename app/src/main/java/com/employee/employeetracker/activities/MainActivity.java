@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements MakeReportListene
                         .setCustomAnimations(R.anim.enter_from_right,
                                 R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
                         .replace(R.id.fragmentContainer, fragment)
-                        .addToBackStack(null)
+                        //.addToBackStack(null)
                         .commit();
                 return true;
 
@@ -541,6 +541,11 @@ public class MainActivity extends AppCompatActivity implements MakeReportListene
         //Unregister receiver on destroy
 //        if (gpsLocationReceiver != null)
 //          unregisterReceiver(gpsLocationReceiver);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
 
