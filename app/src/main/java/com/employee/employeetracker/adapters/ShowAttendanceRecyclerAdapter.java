@@ -61,8 +61,11 @@ public class ShowAttendanceRecyclerAdapter extends FirebaseRecyclerAdapter<Emplo
     @NonNull
     @Override
     public ShowAttendanceAdapter onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+//        return new ShowAttendanceAdapter(LayoutInflater.from(viewGroup.getContext())
+//                .inflate(R.layout.layout_view_employee_check_in, viewGroup, false));
+
         return new ShowAttendanceAdapter(LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.layout_view_employee_check_in, viewGroup, false));
+                .inflate(R.layout.layout_test_combine, viewGroup, false));
     }
 
     @Override
@@ -120,6 +123,9 @@ public class ShowAttendanceRecyclerAdapter extends FirebaseRecyclerAdapter<Emplo
             //  SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy '@' hh:mm aa", Locale.US);
 
             try {
+                if (date == 0) {
+                    txtViewCheckOut.setText(" ");
+                }
                 txtViewCheckOut.setText(String.format("Checked out on : %s",
                         GetDateTime.getFormattedDate(new Date(date))));
             } catch (Exception e) {

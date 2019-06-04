@@ -100,10 +100,10 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
         mMap = googleMap;
 
         //create a geo fence
-        LatLng myBoundary = new LatLng(-5.3552, 32.22);
+        LatLng myBoundary = new LatLng(5.6372616, -0.3197919);
         mMap.addCircle(new CircleOptions()
                 .center(myBoundary)
-                .radius(1000)
+                .radius(10)
                 .strokeColor(Color.BLUE)
                 .fillColor(0x220000FF)
                 .strokeWidth(5.0f)

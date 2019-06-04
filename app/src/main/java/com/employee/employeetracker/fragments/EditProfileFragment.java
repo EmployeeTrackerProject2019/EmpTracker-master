@@ -26,7 +26,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.employee.employeetracker.R;
-import com.employee.employeetracker.activities.WelcomeActivity;
+import com.employee.employeetracker.activities.WelcomeScreenActivity;
 import com.employee.employeetracker.bottomsheets.PhoneNumberBottomSheet;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -254,7 +254,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
                                         mAuth.signOut();
 
                                         Intent intent = new Intent(getActivity(),
-                                                WelcomeActivity.class);
+                                                WelcomeScreenActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         EditProfileFragment.this.startActivity(intent);
                                         getActivity().finish();

@@ -3,7 +3,6 @@ package com.employee.employeetracker.activities;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -27,8 +26,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.employee.employeetracker.R;
-import com.employee.employeetracker.constants.Constants;
-import com.google.android.gms.tasks.Continuation;
+import com.employee.employeetracker.utils.GetDateTime;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,9 +40,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
-import com.google.firebase.storage.UploadTask.TaskSnapshot;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -88,9 +86,9 @@ public class CheckInActivity extends AppCompatActivity implements View.OnClickLi
         final boolean firstStart = prefs.getBoolean("firstStart", true);
 
 //                        showWarning
-        if (firstStart) {
-            showWarningDialog();
-        }
+//        if (firstStart) {
+//            showWarningDialog();
+//        }
 
 
     }
@@ -110,7 +108,11 @@ public class CheckInActivity extends AppCompatActivity implements View.OnClickLi
         mcheckInStorageReference = FirebaseStorage.getInstance().getReference("AttendancePhotos");
 
 //creates a node for check in
-        mAttendance = FirebaseDatabase.getInstance().getReference("CheckIn");
+        // mAttendance = FirebaseDatabase.getInstance().getReference("CheckIn");
+
+        //attendance
+        mAttendance = FirebaseDatabase.getInstance().getReference("Attendance");
+
 
         //create the history database
 
@@ -243,23 +245,7 @@ public class CheckInActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    private String getFormattedDate(Date date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        int day = cal.get(Calendar.DATE);
 
-        switch (day % 10) {
-            case 1:
-                return new SimpleDateFormat("EEEE MMMM d'st', yyyy", Locale.US).format(date);
-            case 2:
-                return new SimpleDateFormat("EEEE MMMM d'nd', yyyy", Locale.US).format(date);
-            case 3:
-                return new SimpleDateFormat("EEEE MMMM d'rd', yyyy", Locale.US).format(date);
-            default:
-                return new SimpleDateFormat("EEEE MMMM d'th', yyyy", Locale.US).format(date);
-        }
-
-    }
 
     @Override
     public void onClick(View view) {
@@ -277,7 +263,7 @@ public class CheckInActivity extends AppCompatActivity implements View.OnClickLi
         }
 
     }
-
+/*
     private void openCamera() {
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         if (cameraIntent.resolveActivity(getPackageManager()) != null) {
@@ -286,8 +272,15 @@ public class CheckInActivity extends AppCompatActivity implements View.OnClickLi
         }
 
     }
+*/
 
-
+    private void openCamera() {
+        CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setAspectRatio(1, 1)
+                .start(CheckInActivity.this);
+    }
+/*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -307,34 +300,124 @@ public class CheckInActivity extends AppCompatActivity implements View.OnClickLi
         }
 
     }
+*/
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+
+            if (resultCode == RESULT_OK) {
+                assert result != null;
+                uri = result.getUri();
+                //  userImage.setImageURI(uri);
+
+                Glide.with(getApplicationContext()).load(uri).into(checkInUserPhoto);
+                //checkOutUser();
+
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                loading.dismiss();
+                assert result != null;
+                String error = result.getError().getMessage();
+                Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
+            }
+        }
+
+    }
 
     private void checkInUser() {
-        if (photo != null) {
 
-            try {
-                Calendar calendar = Calendar.getInstance();
-                Date today = calendar.getTime();
+
+        Calendar calendar = Calendar.getInstance();
+        Date today = calendar.getTime();
 //                SimpleDateFormat sfd = new SimpleDateFormat("EEEE dd/MMMM/yyyy", Locale.US);
-                datePosted = getFormattedDate(today);
-                dayOfTheWeek = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(System.currentTimeMillis());
+        datePosted = GetDateTime.getFormattedDate(today);
+        dayOfTheWeek = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(System.currentTimeMillis());
 
 
-                loading.setMessage("please wait...It may take a moment");
-                loading.setCancelable(false);
-                loading.show();
+        loading.setMessage("please wait...It may take a moment");
+        loading.setCancelable(false);
+        loading.show();
 
-                final String getTypeOfShiftSelected = spinnerWorkShift.getSelectedItem().toString();
-                final String getTypeOfDutyPostSelected = spinnerDutyPost.getSelectedItem().toString();
-
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-
-                byte[] b = stream.toByteArray();
-                //file path of the original image
-                final StorageReference fileReference =
-                        mcheckInStorageReference.child(String.valueOf(System.currentTimeMillis()));
+        final String getTypeOfShiftSelected = spinnerWorkShift.getSelectedItem().toString();
+        final String getTypeOfDutyPostSelected = spinnerDutyPost.getSelectedItem().toString();
 
 
+        Map<String, Object> checkInDetails = new HashMap<>();
+        checkInDetails.put("userId", uid);
+        checkInDetails.put("userName", username);
+        checkInDetails.put("date", datePosted);
+        checkInDetails.put("dayOfWeek", dayOfTheWeek);
+        //checkInDetails.put("checkInPhoto", getImageUri);
+        checkInDetails.put("checkInTimeStamp", ServerValue.TIMESTAMP);
+        checkInDetails.put("checkOutTimeStamp", 0);
+
+        checkInDetails.put("dutyPost", getTypeOfDutyPostSelected);
+        checkInDetails.put("typeOfShift", getTypeOfShiftSelected);
+
+        String uploadAttendance = mAttendance.push().getKey();
+        assert uploadAttendance != null;
+
+//Add to user profile and update profile
+        final Map<String, Object> addDetailsToProfile = new HashMap<>();
+        addDetailsToProfile.put("dutyPost", getTypeOfDutyPostSelected);
+        addDetailsToProfile.put("typeOfShift", getTypeOfShiftSelected);
+        addDetailsToProfile.put("timeStamp", ServerValue.TIMESTAMP);
+//keep history
+        String historyBuilder;
+        historyBuilder =
+                username + " " + "checked in on" + " " + datePosted;
+
+        //add to history database
+        final Map<String, Object> history = new HashMap<>();
+        history.put("history", historyBuilder);
+        final String historyID = historyDbRef.push().getKey();
+
+//Post details to check in database
+        final String attendanceKey = mAttendance.push().getKey();
+        //  mAttendance.child(dayOfTheWeek).child(uid).setValue(checkInDetails)
+        mAttendance.child(attendanceKey).setValue(checkInDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+
+//set values to database and update the employee account with the details
+
+                    mUserDbRef.updateChildren(addDetailsToProfile);
+
+
+                    //insert data into history database
+                    assert historyID != null;
+                    historyDbRef.child(historyID).setValue(history);
+                    Log.d(TAG, "onComplete: " + historyDbRef);
+
+                    loading.dismiss();
+                    Toast toast = Toast.makeText(CheckInActivity.this, "Successfully posted", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                    startActivity(new Intent(CheckInActivity.this,
+                            MainActivity.class));
+                    finish();
+                } else if (!task.isSuccessful()) {
+                    loading.dismiss();
+                    Toast toast = Toast.makeText(CheckInActivity.this,
+                            task.getException().getMessage(), Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                }
+            }
+        });
+
+        //   ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//        photo.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+
+        //     byte[] b = stream.toByteArray();
+        //file path of the original image
+        //    final StorageReference fileReference =
+        // mcheckInStorageReference.child(String.valueOf(System.currentTimeMillis()));
+
+/*
                 fileReference.putBytes(b).continueWithTask(new Continuation<TaskSnapshot,
                         Task<Uri>>() {
                     @Override
@@ -358,67 +441,6 @@ public class CheckInActivity extends AppCompatActivity implements View.OnClickLi
                             assert downLoadUri != null;
                             getImageUri = downLoadUri.toString();
 
-                            Map<String, Object> checkInDetails = new HashMap<>();
-                            checkInDetails.put("userId", uid);
-                            checkInDetails.put("userName", username);
-                            checkInDetails.put("date", datePosted);
-                            checkInDetails.put("dayOfWeek", dayOfTheWeek);
-                            checkInDetails.put("checkInPhoto", getImageUri);
-                            checkInDetails.put("checkInTimeStamp", ServerValue.TIMESTAMP);
-
-                            checkInDetails.put("dutyPost", getTypeOfDutyPostSelected);
-                            checkInDetails.put("typeOfShift", getTypeOfShiftSelected);
-
-                            String uploadAttendance = mAttendance.push().getKey();
-                            assert uploadAttendance != null;
-
-//Add to user profile and update profile
-                            final Map<String, Object> addDetailsToProfile = new HashMap<>();
-                            addDetailsToProfile.put("dutyPost", getTypeOfDutyPostSelected);
-                            addDetailsToProfile.put("typeOfShift", getTypeOfShiftSelected);
-                            addDetailsToProfile.put("timeStamp", ServerValue.TIMESTAMP);
-//keep history
-                            String historyBuilder;
-                            historyBuilder =
-                                    username + " " + "checked in on" + " " + datePosted;
-
-                            //add to history database
-                            final Map<String, Object> history = new HashMap<>();
-                            history.put("history", historyBuilder);
-                            final String historyID = historyDbRef.push().getKey();
-
-//Post details to check in database
-                            mAttendance.child(dayOfTheWeek).child(uid).setValue(checkInDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-
-//set values to database and update the employee account with the details
-
-                                        mUserDbRef.updateChildren(addDetailsToProfile);
-
-
-                                        //insert data into history database
-                                        assert historyID != null;
-                                        historyDbRef.child(historyID).setValue(history);
-                                        Log.d(TAG, "onComplete: " + historyDbRef);
-
-                                        loading.dismiss();
-                                        Toast toast = Toast.makeText(CheckInActivity.this, "Successfully posted", Toast.LENGTH_LONG);
-                                        toast.setGravity(Gravity.CENTER, 0, 0);
-                                        toast.show();
-                                        startActivity(new Intent(CheckInActivity.this,
-                                                MainActivity.class));
-                                        finish();
-                                    } else if (!task.isSuccessful()) {
-                                        loading.dismiss();
-                                        Toast toast = Toast.makeText(CheckInActivity.this,
-                                                task.getException().getMessage(), Toast.LENGTH_LONG);
-                                        toast.setGravity(Gravity.CENTER, 0, 0);
-                                        toast.show();
-                                    }
-                                }
-                            });
 
 
                             Log.d(TAG, "onComplete: " + getImageUri);
@@ -430,7 +452,10 @@ public class CheckInActivity extends AppCompatActivity implements View.OnClickLi
                 e.printStackTrace();
             }
 
-        } else {
+*/
+
+     /*
+        else {
             new AlertDialog.Builder(this)
                     .setTitle("Warning")
                     .setMessage("Must add a photo and select your duty along with your shift.")
@@ -441,29 +466,10 @@ public class CheckInActivity extends AppCompatActivity implements View.OnClickLi
                         }
                     }).create().show();
         }
-
+        */
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart: ");
-        try {
-            if (wifiManager.isWifiEnabled()) {
-                Log.d(TAG, "Wifi already on: ");
-                // checkWifiSSID();
-            } else if (!wifiManager.isWifiEnabled()) {
-                Log.d(TAG, "Wifi off but  enabled: ");
-                wifiManager.setWifiEnabled(true);
 
-            } else {
-                //checkWifiSSID();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
 }

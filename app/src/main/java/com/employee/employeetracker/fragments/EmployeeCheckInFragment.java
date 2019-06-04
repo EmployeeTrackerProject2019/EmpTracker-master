@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.employee.employeetracker.MapsActivity2;
 import com.employee.employeetracker.R;
+import com.employee.employeetracker.activities.CheckInActivity;
 import com.employee.employeetracker.adapters.SectionsPagerAdapter;
 
 import jahirfiquitiva.libs.fabsmenu.TitleFAB;
@@ -25,7 +26,7 @@ public class EmployeeCheckInFragment extends Fragment implements View.OnClickLis
     private View view;
     TabLayout tabLayout;
     ViewPager viewPager;
-    private TitleFAB gotoCheckIn, gotoCheckOut;
+    private TitleFAB gotoCheckIn, gotoCheckOut, tstChkIn;
 
     public EmployeeCheckInFragment() {
         // Required empty public constructor
@@ -78,6 +79,7 @@ public class EmployeeCheckInFragment extends Fragment implements View.OnClickLis
 
         gotoCheckIn = view.findViewById(R.id.to_checkIn);
         gotoCheckOut = view.findViewById(R.id.to_checkOut);
+        tstChkIn = view.findViewById(R.id.to_TESTcHK);
 
 
     }
@@ -85,6 +87,7 @@ public class EmployeeCheckInFragment extends Fragment implements View.OnClickLis
     private void initListener() {
         gotoCheckIn.setOnClickListener(this);
         gotoCheckOut.setOnClickListener(this);
+        tstChkIn.setOnClickListener(this);
 
     }
 
@@ -103,6 +106,10 @@ public class EmployeeCheckInFragment extends Fragment implements View.OnClickLis
 
             case R.id.to_checkOut:
                 // startActivity(new Intent(getContext(), Main2Activity.class));
+                break;
+
+            case R.id.to_TESTcHK:
+                startActivity(new Intent(getContext(), CheckInActivity.class));
                 break;
 
 
