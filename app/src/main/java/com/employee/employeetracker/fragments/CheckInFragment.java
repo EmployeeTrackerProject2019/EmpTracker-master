@@ -253,7 +253,7 @@ public class CheckInFragment extends Fragment implements RecyclerItemTouchHelper
             @Override
             protected void onBindViewHolder(@NonNull ShowAttendanceViewHolder holder, int position, @NonNull Employee model) {
 
-                holder.showCheckInDate(model.getCheckInTimeStamp());
+                // holder.showCheckInDate(model.getCheckInTimeStamp());
                 // holder.showCheckInPhoto(model.getCheckInPhoto());
                 //  holder.showDutyPost(model.getDutyPost());
                 // holder.showUserName(model.getUserName());

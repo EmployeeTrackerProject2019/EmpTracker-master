@@ -12,11 +12,8 @@ import android.widget.TextView;
 import com.employee.employeetracker.MapsActivity;
 import com.employee.employeetracker.R;
 import com.employee.employeetracker.models.Employee;
-import com.employee.employeetracker.utils.GetDateTime;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-
-import java.util.Date;
 
 
 public class ShowAttendanceRecyclerAdapter extends FirebaseRecyclerAdapter<Employee, ShowAttendanceRecyclerAdapter.ShowAttendanceAdapter> {
@@ -102,8 +99,9 @@ public class ShowAttendanceRecyclerAdapter extends FirebaseRecyclerAdapter<Emplo
         public void showDate(String date) {
             //  TextView nameOfAttendee = view.findViewById(R.id.txtCheckOutNameOfEmployee);
             // nameOfAttendee.setText(name);
+
             try {
-                txtViewCheckIn.setText(GetDateTime.getFormattedDate(new Date(date)));
+                txtViewCheckIn.setText(date);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -131,7 +129,7 @@ public class ShowAttendanceRecyclerAdapter extends FirebaseRecyclerAdapter<Emplo
                 if (date.isEmpty()) {
                     txtViewCheckOut.setText(" ");
                 } else
-                    txtViewCheckOut.setText(GetDateTime.getFormattedDate(new Date(date)));
+                    txtViewCheckOut.setText(date);
             } catch (Exception e) {
                 e.printStackTrace();
             }

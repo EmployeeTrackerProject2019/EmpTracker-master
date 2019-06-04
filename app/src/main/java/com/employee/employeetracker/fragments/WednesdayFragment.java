@@ -66,7 +66,7 @@ public class WednesdayFragment extends Fragment {
         assert mFirebaseUser != null;
         uid = mFirebaseUser.getUid();
         checkedInDb =
-                FirebaseDatabase.getInstance().getReference().child("Attendance");
+                FirebaseDatabase.getInstance().getReference().child("Attendance").child("Wednesday");
         checkedInDb.keepSynced(true);
         setUpRecycler();
     }
@@ -96,7 +96,7 @@ public class WednesdayFragment extends Fragment {
         String dayOfTheWeek = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(System.currentTimeMillis());
 
         //querying the database base of the time posted
-        Query query = checkedInDb.orderByChild("dayOfWeek").equalTo("Wednesday");
+        Query query = checkedInDb.orderByChild("userId").equalTo(uid);
 
         FirebaseRecyclerOptions<Employee> options =
                 new FirebaseRecyclerOptions.Builder<Employee>().setQuery(query,

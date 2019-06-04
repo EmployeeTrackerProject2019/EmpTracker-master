@@ -67,7 +67,7 @@ public class SundayFragment extends Fragment {
         assert mFirebaseUser != null;
         uid = mFirebaseUser.getUid();
         checkedInDb =
-                FirebaseDatabase.getInstance().getReference().child("CheckIn/Sunday");
+                FirebaseDatabase.getInstance().getReference().child("Attendance").child("Sunday");
         checkedInDb.keepSynced(true);
 
 

@@ -143,7 +143,7 @@ public class CheckOutFragment extends Fragment implements RecyclerItemTouchHelpe
             @Override
             protected void onBindViewHolder(@NonNull ShowAttendanceViewHolder holder, int position, @NonNull Employee model) {
 
-                holder.showCheckOutDate(model.getCheckOutTimeStamp());
+                // holder.showCheckOutDate(model.getCheckOutTimeStamp());
 
                 //get the post position using the positions in each view holder
                 final String getPostPosition = getRef(position).getKey();

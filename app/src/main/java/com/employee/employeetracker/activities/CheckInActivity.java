@@ -378,7 +378,7 @@ public class CheckInActivity extends AppCompatActivity implements View.OnClickLi
         final String attendanceKey = mAttendance.push().getKey();
         //  mAttendance.child(dayOfTheWeek).child(uid).setValue(checkInDetails)
         assert attendanceKey != null;
-        mAttendance.child(attendanceKey).setValue(checkInDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+        mAttendance.child(dayOfTheWeek).child(attendanceKey).setValue(checkInDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {

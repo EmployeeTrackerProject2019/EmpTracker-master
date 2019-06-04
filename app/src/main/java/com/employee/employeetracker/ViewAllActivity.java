@@ -83,7 +83,7 @@ public class ViewAllActivity extends AppCompatActivity {
             protected void onBindViewHolder(@NonNull ViewAllActivity.ShowAttendanceViewHolder holder, int position, @NonNull Employee model) {
                 holder.showUserName(model.getUserName());
                 holder.showCheckInPhoto(model.getCheckInPhoto());
-                holder.showCheckInDate(model.getCheckInTimeStamp());
+                //holder.showCheckInDate(model.getCheckInTimeStamp());
                 holder.showDutyPost(model.getDutyPost());
                 holder.showWorkShift(model.getTypeOfShift());
                 holder.showLocation(model.getLocation());

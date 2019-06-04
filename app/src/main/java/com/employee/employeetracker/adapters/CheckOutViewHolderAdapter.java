@@ -45,7 +45,7 @@ public class CheckOutViewHolderAdapter extends FirebaseRecyclerAdapter<Employee,
     @Override
     protected void onBindViewHolder(@NonNull ShowCheckOutAttendanceViewHolder holder, int position, @NonNull Employee model) {
 
-        holder.showCheckOutDate(model.getCheckOutTimeStamp());
+        // holder.showCheckOutDate(model.getCheckOutTimeStamp());
 //        holder.showCheckOutPhoto(model.getCheckOutPhoto());
 //        holder.showDutyPost(model.getDutyPost());
 //        holder.showUserName(model.getUserName());
