@@ -100,10 +100,10 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
         mMap = googleMap;
 
         //create a geo fence
-        LatLng myBoundary = new LatLng(5.6372616, -0.3197919);
+        LatLng myBoundary = new LatLng(5.636343, -0.318750);//post office
         mMap.addCircle(new CircleOptions()
                 .center(myBoundary)
-                .radius(10)
+                .radius(500)
                 .strokeColor(Color.BLUE)
                 .fillColor(0x220000FF)
                 .strokeWidth(5.0f)
@@ -114,17 +114,17 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
             @Override
             public void onKeyEntered(String key, GeoLocation location) {
-                sendNotis("MyLocation", String.format("%s You entered and can do what ever", key));
+                sendNotis(String.format("%s You entered and can do what ever", key));
             }
 
             @Override
             public void onKeyExited(String key) {
-                sendNotis("MyLocation", String.format("%s You have left and can not do what ever", key));
+                sendNotis(String.format("%s You have left and can not do what ever", key));
             }
 
             @Override
             public void onKeyMoved(String key, GeoLocation location) {
-                sendNotis("MyLocation", String.format("%s You are within", key));
+                sendNotis(String.format("%s You are within", key));
             }
 
             @Override
@@ -141,14 +141,14 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
 
     }
 
-    private void sendNotis(String title, String content) {
+    private void sendNotis(String content) {
         Notification.Builder builder = new Notification.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(title)
+                .setContentTitle("MyLocation")
                 .setContentText(content);
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Intent intent = new Intent(this, MapsActivity2.class);
-        PendingIntent contentPendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent contentPendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(contentPendingIntent);
         Notification notification = builder.build();
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
