@@ -35,12 +35,12 @@ public class RequestALeaveBottomSheet extends BottomSheetDialogFragment implemen
     private int day = calendar.get(Calendar.DAY_OF_MONTH);
     private String getStartDate;
     private String getEndDate;
-    private String currentDate;
+    private String startDateSelected, endDateSelected;
     private TextInputLayout txtLeaveMsg, txtStartDate, txtEndDate;
     private ProgressBar loading;
     private Button btnSubmit, btnStartDate, btnEndDate;
     private View view;
-    private Date date;
+    private Date date, convertStartDate, convertEndDate;
 
     @Nullable
     @Override
@@ -56,6 +56,9 @@ public class RequestALeaveBottomSheet extends BottomSheetDialogFragment implemen
         btnEndDate = view.findViewById(R.id.btnEndDate);
 
         date = calendar.getTime();
+        convertEndDate = new Date();
+        convertStartDate = new Date();
+
         Log.i(TAG, "onCreateView: " + GetDateTime.getFormattedDate(new Date(String.valueOf(date))));
 
         initListeners();
@@ -63,13 +66,14 @@ public class RequestALeaveBottomSheet extends BottomSheetDialogFragment implemen
         return view;
     }
 
-
+    //initialize views
     private void initListeners() {
         btnStartDate.setOnClickListener(this);
         btnEndDate.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
     }
 
+    //trigger click events
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -85,6 +89,7 @@ public class RequestALeaveBottomSheet extends BottomSheetDialogFragment implemen
         }
     }
 
+    //Method to check the end date selected by the user and display the valid date into the view
     private void callEndDate() {
         datePicker = new DatePickerDialog(getContext(), new OnDateSetListener() {
             @Override
@@ -96,14 +101,14 @@ public class RequestALeaveBottomSheet extends BottomSheetDialogFragment implemen
                     calendar.set(Calendar.MONTH, month);
                     calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                    currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+                    endDateSelected = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
 
 
-                    if (date.before(new Date(currentDate))) {
+                    if (date.before(new Date(endDateSelected))) {
                         checkSuccessEndDate();
 
 
-                    } else if (date.after(new Date(currentDate))) {
+                    } else if (date.after(new Date(endDateSelected))) {
                         // Log.i(TAG, "onDateSet: " + " today: " + date + " date selected: " + currentDate);
                         displayErrorOnEndDateSelected();
                     }
@@ -127,6 +132,7 @@ public class RequestALeaveBottomSheet extends BottomSheetDialogFragment implemen
         datePicker.show();
     }
 
+    //Method to check the start date selected by the user and display the valid date into the view
     private void callStartDate() {
         datePicker = new DatePickerDialog(getContext(), new OnDateSetListener() {
             @Override
@@ -137,14 +143,14 @@ public class RequestALeaveBottomSheet extends BottomSheetDialogFragment implemen
                     calendar.set(Calendar.MONTH, month);
                     calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                    currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+                    startDateSelected = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
 
 
-                    if (date.before(new Date(currentDate))) {
+                    if (date.before(new Date(startDateSelected))) {
                         checkSuccessSelectStartDate();
 
 
-                    } else if (date.after(new Date(currentDate))) {
+                    } else if (date.after(new Date(startDateSelected))) {
                         // Log.i(TAG, "onDateSet: " + " today: " + date + " date selected: " + currentDate);
                         displayErrorOnStartDateSelected();
                     }
@@ -169,8 +175,9 @@ public class RequestALeaveBottomSheet extends BottomSheetDialogFragment implemen
     void checkSuccessSelectStartDate() {
         txtStartDate.setError("");
         txtStartDate.setErrorEnabled(false);
-        txtStartDate.getEditText().setText(GetDateTime.getFormattedDate(new Date(currentDate)));
+        txtStartDate.getEditText().setText(GetDateTime.getFormattedDate(new Date(startDateSelected)));
         getStartDate = txtStartDate.getEditText().getText().toString();
+        Log.i(TAG, "checkSuccessSelectStartDate: " + getStartDate);
     }
 
     //if date selected is before the current date ... display error
@@ -184,8 +191,9 @@ public class RequestALeaveBottomSheet extends BottomSheetDialogFragment implemen
     void checkSuccessEndDate() {
         txtEndDate.setError("");
         txtEndDate.setErrorEnabled(false);
-        txtEndDate.getEditText().setText(GetDateTime.getFormattedDate(new Date(currentDate)));
+        txtEndDate.getEditText().setText(GetDateTime.getFormattedDate(new Date(endDateSelected)));
         getEndDate = txtStartDate.getEditText().getText().toString();
+        Log.i(TAG, "checkSuccessEndDate: " + getEndDate);
     }
 
     //display error when wrong date is selected
@@ -195,64 +203,92 @@ public class RequestALeaveBottomSheet extends BottomSheetDialogFragment implemen
         txtEndDate.getEditText().getText().clear();
     }
 
-
+    //validates the input before updating the database
     private void validateInputs() {
-
-        try {
-            String getLeaveMsg = txtLeaveMsg.getEditText().getText().toString();
-
-            //        check and validate inputs
-            if (!TextUtils.isEmpty(getLeaveMsg) && (!TextUtils.isEmpty(txtStartDate.getEditText().getText().toString())) && (!TextUtils.isEmpty(txtEndDate.getEditText().getText().toString())) && getLeaveMsg.length() > 10) {
-                txtLeaveMsg.setErrorEnabled(false);
-                requestLeaveListener.onButtonClicked(getLeaveMsg, getStartDate, getEndDate);
-                loading.setVisibility(View.VISIBLE);
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        loading.setVisibility(View.INVISIBLE);
-                        dismiss();
-
-
-                    }
-                }, 2000);
-            } else if (TextUtils.isEmpty(getLeaveMsg)) {
-
-                loading.setVisibility(View.GONE);
-                txtLeaveMsg.setError("Required");
-                txtLeaveMsg.setErrorEnabled(true);
-
-            } else if (TextUtils.isEmpty(getStartDate)) {
-
-                loading.setVisibility(View.GONE);
-                txtStartDate.setError("You must select a start date");
-                txtStartDate.setErrorEnabled(true);
-
-            } else if (TextUtils.isEmpty(getEndDate)) {
-
-                loading.setVisibility(View.GONE);
-                txtEndDate.setError("You must select an end date");
-                txtEndDate.setErrorEnabled(true);
-
-            } else if (getLeaveMsg.length() <= 5) {
-
-                loading.setVisibility(View.GONE);
-                txtLeaveMsg.setError("Message too short");
-                txtLeaveMsg.setErrorEnabled(true);
-
-            } else if (getLeaveMsg.matches("[-+]?\\d+(\\.\\d+)?")) {
-
-                loading.setVisibility(View.GONE);
-                txtLeaveMsg.setError("Invalid inputs");
-                txtLeaveMsg.setErrorEnabled(true);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+//Todo compare the start and end date
+/*
+        if (convertEndDate.before(convertStartDate)) {
+            Log.i(TAG, "validateInputs: " + convertStartDate + "    ...   "  + convertEndDate);
+            txtEndDate.setError("Sorry You can not request a leave for selected days!");
+            txtEndDate.getEditText().getText().clear();
         }
+
+*/
+
+//FIRST condition to check if the both dates selected are not the same
+        if (!startDateSelected.equals(endDateSelected)) {
+
+            try {
+                btnSubmit.setEnabled(true);
+                String getLeaveMsg = txtLeaveMsg.getEditText().getText().toString();
+
+                //        check and validate inputs
+                if (!TextUtils.isEmpty(getLeaveMsg) && (!TextUtils.isEmpty(txtStartDate.getEditText().getText().toString())) && (!TextUtils.isEmpty(txtEndDate.getEditText().getText().toString())) && getLeaveMsg.length() > 10) {
+                    txtLeaveMsg.setErrorEnabled(false);
+                    requestLeaveListener.onButtonClicked(getLeaveMsg, getStartDate, getEndDate);
+                    loading.setVisibility(View.VISIBLE);
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            loading.setVisibility(View.INVISIBLE);
+                            dismiss();
+
+
+                        }
+                    }, 2000);
+                } else if (TextUtils.isEmpty(getLeaveMsg)) {
+
+                    loading.setVisibility(View.GONE);
+                    txtLeaveMsg.setError("Required");
+                    txtLeaveMsg.setErrorEnabled(true);
+
+                } else if (TextUtils.isEmpty(getStartDate)) {
+
+                    loading.setVisibility(View.GONE);
+                    txtStartDate.setError("You must select a start date");
+                    txtStartDate.setErrorEnabled(true);
+
+                } else if (TextUtils.isEmpty(getEndDate)) {
+
+                    loading.setVisibility(View.GONE);
+                    txtEndDate.setError("You must select an end date");
+                    txtEndDate.setErrorEnabled(true);
+
+                } else if (getLeaveMsg.length() <= 5) {
+
+                    loading.setVisibility(View.GONE);
+                    txtLeaveMsg.setError("Message too short");
+                    txtLeaveMsg.setErrorEnabled(true);
+
+                } else if (getLeaveMsg.matches("[-+]?\\d+(\\.\\d+)?")) {
+
+                    loading.setVisibility(View.GONE);
+                    txtLeaveMsg.setError("Invalid inputs");
+                    txtLeaveMsg.setErrorEnabled(true);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+        }
+        /*compare start date and end date
+         *compute the difference
+         * prompt user when the end date is less than the start date
+         */
+        else {
+            //txtEndDate.setErrorEnabled(true);
+            txtEndDate.setError("Sorry You can not start leave and end the same day!");
+
+            // btnSubmit.setEnabled(false);
+        }
+
 
     }
 
+    //Call onAttach method so that the bottom sheet can display when the interface is implemented
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

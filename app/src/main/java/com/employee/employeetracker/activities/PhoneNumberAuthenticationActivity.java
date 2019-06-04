@@ -18,7 +18,6 @@ import com.employee.employeetracker.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
@@ -127,16 +126,13 @@ public class PhoneNumberAuthenticationActivity extends AppCompatActivity {
     private void verifyCode(String code) {
         PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.getCredential(mVerificationCode, code);
         //method to sign in user
-        signInWithPhoneNumber(phoneAuthCredential);
+        signInWithPhoneNumber();
 
     }
 
 
-    private void signInWithPhoneNumber(PhoneAuthCredential phoneAuthCredential) {
-        mAuth.signInWithCredential(phoneAuthCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
+    private void signInWithPhoneNumber() {
+
 
                     HashMap<String, Object> userPhone = new HashMap<>();
                     userPhone.put("phone", getIntentPhoneNumber);
@@ -174,11 +170,9 @@ public class PhoneNumberAuthenticationActivity extends AppCompatActivity {
                     });
 
 
-                }
 
             }
-        });
-    }
+
 
     private void showDialog() {
         new AlertDialog.Builder(PhoneNumberAuthenticationActivity.this)

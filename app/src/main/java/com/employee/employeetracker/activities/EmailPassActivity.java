@@ -7,16 +7,21 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.employee.employeetracker.R;
 import com.employee.employeetracker.fragments.PhotoFragment;
+import com.employee.employeetracker.security.MD5Encryption;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.SignInMethodQueryResult;
+
+import java.math.BigInteger;
+import java.util.Arrays;
 
 public class EmailPassActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -66,8 +71,8 @@ public class EmailPassActivity extends AppCompatActivity implements View.OnClick
 
     private void validateAndProceed() {
         String getEmail = txtEmail.getEditText().getText().toString();
-        String getPass = txtPass.getEditText().getText().toString();
-        String getConfirmPass = txtConfirmPass.getEditText().getText().toString();
+        byte[] getPass = txtPass.getEditText().getText().toString().getBytes();
+        byte[] getConfirmPass = txtConfirmPass.getEditText().getText().toString().getBytes();
 
         if (getEmail.isEmpty()) {
             txtEmail.setErrorEnabled(true);
@@ -76,21 +81,21 @@ public class EmailPassActivity extends AppCompatActivity implements View.OnClick
             txtEmail.setErrorEnabled(false);
         }
 
-        if (getPass.isEmpty()) {
+        if (!TextUtils.isEmpty(Arrays.toString(getPass))) {
             txtPass.setErrorEnabled(true);
             txtPass.setError("Password required");
         } else {
             txtPass.setErrorEnabled(false);
         }
 
-        if (getConfirmPass.isEmpty()) {
+        if (!TextUtils.isEmpty(Arrays.toString(getConfirmPass))) {
             txtConfirmPass.setErrorEnabled(true);
-            txtConfirmPass.setError("Password required");
+            txtConfirmPass.setError("Confirm password required");
         } else {
             txtConfirmPass.setErrorEnabled(false);
         }
 
-        if (!getPass.equals(getConfirmPass)) {
+        if (!Arrays.toString(getPass).equals(Arrays.toString(getConfirmPass))) {
             txtConfirmPass.setErrorEnabled(true);
             txtConfirmPass.setError("Passwords do not match");
         }
@@ -100,7 +105,7 @@ public class EmailPassActivity extends AppCompatActivity implements View.OnClick
             txtEmail.setError("Please check email format");
         }
 
-        if (getPass.length() < 6 || getConfirmPass.length() < 6) {
+        if (txtPass.getEditText().getText().length() < 6 || txtConfirmPass.getEditText().getText().length() < 6) {
             txtPass.setErrorEnabled(true);
             txtPass.setError("Password is too short");
         }
@@ -108,9 +113,25 @@ public class EmailPassActivity extends AppCompatActivity implements View.OnClick
 
         loading.setMessage("Verifying email...Please wait");
 
-        if (!txtEmail.getEditText().getText().toString().isEmpty() && !txtPass.getEditText().getText().toString().isEmpty() && !txtConfirmPass.getEditText().getText().toString().isEmpty() && getEmail.matches(emailPattern)) {
-            if (getPass.equals(getConfirmPass)) {
+        if (!txtEmail.getEditText().getText().toString().isEmpty()
+                && !txtPass.getEditText().getText().toString().isEmpty()
+                && !txtConfirmPass.getEditText().getText().toString().isEmpty()
+                && getEmail.matches(emailPattern)) {
+
+            if (Arrays.toString(getPass).equals(Arrays.toString(getConfirmPass))) {
                 loading.show();
+
+                //perform Encryption
+                BigInteger md5BigInteger = null;
+
+                try {
+                    md5BigInteger = new BigInteger(1, MD5Encryption.encryptData(getPass));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                assert md5BigInteger != null;
+                final String encryptedData = md5BigInteger.toString(16);
 
                 try {
 
@@ -127,7 +148,7 @@ public class EmailPassActivity extends AppCompatActivity implements View.OnClick
                                     gotoPhotoActivity.putExtra("passFirstName", getFirstName);
                                     gotoPhotoActivity.putExtra("passLastName", getLastName);
                                     gotoPhotoActivity.putExtra("passEmail", txtEmail.getEditText().getText().toString());
-                                    gotoPhotoActivity.putExtra("passPassword", txtPass.getEditText().getText().toString());
+                                    gotoPhotoActivity.putExtra("passPassword", encryptedData);
                                     startActivity(gotoPhotoActivity);
 
 

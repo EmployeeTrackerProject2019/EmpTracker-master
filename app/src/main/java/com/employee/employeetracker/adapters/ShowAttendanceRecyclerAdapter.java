@@ -9,12 +9,11 @@ import android.widget.TextView;
 
 import com.employee.employeetracker.R;
 import com.employee.employeetracker.models.Employee;
+import com.employee.employeetracker.utils.GetDateTime;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 
 public class ShowAttendanceRecyclerAdapter extends FirebaseRecyclerAdapter<Employee, ShowAttendanceRecyclerAdapter.ShowAttendanceAdapter> {
@@ -76,10 +75,10 @@ public class ShowAttendanceRecyclerAdapter extends FirebaseRecyclerAdapter<Emplo
         void showCheckInDate(long date) {
 
             TextView txtCheckInDate = view.findViewById(R.id.textViewShowCheckInTimeStamp);
-            SimpleDateFormat sfd = new SimpleDateFormat("EEEE ' ' dd-MMMM-yyyy '@' hh:mm aa", Locale.US);
+            //  SimpleDateFormat sfd = new SimpleDateFormat("EEEE ' ' dd-MMMM-yyyy '@' hh:mm aa", Locale.US);
 
             try {
-                txtCheckInDate.setText(String.format("Checked in on : %s", sfd.format(new Date(date))));
+                txtCheckInDate.setText(String.format("Checked in on : %s", GetDateTime.getFormattedDate(new Date(date))));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -89,11 +88,11 @@ public class ShowAttendanceRecyclerAdapter extends FirebaseRecyclerAdapter<Emplo
         public void showCheckOutDate(long date) {
 
             TextView txtCheckOutDate = view.findViewById(R.id.textViewShowCheckOutTimeStamp);
-            SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy '@' hh:mm aa", Locale.US);
+            //  SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy '@' hh:mm aa", Locale.US);
 
             try {
                 txtCheckOutDate.setText(String.format("Checked out on : %s",
-                        sfd.format(new Date(date))));
+                        GetDateTime.getFormattedDate(new Date(date))));
             } catch (Exception e) {
                 e.printStackTrace();
             }

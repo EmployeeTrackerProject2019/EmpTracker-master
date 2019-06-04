@@ -207,6 +207,7 @@ public class PhotoRegisterActivity extends AppCompatActivity implements View.OnC
 
     private void insertDetailsIntoDatabase() {
 
+
         progressDialog.setMessage("loading please wait...");
         progressDialog.setCancelable(false);
         progressDialog.show();
