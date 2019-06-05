@@ -81,14 +81,14 @@ public class EmailPassActivity extends AppCompatActivity implements View.OnClick
             txtEmail.setErrorEnabled(false);
         }
 
-        if (!TextUtils.isEmpty(Arrays.toString(getPass))) {
+        if (TextUtils.isEmpty(Arrays.toString(getPass))) {
             txtPass.setErrorEnabled(true);
             txtPass.setError("Password required");
         } else {
             txtPass.setErrorEnabled(false);
         }
 
-        if (!TextUtils.isEmpty(Arrays.toString(getConfirmPass))) {
+        if (TextUtils.isEmpty(Arrays.toString(getConfirmPass))) {
             txtConfirmPass.setErrorEnabled(true);
             txtConfirmPass.setError("Confirm password required");
         } else {

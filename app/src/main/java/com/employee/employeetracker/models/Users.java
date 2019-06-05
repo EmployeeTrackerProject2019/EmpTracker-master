@@ -7,6 +7,7 @@ public class Users {
     private String lastName;
     private String fullName;
     private String email;
+    private String pass;
     private String occupation;
     private String image;
     private String phone;
@@ -29,6 +30,28 @@ public class Users {
         this.phone = phone;
         this.about = about;
         this.image = image;
+    }
+
+    public Users(String userId, String firstName, String lastName, String fullName, String email,
+                 String pass,
+                 String phone, String about, String image) {
+        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.fullName = fullName;
+        this.email = email;
+        this.pass = pass;
+        this.image = image;
+        this.phone = phone;
+
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 
     public String getDutyPost() {

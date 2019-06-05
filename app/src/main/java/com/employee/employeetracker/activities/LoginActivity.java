@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.employee.employeetracker.R;
+import com.employee.employeetracker.security.MD5Encryption;
 import com.employee.employeetracker.utils.GetDateTime;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,6 +30,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -103,19 +106,30 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
             final String email = txtEmail.getEditText().getText().toString();
-            String password = txtPassword.getEditText().getText().toString();
+            byte[] password = txtPassword.getEditText().getText().toString().getBytes();
 //validate inputs from the user
-            if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+            if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(Arrays.toString(password))) {
+                //perform Encryption
+                BigInteger md5BigInteger = null;
+
+                try {
+                    md5BigInteger = new BigInteger(1, MD5Encryption.encryptData(password));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                assert md5BigInteger != null;
+                final String encryptedPass = md5BigInteger.toString(16);
+
                 startLoading.setMessage("loading please wait ...");
                 startLoading.setCancelable(false);
                 startLoading.show();
 
-                mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                mAuth.signInWithEmailAndPassword(email, encryptedPass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull final Task<AuthResult> task) {
 
                         if (task.isSuccessful()) {
-//check if the reference match in the employee database and log user in
 
                             //keep log files
                             String historyBuilder;
@@ -145,11 +159,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                             } else {
                                 startLoading.dismiss();
-                                if (Build.VERSION.SDK_INT >= 26) {
-                                    vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
-                                } else {
-                                    vibrator.vibrate(200);
-                                }
                                 new AlertDialog.Builder(LoginActivity.this)
                                         .setMessage("Your email" + " " + email + " " + "\n" + "is not yet verified" + "\n" + "please  verify to continue")
                                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -160,6 +169,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         })
                                         .create()
                                         .show();
+
+
+                                if (Build.VERSION.SDK_INT >= 26)
+                                    vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
+                                else
+                                    vibrator.vibrate(200);
+
+
                             }
 
 

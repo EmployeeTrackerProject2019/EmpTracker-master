@@ -290,8 +290,8 @@ public class PhotoRegisterActivity extends AppCompatActivity implements View.OnC
 
                                             Log.d(TAG, "onComplete: Email verification has been sent");
                                             Users users = new Users(uid, getFirstName, getLastName,
-                                                    getFulName, getEmail, "", "", getImageUri);
-
+                                                    getFulName, getEmail, getPass, "", "", getImageUri);
+                                            Log.i(TAG, "onComplete: " + getPass);
                                             usersDbRef = FirebaseDatabase.getInstance().getReference().child("Employee").child(uid);
 
                                             //Now create the database for the user
