@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -22,6 +23,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.employee.employeetracker.activities.MainActivity;
+import com.employee.employeetracker.utils.GetDateTime;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
@@ -40,10 +43,21 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 
 public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallback,
@@ -53,11 +67,11 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
     private static final String TAG = "MapsActivity2";
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
-    GoogleMap mMap;
+    private GoogleMap mMap;
     private TextView txtLat, txtLong;
-    DatabaseReference reference;
-    GeoFire geoFire;
-    Marker marker;
+    private DatabaseReference reference;
+    private GeoFire geoFire;
+    private Marker marker;
     public static final int PLAYSERVICES_RESOLUTION = 101;
     private Location mLastLocation;
     public static final int UPDATE_INTERVAL = 5000;
@@ -65,6 +79,13 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
     public static final int DISPLACEMENT = 10;
     private Spinner spinnerDutyPost, spinnerWorkShift;
     private Button btnCheckIn;
+    private double latitude, longitude;
+
+
+    private String datePosted = "", dayOfTheWeek;
+    private ProgressDialog loading;
+    private String uid, username;
+    private DatabaseReference mUserDbRef, mAttendance, historyDbRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +112,31 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
     }
 
     private void initViews() {
+
+        //firebase
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (mAuth.getCurrentUser() == null) {
+            return;
+        }
+        assert mFirebaseUser != null;
+        uid = mFirebaseUser.getUid();
+
+
+        //attendance
+        mAttendance = FirebaseDatabase.getInstance().getReference("Attendance");
+
+
+        //create the history database
+
+        String log = "History";
+        historyDbRef = FirebaseDatabase.getInstance().getReference(log);
+//        historyDbRef.keepSynced(true);
+
+        mUserDbRef = FirebaseDatabase.getInstance().getReference().child("Employee").child(uid);
+        mUserDbRef.keepSynced(true);
+
+
         btnCheckIn = findViewById(R.id.btnCheckIn);
         spinnerDutyPost = findViewById(R.id.spinnerForDutyPost);
         spinnerWorkShift = findViewById(R.id.spinnerForShifs);
@@ -122,8 +168,8 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
         mLastLocation = LocationServices.FusedLocationApi
                 .getLastLocation(googleApiClient);
         if (mLastLocation != null) {
-            final double latitude = mLastLocation.getLatitude();
-            final double longitude = mLastLocation.getLongitude();
+            latitude = mLastLocation.getLatitude();
+            longitude = mLastLocation.getLongitude();
 
             //update to fire base
             geoFire.setLocation("You", new GeoLocation(latitude, longitude), new GeoFire.CompletionListener() {
@@ -219,13 +265,15 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
             @Override
             public void onKeyEntered(String key, GeoLocation location) {
 //can check in here .. enable the check in button
-                sendNotis(String.format("%s You entered and can do what ever", key));
+                btnCheckIn.setEnabled(true);
+                sendNotis(String.format("%s You entered and can check in", key));
             }
 
             @Override
             public void onKeyExited(String key) {
                 //cannot check in here .. disable check in button
-                sendNotis(String.format("%s You have left and can not do what ever", key));
+                btnCheckIn.setEnabled(false);
+                sendNotis(String.format("%s You have left school and can not check in", key));
             }
 
             @Override
@@ -319,6 +367,97 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
 
     @Override
     public void onClick(View v) {
+        if (v.getId() == R.id.btnCheckIn) {
+
+            if (btnCheckIn.isEnabled()) {
+                checkInUser();
+            } else {
+                makeToast("You can not check in from this location");
+            }
+
+
+        }
+    }
+
+    private void checkInUser() {
+
+
+        Calendar calendar = Calendar.getInstance();
+        Date today = calendar.getTime();
+//                SimpleDateFormat sfd = new SimpleDateFormat("EEEE dd/MMMM/yyyy", Locale.US);
+        datePosted = GetDateTime.getFormattedDate(today);
+        dayOfTheWeek = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(System.currentTimeMillis());
+
+
+        loading.setMessage("please wait...It may take a moment");
+        loading.setCancelable(false);
+        loading.show();
+
+        final String getTypeOfShiftSelected = spinnerWorkShift.getSelectedItem().toString();
+        final String getTypeOfDutyPostSelected = spinnerDutyPost.getSelectedItem().toString();
+
+
+        Map<String, Object> checkInDetails = new HashMap<>();
+        checkInDetails.put("userId", uid);
+        checkInDetails.put("userName", username);
+        checkInDetails.put("date", datePosted);
+        checkInDetails.put("dayOfWeek", dayOfTheWeek);
+        checkInDetails.put("checkOutTimeStamp", "");
+        checkInDetails.put("dutyPost", getTypeOfDutyPostSelected);
+        checkInDetails.put("typeOfShift", getTypeOfShiftSelected);
+
+
+//Add to user profile and update profile
+        final Map<String, Object> addDetailsToProfile = new HashMap<>();
+        addDetailsToProfile.put("dutyPost", getTypeOfDutyPostSelected);
+        addDetailsToProfile.put("typeOfShift", getTypeOfShiftSelected);
+        addDetailsToProfile.put("timeStamp", ServerValue.TIMESTAMP);
+//keep history
+        String historyBuilder;
+        historyBuilder =
+                username + " " + "checked in on" + " " + datePosted;
+
+        //add to history database
+        final Map<String, Object> history = new HashMap<>();
+        history.put("history", historyBuilder);
+        final String historyID = historyDbRef.push().getKey();
+
+//Post details to check in database
+        final String attendanceKey = mAttendance.push().getKey();
+        //  mAttendance.child(dayOfTheWeek).child(uid).setValue(checkInDetails)
+        assert attendanceKey != null;
+        mAttendance.child(dayOfTheWeek).child(attendanceKey).setValue(checkInDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+
+//set values to database and update the employee account with the details
+
+                    mUserDbRef.updateChildren(addDetailsToProfile);
+
+
+                    //insert data into history database
+                    assert historyID != null;
+                    historyDbRef.child(historyID).setValue(history);
+                    Log.d(TAG, "onComplete: " + historyDbRef);
+
+                    loading.dismiss();
+                    Toast toast = Toast.makeText(MapsActivity2.this, "Successfully posted", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                    startActivity(new Intent(MapsActivity2.this,
+                            MainActivity.class));
+                    finish();
+                } else if (!task.isSuccessful()) {
+                    loading.dismiss();
+                    Toast toast = Toast.makeText(MapsActivity2.this,
+                            task.getException().getMessage(), Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                }
+            }
+        });
+
 
     }
 }
