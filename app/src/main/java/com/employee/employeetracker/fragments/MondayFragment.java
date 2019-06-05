@@ -147,11 +147,8 @@ public class MondayFragment extends Fragment {
         super.onStop();
         Log.i(TAG, "onStop: ");
         adapter.stopListening();
-        adapter.notifyDataSetChanged();
+
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
+
 }
