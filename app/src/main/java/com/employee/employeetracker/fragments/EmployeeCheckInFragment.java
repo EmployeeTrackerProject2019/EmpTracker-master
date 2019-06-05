@@ -87,7 +87,7 @@ public class EmployeeCheckInFragment extends Fragment implements View.OnClickLis
     private void initListener() {
         gotoCheckIn.setOnClickListener(this);
         gotoCheckOut.setOnClickListener(this);
-        tstChkIn.setOnClickListener(this);
+        // tstChkIn.setOnClickListener(this);
 
     }
 

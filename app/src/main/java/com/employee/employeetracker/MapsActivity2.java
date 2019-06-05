@@ -250,10 +250,10 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
         mMap = googleMap;
 
         //create a geo fence of the area or the boundary
-        LatLng placeBoundary = new LatLng(5.5818658, 0.2357531);//babbage
+        LatLng placeBoundary = new LatLng(5.5828658, 0.2357548);//BABBAGE
         mMap.addCircle(new CircleOptions()
                 .center(placeBoundary)
-                .radius(500)
+                .radius(100)
                 .strokeColor(Color.GREEN)
                 .fillColor(0x220000FF)
                 .strokeWidth(5.0f)
@@ -389,20 +389,22 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
         dayOfTheWeek = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(System.currentTimeMillis());
 
 
-        loading.setMessage("please wait...It may take a moment");
-        loading.setCancelable(false);
-        loading.show();
-
         final String getTypeOfShiftSelected = spinnerWorkShift.getSelectedItem().toString();
         final String getTypeOfDutyPostSelected = spinnerDutyPost.getSelectedItem().toString();
 
+        loading.setMessage("Checking in on " + getTypeOfShiftSelected + " at " + getTypeOfDutyPostSelected);
+        loading.setCancelable(false);
+        loading.show();
 
+//The constructor can equally be used as this
         Map<String, Object> checkInDetails = new HashMap<>();
         checkInDetails.put("userId", uid);
         checkInDetails.put("userName", username);
         checkInDetails.put("date", datePosted);
         checkInDetails.put("dayOfWeek", dayOfTheWeek);
         checkInDetails.put("checkOutTimeStamp", "");
+        checkInDetails.put("latitude", latitude);
+        checkInDetails.put("longitude", longitude);
         checkInDetails.put("dutyPost", getTypeOfDutyPostSelected);
         checkInDetails.put("typeOfShift", getTypeOfShiftSelected);
 
@@ -432,7 +434,6 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
                 if (task.isSuccessful()) {
 
 //set values to database and update the employee account with the details
-
                     mUserDbRef.updateChildren(addDetailsToProfile);
 
 
