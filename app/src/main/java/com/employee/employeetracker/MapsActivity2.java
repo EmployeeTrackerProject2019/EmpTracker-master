@@ -103,7 +103,7 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
         LatLng myBoundary = new LatLng(5.636343, -0.318750);//post office
         mMap.addCircle(new CircleOptions()
                 .center(myBoundary)
-                .radius(500)
+                .radius(50)
                 .strokeColor(Color.BLUE)
                 .fillColor(0x220000FF)
                 .strokeWidth(5.0f)

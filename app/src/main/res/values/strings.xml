@@ -137,4 +137,6 @@
     <string name="duty_Post">Duty Post</string>
     <string name="duty_roster">Duty Roster</string>
     <string name="type_your_response">Type your response</string>
+    <string name="in">IN</string>
+    <string name="out">OUT</string>
 </resources>

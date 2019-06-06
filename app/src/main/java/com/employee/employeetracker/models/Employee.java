@@ -3,20 +3,104 @@ package com.employee.employeetracker.models;
 public class Employee {
     private String userId;
     private String userName;
-    private Long checkInTimeStamp;
+    private String checkInTimeStamp;
     private String checkInPhoto;
-    private Long checkOutTimeStamp;
+    private String checkOutTimeStamp;
     private String checkOutPhoto;
     private String typeOfShift;
     private String dutyPost;
     private String location;
-
+    private String date;
     private String fullName, email, phone, image, history;
     private String lastName;
     private String firstName;
     private long lastSeen;
     private long getCheckInCount;
     private long getCheckOutCount;
+
+
+    public Employee() {
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getCheckInTimeStamp() {
+        return checkInTimeStamp;
+    }
+
+    public void setCheckInTimeStamp(String checkInTimeStamp) {
+        this.checkInTimeStamp = checkInTimeStamp;
+    }
+
+    public String getCheckInPhoto() {
+        return checkInPhoto;
+    }
+
+    public void setCheckInPhoto(String checkInPhoto) {
+        this.checkInPhoto = checkInPhoto;
+    }
+
+    public String getCheckOutTimeStamp() {
+        return checkOutTimeStamp;
+    }
+
+    public void setCheckOutTimeStamp(String checkOutTimeStamp) {
+        this.checkOutTimeStamp = checkOutTimeStamp;
+    }
+
+    public String getCheckOutPhoto() {
+        return checkOutPhoto;
+    }
+
+    public void setCheckOutPhoto(String checkOutPhoto) {
+        this.checkOutPhoto = checkOutPhoto;
+    }
+
+    public String getTypeOfShift() {
+        return typeOfShift;
+    }
+
+    public void setTypeOfShift(String typeOfShift) {
+        this.typeOfShift = typeOfShift;
+    }
+
+    public String getDutyPost() {
+        return dutyPost;
+    }
+
+    public void setDutyPost(String dutyPost) {
+        this.dutyPost = dutyPost;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public String getFullName() {
         return fullName;
@@ -97,94 +181,4 @@ public class Employee {
     public void setGetCheckOutCount(long getCheckOutCount) {
         this.getCheckOutCount = getCheckOutCount;
     }
-
-    public Employee() {
-    }
-
-    public Employee(String userId, String userName, Long checkInTimeStamp, String checkInPhoto,
-                    Long checkOutTimeStamp, String checkOutPhoto, String typeOfShift, String dutyPost, String location) {
-        this.userId = userId;
-        this.userName = userName;
-        this.checkInTimeStamp = checkInTimeStamp;
-        this.checkInPhoto = checkInPhoto;
-        this.checkOutTimeStamp = checkOutTimeStamp;
-        this.checkOutPhoto = checkOutPhoto;
-        this.typeOfShift = typeOfShift;
-        this.dutyPost = dutyPost;
-        this.location = location;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public Long getCheckInTimeStamp() {
-        return checkInTimeStamp;
-    }
-
-    public void setCheckInTimeStamp(Long checkInTimeStamp) {
-        this.checkInTimeStamp = checkInTimeStamp;
-    }
-
-    public String getCheckInPhoto() {
-        return checkInPhoto;
-    }
-
-    public void setCheckInPhoto(String checkInPhoto) {
-        this.checkInPhoto = checkInPhoto;
-    }
-
-    public Long getCheckOutTimeStamp() {
-        return checkOutTimeStamp;
-    }
-
-    public void setCheckOutTimeStamp(Long checkOutTimeStamp) {
-        this.checkOutTimeStamp = checkOutTimeStamp;
-    }
-
-    public String getCheckOutPhoto() {
-        return checkOutPhoto;
-    }
-
-    public void setCheckOutPhoto(String checkOutPhoto) {
-        this.checkOutPhoto = checkOutPhoto;
-    }
-
-    public String getTypeOfShift() {
-        return typeOfShift;
-    }
-
-    public void setTypeOfShift(String typeOfShift) {
-        this.typeOfShift = typeOfShift;
-    }
-
-    public String getDutyPost() {
-        return dutyPost;
-    }
-
-    public void setDutyPost(String dutyPost) {
-        this.dutyPost = dutyPost;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-
 }

@@ -35,7 +35,7 @@ public class ShowAttendanceRecyclerAdapter extends FirebaseRecyclerAdapter<Emplo
     @Override
     protected void onBindViewHolder(@NonNull ShowAttendanceAdapter holder, int position, @NonNull final Employee model) {
         holder.showCheckInEmployeeName(model.getUserName());
-        holder.showCheckInDate(model.getCheckInTimeStamp());
+        holder.showDate(model.getDate());
         holder.showCheckOutDate(model.getCheckOutTimeStamp());
         holder.showDutyPost(model.getDutyPost());
         holder.showShift(model.getTypeOfShift());
@@ -99,9 +99,14 @@ public class ShowAttendanceRecyclerAdapter extends FirebaseRecyclerAdapter<Emplo
             txtName.setText(name);
         }
 
-        public void showCheckOutEmployeeName(String name) {
+        public void showDate(String date) {
             //  TextView nameOfAttendee = view.findViewById(R.id.txtCheckOutNameOfEmployee);
             // nameOfAttendee.setText(name);
+            try {
+                txtViewCheckIn.setText(GetDateTime.getFormattedDate(new Date(date)));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         void showCheckInDate(long date) {
@@ -109,25 +114,24 @@ public class ShowAttendanceRecyclerAdapter extends FirebaseRecyclerAdapter<Emplo
             // TextView txtCheckInDate = view.findViewById(R.id.textViewShowCheckInTimeStamp);
             //  SimpleDateFormat sfd = new SimpleDateFormat("EEEE ' ' dd-MMMM-yyyy '@' hh:mm aa", Locale.US);
 
-            try {
-                txtViewCheckIn.setText(String.format("Checked in on : %s", GetDateTime.getFormattedDate(new Date(date))));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+//            try {
+//                txtViewCheckIn.setText(String.format("Checked in on : %s", GetDateTime.getFormattedDate(new Date(date))));
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
 
         }
 
-        public void showCheckOutDate(long date) {
+        public void showCheckOutDate(String date) {
 
             // TextView txtCheckOutDate = view.findViewById(R.id.textViewShowCheckOutTimeStamp);
             //  SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy '@' hh:mm aa", Locale.US);
 
             try {
-                if (date == 0) {
+                if (date.isEmpty()) {
                     txtViewCheckOut.setText(" ");
-                }
-                txtViewCheckOut.setText(String.format("Checked out on : %s",
-                        GetDateTime.getFormattedDate(new Date(date))));
+                } else
+                    txtViewCheckOut.setText(GetDateTime.getFormattedDate(new Date(date)));
             } catch (Exception e) {
                 e.printStackTrace();
             }

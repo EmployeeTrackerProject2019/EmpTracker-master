@@ -350,8 +350,8 @@ public class CheckInActivity extends AppCompatActivity implements View.OnClickLi
         checkInDetails.put("date", datePosted);
         checkInDetails.put("dayOfWeek", dayOfTheWeek);
         //checkInDetails.put("checkInPhoto", getImageUri);
-        checkInDetails.put("checkInTimeStamp", ServerValue.TIMESTAMP);
-        checkInDetails.put("checkOutTimeStamp", 0);
+        // checkInDetails.put("checkInTimeStamp", ServerValue.TIMESTAMP);
+        checkInDetails.put("checkOutTimeStamp", "");
 
         checkInDetails.put("dutyPost", getTypeOfDutyPostSelected);
         checkInDetails.put("typeOfShift", getTypeOfShiftSelected);
@@ -377,6 +377,7 @@ public class CheckInActivity extends AppCompatActivity implements View.OnClickLi
 //Post details to check in database
         final String attendanceKey = mAttendance.push().getKey();
         //  mAttendance.child(dayOfTheWeek).child(uid).setValue(checkInDetails)
+        assert attendanceKey != null;
         mAttendance.child(attendanceKey).setValue(checkInDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
