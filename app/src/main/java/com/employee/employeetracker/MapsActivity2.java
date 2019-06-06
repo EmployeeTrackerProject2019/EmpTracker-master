@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
@@ -54,6 +55,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -187,14 +189,14 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
         mUserDbRef = FirebaseDatabase.getInstance().getReference().child("Employee").child(uid);
         mUserDbRef.keepSynced(true);
 
-
+        loading = new ProgressDialog(this);
         btnCheckIn = findViewById(R.id.btnCheckIn);
         spinnerDutyPost = findViewById(R.id.spinnerForDutyPost);
         spinnerWorkShift = findViewById(R.id.spinnerForShifs);
     }
 
     /* Initiate Google API Client  */
-    private void initGoogleAPIClient() {
+    private synchronized void initGoogleAPIClient() {
         //Without Google API Client Auto Location Dialog will not work
         mGoogleApiClient = new GoogleApiClient.Builder(MapsActivity2.this)
                 .addApi(LocationServices.API)
@@ -328,15 +330,7 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
                }
            }
 
-           private void createLocationRequest() {
 
-               locationRequest = new LocationRequest();
-               locationRequest.setInterval(UPDATE_INTERVAL);
-               locationRequest.setFastestInterval(FAST_INTERVAL);
-               locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-               locationRequest.setSmallestDisplacement(DISPLACEMENT);
-
-           }
 
            private void buildGoogleClient() {
                //build the google client
@@ -400,6 +394,56 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
         }
     }
 
+    private void createLocationRequest() {
+
+        locationRequest = new LocationRequest();
+        locationRequest.setInterval(UPDATE_INTERVAL);
+        locationRequest.setFastestInterval(FAST_INTERVAL);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setSmallestDisplacement(DISPLACEMENT);
+
+    }
+
+    private void startLocationUpdates() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MYPERMISSIONREQUEST);
+
+            return;
+        }
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
+
+    }
+
+
+    /* On Request permission method to check the permisison is granted or not for Marshmallow+ Devices  */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // If request is cancelled, the result arrays are empty.
+        if (requestCode == ACCESS_FINE_LOCATION_INTENT_ID) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                initGoogleAPIClient();
+                createLocationRequest();
+                displayLocation();
+                //If permission granted show location dialog if APIClient is not null
+                if (mGoogleApiClient == null) {
+                    initGoogleAPIClient();
+                    showSettingDialog();
+                } else
+                    showSettingDialog();
+
+
+            } else {
+//                    updateGPSStatus("Location Permission denied.");
+                Toast.makeText(MapsActivity2.this, "Location Permission denied.", Toast.LENGTH_SHORT).show();
+                // permission denied, boo! Disable the
+                // functionality that depends on this permission.
+            }
+        }
+    }
+
 
     public void makeToast(String text) {
         Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
@@ -407,6 +451,21 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
         toast.show();
     }
 
+    private void sendNotis(String content) {
+        Notification.Builder builder = new Notification.Builder(this)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("MyLocation")
+                .setContentText(content);
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        Intent intent = new Intent(this, MapsActivity2.class);
+        PendingIntent contentPendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(contentPendingIntent);
+        Notification notification = builder.build();
+        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+        notification.defaults |= Notification.DEFAULT_SOUND;
+
+        manager.notify(new Random().nextInt(), notification);
+    }
 
     /**
      * Manipulates the map once available.
@@ -421,18 +480,34 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            requestLocationPermission();
-//            return;
-//        }
-//        mMap.setMyLocationEnabled(true);
-        mMap.setIndoorEnabled(true);
-        // map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        mMap.setBuildingsEnabled(true);
+        try {
+            // Customise the styling of the base map using a JSON object defined
+            // in a raw resource file.
+            boolean success = mMap.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
+                            this, R.raw.custommap));
+            if (ActivityCompat.checkSelfPermission(MapsActivity2.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MapsActivity2.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            mMap.setMyLocationEnabled(true);
+            mMap.setIndoorEnabled(true);
+            // map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            mMap.setBuildingsEnabled(true);
 
-        UiSettings uiSettings = mMap.getUiSettings();
-        uiSettings.setZoomControlsEnabled(true);
-        uiSettings.setAllGesturesEnabled(true);
+            UiSettings uiSettings = mMap.getUiSettings();
+            uiSettings.setZoomControlsEnabled(true);
+            uiSettings.setAllGesturesEnabled(true);
+
+
+            Log.d(TAG, "onMapReady: Successful");
+            if (!success) {
+                Log.e(TAG, "Style parsing failed.");
+            }
+        } catch (Resources.NotFoundException e) {
+            Log.d(TAG, "Error occurred " + e.getMessage());
+            Log.e(TAG, "Can't find style. Error: ", e);
+        }
+
 
         //create a geo fence of the area or the boundary
         LatLng placeBoundary = new LatLng(5.583481, -0.237052);//press by
@@ -484,21 +559,6 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
 
     }
 
-    private void sendNotis(String content) {
-        Notification.Builder builder = new Notification.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("MyLocation")
-                .setContentText(content);
-        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        Intent intent = new Intent(this, MapsActivity2.class);
-        PendingIntent contentPendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentIntent(contentPendingIntent);
-        Notification notification = builder.build();
-        notification.flags |= Notification.FLAG_AUTO_CANCEL;
-        notification.defaults |= Notification.DEFAULT_SOUND;
-
-        manager.notify(new Random().nextInt(), notification);
-    }
 
 
     @Override
@@ -510,45 +570,6 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
 
     }
 
-    private void startLocationUpdates() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MYPERMISSIONREQUEST);
-
-            return;
-        }
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
-
-    }
-
-
-    /* On Request permission method to check the permisison is granted or not for Marshmallow+ Devices  */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case ACCESS_FINE_LOCATION_INTENT_ID: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    //If permission granted show location dialog if APIClient is not null
-                    if (mGoogleApiClient == null) {
-                        initGoogleAPIClient();
-                        showSettingDialog();
-                    } else
-                        showSettingDialog();
-
-
-                } else {
-//                    updateGPSStatus("Location Permission denied.");
-                    Toast.makeText(MapsActivity2.this, "Location Permission denied.", Toast.LENGTH_SHORT).show();
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                }
-            }
-        }
-    }
 
 
     /*
