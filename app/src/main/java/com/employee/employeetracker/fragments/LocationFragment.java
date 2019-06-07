@@ -11,9 +11,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.employee.employeetracker.R;
 import com.google.android.gms.common.ConnectionResult;
@@ -99,8 +101,25 @@ public class LocationFragment extends Fragment implements View.OnClickListener,
     public void onLocationChanged(Location location) {
         try {
 
+            double lat = location.getLatitude();
+            double lng = location.getLongitude();
 
-            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+            LatLng latLng = new LatLng(lat, lng);
+
+
+            float[] results = new float[1];
+            Location.distanceBetween(lat, lng, 5.596242, -0.223489, results);
+            float distanceInMeters = results[0];
+            boolean isWithinRange = distanceInMeters < 800;
+
+            if (!isWithinRange) {
+                //write your code what ever you wanna perform
+                makeToast("cannot check in ");
+            } else
+                makeToast("Can check in");
+
+
+
             Log.d(TAG, "onLocationChanged: " + latLng);
 //
             map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f));
@@ -154,6 +173,12 @@ public class LocationFragment extends Fragment implements View.OnClickListener,
                 .addApi(LocationServices.API)
                 .build();
         mGoogleApiClient.connect();
+    }
+
+    public void makeToast(String text) {
+        Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     @Override

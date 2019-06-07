@@ -139,4 +139,5 @@
     <string name="type_your_response">Type your response</string>
     <string name="in">IN</string>
     <string name="out">OUT</string>
+    <string name="cannotCheckIn">Cannot check in</string>
 </resources>

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -138,11 +139,26 @@ public class MainActivity extends AppCompatActivity implements MakeReportListene
         }
         assert mFirebaseUser != null;
         userId = mFirebaseUser.getUid();
+        float[] results = new float[1];
+        Location.distanceBetween(5.594759, -0.223371, 5.596091, -0.223362, results);
+        float distanceInMeters = results[0];
+        boolean isWithinRange = distanceInMeters < 145;
+
+        if (!isWithinRange) {
+
+            Log.i(TAG, "cannot check in from this location: ");
+            //makeToast("cannot check in from this location ");
+        } else {
+            // makeToast("Can check in");
+            Log.i(TAG, " can check in ");
+        }
+
+        Log.i(TAG, "onLocationChanged --- distance in meters: " + distanceInMeters);
 
 
         retrieveDetails();
-        //initGoogleAPIClient();//Init Google API Client
-        // checkPermissions();//Check Permission
+        initGoogleAPIClient();//Init Google API Client
+        checkPermissions();//Check Permission
 
         BottomNavigationView mBottomNavigationView = findViewById(R.id.bottomNavigationView);
 
