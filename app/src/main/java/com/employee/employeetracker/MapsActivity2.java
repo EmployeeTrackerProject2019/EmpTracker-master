@@ -491,7 +491,7 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
             }
             mMap.setMyLocationEnabled(true);
             mMap.setIndoorEnabled(true);
-            // map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
             mMap.setBuildingsEnabled(true);
 
             UiSettings uiSettings = mMap.getUiSettings();
