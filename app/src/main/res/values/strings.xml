@@ -75,14 +75,14 @@
 
     <!--string array for working shift-->
     <string-array name="shifts">
-        <item>Please select your shift</item>
+        <item>Select your shift</item>
         <item>Day shift</item>
         <item>Night shift</item>
     </string-array>
 
     <!--string array for duty post-->
     <string-array name="dutyPost">
-        <item>Please select your duty post</item>
+        <item>Select your duty post</item>
         <item>Block C</item>
         <item>COLT</item>
         <item>Duty Officer</item>
@@ -142,4 +142,6 @@
     <string name="in">IN</string>
     <string name="out">OUT</string>
     <string name="cannotCheckIn">Cannot check in</string>
+    <string name="cannotCheckOut">Can not check out</string>
+    <string name="canCheckOut">Can check out</string>
 </resources>

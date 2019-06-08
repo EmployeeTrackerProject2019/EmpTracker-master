@@ -18,10 +18,11 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/checkInPhoto"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
+                android:layout_marginTop="16dp"
                 android:src="@drawable/abc"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -95,16 +96,33 @@
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:layout_gravity="bottom"
+        app:fabAlignmentMode="end"
         app:backgroundTint="@color/purple"
         app:buttonGravity="bottom|top"
-        app:fabAlignmentMode="end" />
+        app:titleTextColor="@color/white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/txtShowWarning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/checkOut"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+                android:textColor="#fff" />
+
+        </RelativeLayout>
+    </android.support.design.bottomappbar.BottomAppBar>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/setWallpaper"
+        android:id="@+id/checkOutFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/wyfy"
-        app:backgroundTint="@color/white"
+        app:backgroundTint="@color/fb"
+        app:srcCompat="@drawable/ic_check_out"
         app:fabSize="normal"
         app:layout_anchor="@id/bottomAppBar" />
 

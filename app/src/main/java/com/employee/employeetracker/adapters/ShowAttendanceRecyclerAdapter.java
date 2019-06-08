@@ -39,7 +39,7 @@ public class ShowAttendanceRecyclerAdapter extends FirebaseRecyclerAdapter<Emplo
         holder.showCheckOutDate(model.getCheckOutTimeStamp());
         holder.showDutyPost(model.getDutyPost());
         holder.showShift(model.getTypeOfShift());
-        // holder.showPhoto(model.getCheckInPhoto());
+        holder.showPhoto(model.getCheckInPhoto());
 
         final String getAdapterPosition = getRef(position).getKey();
 
@@ -90,7 +90,7 @@ public class ShowAttendanceRecyclerAdapter extends FirebaseRecyclerAdapter<Emplo
             txtDutyPost = view.findViewById(R.id.txttDutyPost);
             txtShift = view.findViewById(R.id.txttShift);
             checkOut = view.findViewById(R.id.btnnCheckOut);
-            userPhoto = view.findViewById(R.id.checkInPhoto);
+            userPhoto = view.findViewById(R.id.imgCheckinPhoto);
 
         }
 

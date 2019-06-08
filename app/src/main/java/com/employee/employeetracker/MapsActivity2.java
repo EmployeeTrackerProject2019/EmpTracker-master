@@ -23,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.employee.employeetracker.activities.MainActivity;
 import com.employee.employeetracker.utils.GetDateTime;
 import com.firebase.geofire.GeoFire;
@@ -63,6 +64,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
         LocationListener, View.OnClickListener {
@@ -71,14 +74,15 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
     private static final String TAG = "MapsActivity2";
     private static final int REQUEST_CHECK_SETTINGS = 0x1;
     private GoogleMap mMap;
-    private TextView txtLat, txtLong;
+    public static final int UPDATE_INTERVAL = 1000;
+    public static final int FAST_INTERVAL = 1000;
     private DatabaseReference reference;
     private GeoFire geoFire;
     private Marker marker;
     public static final int PLAYSERVICES_RESOLUTION = 101;
     private Location mLastLocation;
-    public static final int UPDATE_INTERVAL = 5000;
-    public static final int FAST_INTERVAL = 3000;
+    private TextView txtName;
+    private CircleImageView mPhoto;
     public static final int DISPLACEMENT = 10;
     private Spinner spinnerDutyPost, spinnerWorkShift;
     private Button btnCheckIn;
@@ -128,6 +132,8 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
         }
         assert mFirebaseUser != null;
         uid = mFirebaseUser.getUid();
+        txtName = findViewById(R.id.checkInName);
+        mPhoto = findViewById(R.id.checkInPhoto);
 
 
         //attendance
@@ -148,6 +154,9 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 username = (String) dataSnapshot.child("fullName").getValue();
                 userPhoto = (String) dataSnapshot.child("image").getValue();
+
+                txtName.setText(username);
+                Glide.with(MapsActivity2.this).load(userPhoto).into(mPhoto);
             }
 
             @Override
@@ -449,7 +458,7 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
             Date today = calendar.getTime();
 //                SimpleDateFormat sfd = new SimpleDateFormat("EEEE dd/MMMM/yyyy", Locale.US);
             datePosted = GetDateTime.getFormattedDate(today);
-            dayOfTheWeek = new SimpleDateFormat("EEE", Locale.ENGLISH).format(System.currentTimeMillis());
+            dayOfTheWeek = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(System.currentTimeMillis());
 
 
             final String getTypeOfShiftSelected = spinnerWorkShift.getSelectedItem().toString();
