@@ -87,12 +87,9 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
 
     private String datePosted = "", dayOfTheWeek;
     private ProgressDialog loading;
-    private String uid, username;
+    private String uid, username, userPhoto;
     private DatabaseReference mUserDbRef, mAttendance, historyDbRef;
-    private static final int ACCESS_FINE_LOCATION_INTENT_ID = 3;
-    private static final String BROADCAST_ACTION = "android.location.PROVIDERS_CHANGED";
     private static GoogleApiClient googleApiClient;
-    //  private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
 
     @Override
@@ -150,6 +147,7 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 username = (String) dataSnapshot.child("fullName").getValue();
+                userPhoto = (String) dataSnapshot.child("image").getValue();
             }
 
             @Override
@@ -335,7 +333,6 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
 
         Log.i(TAG, "onLocationChanged --- distance in meters: " + distanceInMeters);
 
-
         displayLocation();
 
 
@@ -471,6 +468,7 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
             checkInDetails.put("checkOutTimeStamp", "");
             checkInDetails.put("latitude", latitude);
             checkInDetails.put("longitude", longitude);
+            checkInDetails.put("checkInPhoto", userPhoto);
             checkInDetails.put("dutyPost", getTypeOfDutyPostSelected);
             checkInDetails.put("typeOfShift", getTypeOfShiftSelected);
 

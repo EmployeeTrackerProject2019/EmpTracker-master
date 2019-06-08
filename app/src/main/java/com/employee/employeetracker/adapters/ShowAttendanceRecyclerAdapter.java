@@ -9,11 +9,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.employee.employeetracker.MapsActivity;
 import com.employee.employeetracker.R;
 import com.employee.employeetracker.models.Employee;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class ShowAttendanceRecyclerAdapter extends FirebaseRecyclerAdapter<Employee, ShowAttendanceRecyclerAdapter.ShowAttendanceAdapter> {
@@ -36,6 +39,7 @@ public class ShowAttendanceRecyclerAdapter extends FirebaseRecyclerAdapter<Emplo
         holder.showCheckOutDate(model.getCheckOutTimeStamp());
         holder.showDutyPost(model.getDutyPost());
         holder.showShift(model.getTypeOfShift());
+        // holder.showPhoto(model.getCheckInPhoto());
 
         final String getAdapterPosition = getRef(position).getKey();
 
@@ -47,6 +51,8 @@ public class ShowAttendanceRecyclerAdapter extends FirebaseRecyclerAdapter<Emplo
                 intent.putExtra("name", model.getUserName());
                 intent.putExtra("dutyPost", model.getDutyPost());
                 intent.putExtra("shift", model.getTypeOfShift());
+                intent.putExtra("photo", model.getCheckInPhoto());
+                intent.putExtra("checkInTime", model.getDate());
                 v.getContext().startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 
 
@@ -58,9 +64,6 @@ public class ShowAttendanceRecyclerAdapter extends FirebaseRecyclerAdapter<Emplo
     @NonNull
     @Override
     public ShowAttendanceAdapter onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-//        return new ShowAttendanceAdapter(LayoutInflater.from(viewGroup.getContext())
-//                .inflate(R.layout.layout_view_employee_check_in, viewGroup, false));
-
         return new ShowAttendanceAdapter(LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.layout_test_combine, viewGroup, false));
     }
@@ -74,32 +77,28 @@ public class ShowAttendanceRecyclerAdapter extends FirebaseRecyclerAdapter<Emplo
         View view;
         TextView txtName, txtViewCheckIn, txtViewCheckOut, txtDutyPost, txtShift;
         Button checkOut;
+        CircleImageView userPhoto;
 
 
         ShowAttendanceAdapter(@NonNull View itemView) {
             super(itemView);
             view = itemView;
 
-            //txtViewCheckOut = view.findViewById(R.id.txtViewCheckOutUsers);
             txtName = view.findViewById(R.id.txttName);
             txtViewCheckIn = view.findViewById(R.id.txttCheckInTime);
             txtViewCheckOut = view.findViewById(R.id.txttCheckOutTime);
             txtDutyPost = view.findViewById(R.id.txttDutyPost);
             txtShift = view.findViewById(R.id.txttShift);
             checkOut = view.findViewById(R.id.btnnCheckOut);
+            userPhoto = view.findViewById(R.id.checkInPhoto);
 
         }
 
         void showCheckInEmployeeName(String name) {
-            // TextView nameOfAttendee = view.findViewById(R.id.txtCheckInNameOfEmployee);
-            // nameOfAttendee.setText(name);
             txtName.setText(name);
         }
 
-        public void showDate(String date) {
-            //  TextView nameOfAttendee = view.findViewById(R.id.txtCheckOutNameOfEmployee);
-            // nameOfAttendee.setText(name);
-
+        void showDate(String date) {
             try {
                 txtViewCheckIn.setText(date);
             } catch (Exception e) {
@@ -107,24 +106,12 @@ public class ShowAttendanceRecyclerAdapter extends FirebaseRecyclerAdapter<Emplo
             }
         }
 
-        void showCheckInDate(long date) {
-
-            // TextView txtCheckInDate = view.findViewById(R.id.textViewShowCheckInTimeStamp);
-            //  SimpleDateFormat sfd = new SimpleDateFormat("EEEE ' ' dd-MMMM-yyyy '@' hh:mm aa", Locale.US);
-
-//            try {
-//                txtViewCheckIn.setText(String.format("Checked in on : %s", GetDateTime.getFormattedDate(new Date(date))));
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
+        void showPhoto(String url) {
+            Glide.with(view).load(url).into(userPhoto);
 
         }
 
-        public void showCheckOutDate(String date) {
-
-            // TextView txtCheckOutDate = view.findViewById(R.id.textViewShowCheckOutTimeStamp);
-            //  SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy '@' hh:mm aa", Locale.US);
-
+        void showCheckOutDate(String date) {
             try {
                 if (date.isEmpty()) {
                     txtViewCheckOut.setText(" ");
@@ -136,16 +123,14 @@ public class ShowAttendanceRecyclerAdapter extends FirebaseRecyclerAdapter<Emplo
 
         }
 
-        public void showDutyPost(String name) {
+        void showDutyPost(String name) {
             txtDutyPost.setText(name);
-            //  TextView nameOfAttendee = view.findViewById(R.id.txtCheckOutNameOfEmployee);
-            // nameOfAttendee.setText(name);
+
         }
 
-        public void showShift(String name) {
+        void showShift(String name) {
             txtShift.setText(name);
-            //  TextView nameOfAttendee = view.findViewById(R.id.txtCheckOutNameOfEmployee);
-            // nameOfAttendee.setText(name);
+
         }
 
     }
