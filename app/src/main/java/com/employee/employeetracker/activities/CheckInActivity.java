@@ -68,6 +68,7 @@ public class CheckInActivity extends AppCompatActivity implements View.OnClickLi
     private ProgressDialog loading;
     private String uid, username, userPhoto;
     private DatabaseReference mUserDbRef, mAttendance, historyDbRef;
+    private String getTypeOfShiftSelected, getTypeOfDutyPostSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,6 +144,8 @@ public class CheckInActivity extends AppCompatActivity implements View.OnClickLi
         spinnerDutyPost = findViewById(R.id.spinnerForDutyPost);
         spinnerWorkShift = findViewById(R.id.spinnerForShifs);
         loading = new ProgressDialog(this);
+
+
     }
 
     private void initListeners() {
@@ -246,7 +249,6 @@ public class CheckInActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -258,7 +260,17 @@ public class CheckInActivity extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case R.id.btnCheckIn:
-                checkInUser();
+
+                if (spinnerWorkShift.getSelectedItemPosition() != 0 && spinnerDutyPost.getSelectedItemPosition() != 0) {
+                    checkInUser();
+                } else if (spinnerWorkShift.getSelectedItemPosition() == 0) {
+                    makeToast("pls slt shft");
+                } else if (spinnerDutyPost.getSelectedItemPosition() == 0) {
+                    makeToast("pls slt duty post");
+                } else {
+                    makeToast("somwtingg");
+                }
+
                 break;
         }
 
@@ -326,7 +338,17 @@ public class CheckInActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
+    void makeToast(String string) {
+        Toast toast = Toast.makeText(this, string, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+
+    }
+
+
     private void checkInUser() {
+        getTypeOfShiftSelected = spinnerWorkShift.getSelectedItem().toString();
+        getTypeOfDutyPostSelected = spinnerDutyPost.getSelectedItem().toString();
 
 
         Calendar calendar = Calendar.getInstance();
@@ -339,9 +361,6 @@ public class CheckInActivity extends AppCompatActivity implements View.OnClickLi
         loading.setMessage("please wait...It may take a moment");
         loading.setCancelable(false);
         loading.show();
-
-        final String getTypeOfShiftSelected = spinnerWorkShift.getSelectedItem().toString();
-        final String getTypeOfDutyPostSelected = spinnerDutyPost.getSelectedItem().toString();
 
 
         Map<String, Object> checkInDetails = new HashMap<>();
@@ -410,6 +429,7 @@ public class CheckInActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
 
+
         //   ByteArrayOutputStream stream = new ByteArrayOutputStream();
 //        photo.compress(Bitmap.CompressFormat.JPEG, 100, stream);
 
@@ -470,7 +490,4 @@ public class CheckInActivity extends AppCompatActivity implements View.OnClickLi
         */
 
     }
-
-
-
 }

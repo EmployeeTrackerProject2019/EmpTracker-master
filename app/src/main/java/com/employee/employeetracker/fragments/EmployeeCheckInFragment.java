@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.employee.employeetracker.CheckInAndOutActivity;
 import com.employee.employeetracker.MapsActivity2;
 import com.employee.employeetracker.R;
 import com.employee.employeetracker.activities.CheckInActivity;
@@ -87,7 +88,7 @@ public class EmployeeCheckInFragment extends Fragment implements View.OnClickLis
     private void initListener() {
         gotoCheckIn.setOnClickListener(this);
         gotoCheckOut.setOnClickListener(this);
-        // tstChkIn.setOnClickListener(this);
+        tstChkIn.setOnClickListener(this);
 
     }
 
@@ -105,7 +106,7 @@ public class EmployeeCheckInFragment extends Fragment implements View.OnClickLis
                 break;
 
             case R.id.to_checkOut:
-                // startActivity(new Intent(getContext(), Main2Activity.class));
+                startActivity(new Intent(getContext(), CheckInAndOutActivity.class));
                 break;
 
             case R.id.to_TESTcHK:

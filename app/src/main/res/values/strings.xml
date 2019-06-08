@@ -75,12 +75,14 @@
 
     <!--string array for working shift-->
     <string-array name="shifts">
+        <item>Please select your shift</item>
         <item>Day shift</item>
         <item>Night shift</item>
     </string-array>
 
     <!--string array for duty post-->
     <string-array name="dutyPost">
+        <item>Please select your duty post</item>
         <item>Block C</item>
         <item>COLT</item>
         <item>Duty Officer</item>

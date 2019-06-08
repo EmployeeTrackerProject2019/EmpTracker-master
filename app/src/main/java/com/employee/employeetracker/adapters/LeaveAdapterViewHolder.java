@@ -98,6 +98,12 @@ public class LeaveAdapterViewHolder extends FirebaseRecyclerAdapter<Leave,
         //display the response
         void showResponse(String response) {
             TextView txtResponse = view.findViewById(R.id.txtResultsFromAdmin);
+            if (response.equals("Leave approved")) {
+                txtResponse.setTextColor(view.getContext().getResources().getColor(R.color.colorGreen));
+            } else if (response.equals("Leave rejected")) {
+                txtResponse.setTextColor(view.getContext().getResources().getColor(R.color.colorRed));
+            }
+
             txtResponse.setText(response);
         }
 

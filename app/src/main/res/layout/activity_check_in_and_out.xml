@@ -1,92 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CheckInAndOutActivity">
 
-    <!-- Menu Layout is needed for the overlay to work -->
-    <jahirfiquitiva.libs.fabsmenu.FABsMenuLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="0dp"
-        fab:fabs_menu_clickableOverlay="true"
-        fab:fabs_menu_overlayColor="#4d000000"
-        tools:layout_behavior="@string/fabs_menu_layout_behavior">
 
-        <!-- FABs Menu is the main view. It will contain all the items FABs and it create the menu fab itself -->
-        <jahirfiquitiva.libs.fabsmenu.FABsMenu
-            android:id="@+id/fabs_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:clipChildren="false"
-            fab:fab_expandDirection="up"
-            fab:fab_labelsPosition="left"
-            fab:fab_menuMargins="16dp"
-            fab:fab_moreButtonBackgroundColor="@color/fb"
-            fab:fab_moreButtonPlusIcon="@drawable/ic_today"
-            fab:fab_moreButtonRippleColor="@color/pink"
-            fab:fab_moreButtonSize="normal">
-
-            <!-- This is the item that appears at the top of the menu -->
-            <jahirfiquitiva.libs.fabsmenu.TitleFAB
-                android:id="@+id/green_fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                fab:backgroundTint="@color/colorAsh"
-                fab:fabSize="normal"
-                fab:fab_title="Fab with even longer text that might not even fit in all the screens"
-                fab:rippleColor="@color/colorDark"
-                fab:srcCompat="@drawable/ic_wc_black" />
-
-            <jahirfiquitiva.libs.fabsmenu.TitleFAB
-                android:id="@+id/mini_fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                fab:backgroundTint="@color/white"
-                fab:fabSize="mini"
-                fab:fab_enableTitleClick="true"
-                fab:fab_title="@string/viewAttendance"
-                fab:fab_title_backgroundColor="@color/white"
-                fab:fab_title_textColor="@color/black"
-                fab:rippleColor="@color/colorBlue"
-                fab:srcCompat="@drawable/ic_view_attendance" />
-
-            <!-- This item will appear just above the menu FAB -->
-
-            <jahirfiquitiva.libs.fabsmenu.TitleFAB
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                fab:backgroundTint="@color/black"
-                fab:fabSize="mini"
-                fab:fab_enableTitleClick="true"
-                fab:fab_title="@string/checkOut"
-                fab:fab_title_backgroundColor="@color/black"
-                fab:fab_title_textColor="@color/white"
-                fab:rippleColor="@color/colorBlue"
-                fab:srcCompat="@drawable/ic_check_out" />
-
-            <jahirfiquitiva.libs.fabsmenu.TitleFAB
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                fab:backgroundTint="@color/amber"
-                fab:fabSize="mini"
-                fab:fab_enableTitleClick="true"
-                fab:fab_title="@string/checkIn"
-                fab:fab_title_backgroundColor="@color/amber"
-                fab:fab_title_textColor="@android:color/white"
-                fab:rippleColor="@color/colorBlue"
-                fab:srcCompat="@drawable/ic_check_in" />
-
-        </jahirfiquitiva.libs.fabsmenu.FABsMenu>
-
-    </jahirfiquitiva.libs.fabsmenu.FABsMenuLayout>
-
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

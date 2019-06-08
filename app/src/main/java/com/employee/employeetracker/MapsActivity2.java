@@ -359,10 +359,10 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
 
 
         //create a geo fence of the area or the boundary
-        LatLng placeBoundary = new LatLng(5.596242, -0.223489);//gtuc
+        LatLng placeBoundary = new LatLng(5.596091, -0.223362);//gtuc
         mMap.addCircle(new CircleOptions()
                 .center(placeBoundary)
-                .radius(100)
+                .radius(150) //150 meters from the center of the school
                 .strokeColor(Color.GREEN)
                 .fillColor(0x220000FF)
                 .strokeWidth(5.0f)
@@ -427,10 +427,16 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
     public void onClick(View v) {
         if (v.getId() == R.id.btnCheckIn) {
 
+            if (spinnerWorkShift.getSelectedItemPosition() != 0 && spinnerDutyPost.getSelectedItemPosition() != 0) {
+                checkInUser();
+            } else if (spinnerWorkShift.getSelectedItemPosition() == 0) {
+                makeToast("please select your shift");
+            } else if (spinnerDutyPost.getSelectedItemPosition() == 0) {
+                makeToast("please select duty post");
+            } else {
+                makeToast("Must select your shift and duty post ");
+            }
 
-            checkInUser();
-
-            //  makeToast("You can not check in from this location");
 
 
         }
@@ -446,7 +452,7 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
             Date today = calendar.getTime();
 //                SimpleDateFormat sfd = new SimpleDateFormat("EEEE dd/MMMM/yyyy", Locale.US);
             datePosted = GetDateTime.getFormattedDate(today);
-            dayOfTheWeek = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(System.currentTimeMillis());
+            dayOfTheWeek = new SimpleDateFormat("EEE", Locale.ENGLISH).format(System.currentTimeMillis());
 
 
             final String getTypeOfShiftSelected = spinnerWorkShift.getSelectedItem().toString();
