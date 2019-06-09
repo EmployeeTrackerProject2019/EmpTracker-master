@@ -151,7 +151,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                                 startLoading.dismiss();
 
-
                                 Intent openMainPage = new Intent(LoginActivity.this, MainActivity.class);
                                 openMainPage.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(openMainPage);
@@ -185,8 +184,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Log.d(TAG, "Log in failed: " + task.getException().getMessage());
                             startLoading.dismiss();
                             String errorMsg = task.getException().getMessage();
-                            Toast.makeText(LoginActivity.this, errorMsg, Toast.LENGTH_SHORT)
-                                    .show();
+                            new AlertDialog.Builder(LoginActivity.this)
+                                    .setIcon(R.drawable.sorry)
+                                    .setTitle("Log in Failed")
+                                    .setMessage(errorMsg)
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    }).create().show();
+
+//                            Toast.makeText(LoginActivity.this, errorMsg, Toast.LENGTH_SHORT).show();
                         }
 
                     }

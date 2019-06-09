@@ -22,7 +22,6 @@ import com.bumptech.glide.Glide;
 import com.employee.employeetracker.activities.MainActivity;
 import com.employee.employeetracker.utils.GetDateTime;
 import com.firebase.geofire.GeoFire;
-import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -42,7 +41,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -174,7 +172,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         float[] results = new float[1];
         Location.distanceBetween(lat, lng, 5.596091, -0.223362, results);
         float distanceInMeters = results[0];
-        boolean isWithinRange = distanceInMeters < 14445;
+        boolean isWithinRange = distanceInMeters < 145;
 
         if (!isWithinRange) {
 
@@ -288,23 +286,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             Log.i(TAG, "displayLocation: " + latitude + " " + longitude);
 
-            if (marker != null) marker.remove();
-
-            //update to fire base
-            geoFire.setLocation("You", new GeoLocation(latitude, longitude), new GeoFire.CompletionListener() {
-                @Override
-                public void onComplete(String key, DatabaseError error) {
-                    //add marker
-                    if (marker != null) marker.remove();
-
-                    marker = mMap.addMarker(new MarkerOptions()
-                            .position(new LatLng(latitude, longitude))
-                            .title("You are here"));
-                    //move camera to position
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude),
-                            16f));
-                }
-            });
+            Log.i(TAG, "displayLocation: " + latitude + " " + longitude);
+            if (marker != null) mMap.clear();
+            marker = mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(latitude, longitude))
+                    .snippet(getDuty + " on " + getShift)
+                    .title(getName));
+            //move camera to position
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude),
+                    16f));
 
             Log.i(TAG, "displayLocation: " + latitude + " " + longitude);
 
@@ -368,13 +358,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
+                        loading.dismiss();
+                        makeToast("Successfully checked out");
                         //insert data into history database
                         assert historyID != null;
                         historyDbRef.child(historyID).setValue(history);
                         Log.d(TAG, "onComplete: " + historyDbRef);
 
-                        loading.dismiss();
-                        makeToast("Successfully checked out");
+
                         startActivity(new Intent(MapsActivity.this,
                                 MainActivity.class));
                         finish();

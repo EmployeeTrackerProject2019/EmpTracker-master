@@ -115,8 +115,13 @@ public class ShowAttendanceRecyclerAdapter extends FirebaseRecyclerAdapter<Emplo
             try {
                 if (date.isEmpty()) {
                     txtViewCheckOut.setText(" ");
-                } else
+                    checkOut.setEnabled(true);
+                } else {
                     txtViewCheckOut.setText(date);
+                    checkOut.setText(view.getResources().getString(R.string.checkedOut));
+                    checkOut.setEnabled(false);
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

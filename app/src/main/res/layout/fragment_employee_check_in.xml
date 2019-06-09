@@ -89,31 +89,31 @@
                     app:fab_title="Check In"
                     app:fab_title_backgroundColor="@color/colorBlue"
                     app:fab_title_textColor="@android:color/white"
-                    app:srcCompat="@drawable/ic_mode" />
-
-                <jahirfiquitiva.libs.fabsmenu.TitleFAB
-                    android:id="@+id/to_checkOut"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:backgroundTint="@color/black"
-                    app:fabSize="mini"
-                    app:fab_enableTitleClick="true"
-                    app:fab_title="Check Out"
-                    app:fab_title_backgroundColor="@color/black"
-                    app:fab_title_textColor="@color/white"
                     app:srcCompat="@drawable/ic_check_in" />
 
-                <jahirfiquitiva.libs.fabsmenu.TitleFAB
-                    android:id="@+id/to_TESTcHK"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:backgroundTint="@color/black"
-                    app:fabSize="mini"
-                    app:fab_enableTitleClick="true"
-                    app:fab_title="Check In tESTER"
-                    app:fab_title_backgroundColor="@color/black"
-                    app:fab_title_textColor="@color/white"
-                    app:srcCompat="@drawable/ic_check_in" />
+                <!--<jahirfiquitiva.libs.fabsmenu.TitleFAB-->
+                <!--android:id="@+id/to_checkOut"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:backgroundTint="@color/black"-->
+                <!--app:fabSize="mini"-->
+                <!--app:fab_enableTitleClick="true"-->
+                <!--app:fab_title="Check Out"-->
+                <!--app:fab_title_backgroundColor="@color/black"-->
+                <!--app:fab_title_textColor="@color/white"-->
+                <!--app:srcCompat="@drawable/ic_check_in" />-->
+
+                <!--<jahirfiquitiva.libs.fabsmenu.TitleFAB-->
+                <!--android:id="@+id/to_TESTcHK"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:backgroundTint="@color/black"-->
+                <!--app:fabSize="mini"-->
+                <!--app:fab_enableTitleClick="true"-->
+                <!--app:fab_title="Check In tESTER"-->
+                <!--app:fab_title_backgroundColor="@color/black"-->
+                <!--app:fab_title_textColor="@color/white"-->
+                <!--app:srcCompat="@drawable/ic_check_in" />-->
 
             </jahirfiquitiva.libs.fabsmenu.FABsMenu>
 

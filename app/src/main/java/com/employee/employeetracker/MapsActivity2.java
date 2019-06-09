@@ -27,9 +27,6 @@ import com.bumptech.glide.Glide;
 import com.employee.employeetracker.activities.MainActivity;
 import com.employee.employeetracker.utils.GetDateTime;
 import com.firebase.geofire.GeoFire;
-import com.firebase.geofire.GeoLocation;
-import com.firebase.geofire.GeoQuery;
-import com.firebase.geofire.GeoQueryEventListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -156,7 +153,7 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
                 userPhoto = (String) dataSnapshot.child("image").getValue();
 
                 txtName.setText(username);
-                Glide.with(MapsActivity2.this).load(userPhoto).into(mPhoto);
+                Glide.with(getApplicationContext()).load(userPhoto).into(mPhoto);
             }
 
             @Override
@@ -229,22 +226,13 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
             longitude = mLastLocation.getLongitude();
 
             Log.i(TAG, "displayLocation: " + latitude + " " + longitude);
-
-            //update to fire base
-            geoFire.setLocation("You", new GeoLocation(latitude, longitude), new GeoFire.CompletionListener() {
-                @Override
-                public void onComplete(String key, DatabaseError error) {
-                    //add marker
-                    if (marker != null) marker.remove();
-
-                    marker = mMap.addMarker(new MarkerOptions()
-                            .position(new LatLng(latitude, longitude))
-                            .title("You are here"));
-                    //move camera to position
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude),
-                            16f));
-                }
-            });
+            if (marker != null) mMap.clear();
+            marker = mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(latitude, longitude))
+                    .title(username));
+            //move camera to position
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude),
+                    16f));
 
 
             Log.i(TAG, "displayLocation: " + latitude + " " + longitude);
@@ -351,21 +339,26 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        //mMap.setMyLocationEnabled(true);
-            mMap.setIndoorEnabled(true);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MYPERMISSIONREQUEST);
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+        mMap.setIndoorEnabled(true);
         //  mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        //mMap.setBuildingsEnabled(true);
+        mMap.setBuildingsEnabled(true);
 
-            UiSettings uiSettings = mMap.getUiSettings();
-            uiSettings.setZoomControlsEnabled(true);
-            uiSettings.setAllGesturesEnabled(true);
+        UiSettings uiSettings = mMap.getUiSettings();
+        uiSettings.setZoomControlsEnabled(false);
+        uiSettings.setAllGesturesEnabled(true);
 
 
-            Log.d(TAG, "onMapReady: Successful");
+        Log.d(TAG, "onMapReady: Successful");
 
 
         //create a geo fence of the area or the boundary
-        LatLng placeBoundary = new LatLng(5.596091, -0.223362);//gtuc
+        LatLng placeBoundary = new LatLng(5.5959835, -0.2231457);//gtuc
+
         mMap.addCircle(new CircleOptions()
                 .center(placeBoundary)
                 .radius(150) //150 meters from the center of the school
@@ -374,7 +367,7 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
                 .strokeWidth(5.0f)
         );
 
-//        add geo query here
+/*        add geo query here
         GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(placeBoundary.latitude, placeBoundary.longitude), 3.0f);
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
             @Override
@@ -410,7 +403,7 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
             }
         });
 
-
+*/
 
     }
 
@@ -430,92 +423,98 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
             }
 
 
-
         }
     }
 
     private void checkInUser() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
 
-        if (!btnCheckIn.isEnabled()) {
-            makeToast("You can not check i n from this location");
-        } else {
+                if (!btnCheckIn.isEnabled()) {
+                    makeToast("You can not check in from this location");
+                } else {
 
-            Calendar calendar = Calendar.getInstance();
-            Date today = calendar.getTime();
+                    Calendar calendar = Calendar.getInstance();
+                    Date today = calendar.getTime();
 //                SimpleDateFormat sfd = new SimpleDateFormat("EEEE dd/MMMM/yyyy", Locale.US);
-            datePosted = GetDateTime.getFormattedDate(today);
-            dayOfTheWeek = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(System.currentTimeMillis());
+                    datePosted = GetDateTime.getFormattedDate(today);
+                    dayOfTheWeek = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(System.currentTimeMillis());
 
 
-            final String getTypeOfShiftSelected = spinnerWorkShift.getSelectedItem().toString();
-            final String getTypeOfDutyPostSelected = spinnerDutyPost.getSelectedItem().toString();
+                    final String getTypeOfShiftSelected = spinnerWorkShift.getSelectedItem().toString();
+                    final String getTypeOfDutyPostSelected = spinnerDutyPost.getSelectedItem().toString();
 
-            loading.setMessage("Checking in on " + getTypeOfShiftSelected + " at " + getTypeOfDutyPostSelected);
-            loading.setCancelable(false);
-            loading.show();
+                    loading.setMessage("Checking in on " + getTypeOfShiftSelected + " at " + getTypeOfDutyPostSelected);
+                    loading.setCancelable(false);
+                    loading.show();
 
 //The constructor can equally be used as this
-            Map<String, Object> checkInDetails = new HashMap<>();
-            checkInDetails.put("userId", uid);
-            checkInDetails.put("userName", username);
-            checkInDetails.put("date", datePosted);
-            checkInDetails.put("dayOfWeek", dayOfTheWeek);
-            checkInDetails.put("checkOutTimeStamp", "");
-            checkInDetails.put("latitude", latitude);
-            checkInDetails.put("longitude", longitude);
-            checkInDetails.put("checkInPhoto", userPhoto);
-            checkInDetails.put("dutyPost", getTypeOfDutyPostSelected);
-            checkInDetails.put("typeOfShift", getTypeOfShiftSelected);
+                    Map<String, Object> checkInDetails = new HashMap<>();
+                    checkInDetails.put("userId", uid);
+                    checkInDetails.put("userName", username);
+                    checkInDetails.put("date", datePosted);
+                    checkInDetails.put("dayOfWeek", dayOfTheWeek);
+                    checkInDetails.put("checkOutTimeStamp", "");
+                    checkInDetails.put("latitude", latitude);
+                    checkInDetails.put("longitude", longitude);
+                    checkInDetails.put("checkInPhoto", userPhoto);
+                    checkInDetails.put("dutyPost", getTypeOfDutyPostSelected);
+                    checkInDetails.put("typeOfShift", getTypeOfShiftSelected);
 
 
 //Add to user profile and update profile
-            final Map<String, Object> addDetailsToProfile = new HashMap<>();
-            addDetailsToProfile.put("dutyPost", getTypeOfDutyPostSelected);
-            addDetailsToProfile.put("typeOfShift", getTypeOfShiftSelected);
-            addDetailsToProfile.put("timeStamp", ServerValue.TIMESTAMP);
+                    final Map<String, Object> addDetailsToProfile = new HashMap<>();
+                    addDetailsToProfile.put("dutyPost", getTypeOfDutyPostSelected);
+                    addDetailsToProfile.put("typeOfShift", getTypeOfShiftSelected);
+                    addDetailsToProfile.put("timeStamp", ServerValue.TIMESTAMP);
 //keep history
-            String historyBuilder;
-            historyBuilder =
-                    username + " " + "checked in on" + " " + datePosted;
+                    String historyBuilder;
+                    historyBuilder =
+                            username + " " + "checked in on" + " " + datePosted;
 
-            //add to history database
-            final Map<String, Object> history = new HashMap<>();
-            history.put("history", historyBuilder);
-            final String historyID = historyDbRef.push().getKey();
+                    //add to history database
+                    final Map<String, Object> history = new HashMap<>();
+                    history.put("history", historyBuilder);
+                    final String historyID = historyDbRef.push().getKey();
+
 
 //Post details to check in database
-            final String attendanceKey = mAttendance.push().getKey();
-            //  mAttendance.child(dayOfTheWeek).child(uid).setValue(checkInDetails)
-            assert attendanceKey != null;
-            mAttendance.child(dayOfTheWeek).child(attendanceKey).setValue(checkInDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
+                    final String attendanceKey = mAttendance.push().getKey();
+                    //  mAttendance.child(dayOfTheWeek).child(uid).setValue(checkInDetails)
+                    assert attendanceKey != null;
+                    mAttendance.child(dayOfTheWeek).child(attendanceKey).setValue(checkInDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                loading.dismiss();
+                                makeToast("Successfully checked in");
+                                //set values to database and update the employee account with the details
+                                mUserDbRef.updateChildren(addDetailsToProfile);
+                                Log.d(TAG, "displayLocation: " + latitude + " " + longitude);
 
-//set values to database and update the employee account with the details
-                        mUserDbRef.updateChildren(addDetailsToProfile);
-                        Log.d(TAG, "displayLocation: " + latitude + " " + longitude);
+                                //insert data into history database
+                                assert historyID != null;
+                                historyDbRef.child(historyID).setValue(history);
+                                Log.d(TAG, "onComplete: " + historyDbRef);
 
-                        //insert data into history database
-                        assert historyID != null;
-                        historyDbRef.child(historyID).setValue(history);
-                        Log.d(TAG, "onComplete: " + historyDbRef);
-
-                        loading.dismiss();
-                        makeToast("Successfully posted");
-                        startActivity(new Intent(MapsActivity2.this,
-                                MainActivity.class));
-                        finish();
-                    } else if (!task.isSuccessful()) {
-                        loading.dismiss();
-                        makeToast(task.getException().getMessage());
-                    }
+                                startActivity(new Intent(MapsActivity2.this,
+                                        MainActivity.class));
+                                //finish();
+                            } else if (!task.isSuccessful()) {
+                                loading.dismiss();
+                                makeToast(task.getException().getMessage());
+                            }
+                        }
+                    });
                 }
-            });
-        }
+
+
+            }
+        });
+
 
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

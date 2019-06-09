@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements MakeReportListene
     private String getLeaveMsg, getStartDate, getEndDate;
     //auths
     private FirebaseUser mFirebaseUser;
+    private FirebaseAuth mAuth;
 
 
     //Run on UI
@@ -132,11 +133,12 @@ public class MainActivity extends AppCompatActivity implements MakeReportListene
         setContentView(R.layout.activity_main);
 
         //Fire base
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mAuth.getCurrentUser();
         if (mAuth.getCurrentUser() == null) {
             return;
         }
+
         assert mFirebaseUser != null;
         userId = mFirebaseUser.getUid();
         float[] results = new float[1];
@@ -296,11 +298,6 @@ public class MainActivity extends AppCompatActivity implements MakeReportListene
 
     }
 
-    //method to return to welcome screen if user id is null
-    private void returnToWelcomePage() {
-        startActivity(new Intent(MainActivity.this, SplashScreenActivity.class));
-        finish();
-    }
 
     /*  Show Popup to access User Permission  */
     private void requestLocationPermission() {
@@ -528,15 +525,21 @@ public class MainActivity extends AppCompatActivity implements MakeReportListene
     protected void onStart() {
         super.onStart();
         try {
-            assert mFirebaseUser != null;
-            if (!mFirebaseUser.isEmailVerified()) {
+            if (mAuth.getCurrentUser() == null) {
                 returnToWelcomePage();
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
 
+    }
+
+    //method to return to welcome screen if user id is null
+    private void returnToWelcomePage() {
+        startActivity(new Intent(MainActivity.this, SplashScreenActivity.class));
+        finish();
     }
 
     @Override
