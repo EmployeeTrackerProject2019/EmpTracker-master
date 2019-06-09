@@ -147,61 +147,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
-
-    @Override
-    public void onClick(View v) {
-        checkOutUser();
-
-    }
-
-    private void checkOutUser() {
-        if (!bar.isEnabled()) {
-            makeToast("You can not check i n from this location");
-        } else {
-            loading.setMessage("Checking out on  " + getShift + " at " + getDuty);
-            loading.setCancelable(false);
-            loading.show();
-
-            Calendar calendar = Calendar.getInstance();
-            Date today = calendar.getTime();
-            dateCheckOut = GetDateTime.getFormattedDate(today);
-
-//The constructor can equally be used as this
-            Map<String, Object> checkOutDetails = new HashMap<>();
-            checkOutDetails.put("checkOutTimeStamp", dateCheckOut);
-//keep history
-            String historyBuilder;
-            historyBuilder =
-                    getName + " " + "checked out on " + " " + dateCheckOut;
-
-            //add to history database
-            final Map<String, Object> history = new HashMap<>();
-            history.put("history", historyBuilder);
-            final String historyID = historyDbRef.push().getKey();
-
-            dbCheckOut.updateChildren(checkOutDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        //insert data into history database
-                        assert historyID != null;
-                        historyDbRef.child(historyID).setValue(history);
-                        Log.d(TAG, "onComplete: " + historyDbRef);
-
-                        loading.dismiss();
-                        makeToast("Successfully checked out");
-                        startActivity(new Intent(MapsActivity.this,
-                                MainActivity.class));
-                        finish();
-                    } else if (!task.isSuccessful()) {
-                        loading.dismiss();
-                        makeToast(task.getException().getMessage());
-                    }
-                }
-            });
-        }
-    }
-
     @Override
     public void onConnected(@Nullable Bundle bundle) {
 
@@ -229,7 +174,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         float[] results = new float[1];
         Location.distanceBetween(lat, lng, 5.596091, -0.223362, results);
         float distanceInMeters = results[0];
-        boolean isWithinRange = distanceInMeters < 145;
+        boolean isWithinRange = distanceInMeters < 14445;
 
         if (!isWithinRange) {
 
@@ -388,9 +333,79 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    @Override
+    public void onClick(View v) {
+        checkOutUser();
+
+    }
+
+    private void checkOutUser() {
+        if (!bar.isEnabled()) {
+            makeToast("You can not check out from this location");
+        } else {
+            loading.setMessage("Checking out on  " + getShift + " at " + getDuty);
+            loading.setCancelable(false);
+            loading.show();
+
+            Calendar calendar = Calendar.getInstance();
+            Date today = calendar.getTime();
+            dateCheckOut = GetDateTime.getFormattedDate(today);
+
+//The constructor can equally be used as this
+            Map<String, Object> checkOutDetails = new HashMap<>();
+            checkOutDetails.put("checkOutTimeStamp", dateCheckOut);
+//keep history
+            String historyBuilder;
+            historyBuilder =
+                    getName + " " + "checked out on " + " " + dateCheckOut;
+
+            //add to history database
+            final Map<String, Object> history = new HashMap<>();
+            history.put("history", historyBuilder);
+            final String historyID = historyDbRef.push().getKey();
+
+            dbCheckOut.updateChildren(checkOutDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        //insert data into history database
+                        assert historyID != null;
+                        historyDbRef.child(historyID).setValue(history);
+                        Log.d(TAG, "onComplete: " + historyDbRef);
+
+                        loading.dismiss();
+                        makeToast("Successfully checked out");
+                        startActivity(new Intent(MapsActivity.this,
+                                MainActivity.class));
+                        finish();
+                    } else if (!task.isSuccessful()) {
+                        loading.dismiss();
+                        makeToast(task.getException().getMessage());
+                    }
+                }
+            });
+        }
+    }
+
     public void makeToast(String text) {
         Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == MYPERMISSIONREQUEST) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (checkPlayServices()) {
+                    buildGoogleClient();
+                    createLocationRequest();
+                    displayLocation();
+                }
+            }
+        }
+
+
+    }
+
 }
