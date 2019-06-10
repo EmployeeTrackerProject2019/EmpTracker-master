@@ -219,39 +219,6 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/textInputLayoutPhone"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:visibility="gone"
-                app:boxBackgroundMode="outline"
-                app:boxCornerRadiusBottomStart="10dp"
-                app:boxCornerRadiusTopEnd="20dp"
-                app:boxStrokeColor="@color/fb"
-                app:boxStrokeWidth="2dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtEditPhoneNumber">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/inputEditPhone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_phone_ash"
-                    android:drawableLeft="@drawable/ic_phone_ash"
-                    android:drawablePadding="@dimen/eightDp"
-                    android:enabled="false"
-                    android:hint="@string/mobile_number"
-                    android:imeOptions="actionNext"
-                    android:inputType="phone"
-                    android:singleLine="true" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
                 android:id="@+id/textInputLayoutAbout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -268,7 +235,7 @@
                 app:errorEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPhone">
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayoutLastName">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/inputEditAbout"
@@ -298,24 +265,6 @@
                 app:layout_constraintStart_toStartOf="@+id/textInputLayoutAbout"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayoutAbout"
                 app:layout_constraintVertical_bias="1.0" />
-
-
-            <TextView
-                android:id="@+id/txtEditPhoneNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:background="@drawable/buttonstyletransparent"
-                android:padding="@dimen/eightDp"
-                android:text="@string/edit_phone_number"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayoutLastName" />
 
 
         </android.support.constraint.ConstraintLayout>

@@ -7,7 +7,7 @@
     <string name="some_text_description">Some Text Description</string>
     <string name="sign_up">Sign Up</string>
     <string name="login">Log in</string>
-    <string name="knowYou">Let us get to you know here…\nTell us your first and last name</string>
+    <string name="knowYou">Let\'s get to you better…\nTell us your first and last name</string>
     <string name="now_you_can_spend_less_time_on_attendance_and_manage_your_employees_with_few_clicks">Now you can spend less time on attendance and manage your employees with few clicks</string>
     <string name="welcome_to_employee_tracker">Welcome to Employee tracker</string>
 
@@ -70,7 +70,7 @@
     <string name="view_map">View Map</string>
     <string name="duty_post">Duty Post</string>
     <string name="tap_on_the_camera_icon_to_add_a_photo">To complete the registration process please add a photo.\nTap on the camera icon to add a photo</string>
-    <string name="nameOfPerson">Name of Person</string>
+    <string name="nameOfPerson">Name of Security Staff</string>
 
 
     <!--string array for working shift-->

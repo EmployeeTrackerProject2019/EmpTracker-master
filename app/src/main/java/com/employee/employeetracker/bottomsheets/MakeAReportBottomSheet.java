@@ -91,13 +91,13 @@ public class MakeAReportBottomSheet extends BottomSheetDialogFragment {
             txtDescription.setError("You must give a detailed description");
             txtDescription.setErrorEnabled(true);
 
-        } else if (getReportTitle.length() <= 5) {
+        } else if (getReportTitle.length() < 10) {
 
             loading.setVisibility(View.GONE);
             txtTitle.setError("Report title too short");
             txtTitle.setErrorEnabled(true);
 
-        } else if (getReportDescription.length() <= 10) {
+        } else if (getReportDescription.length() < 30) {
 
             loading.setVisibility(View.GONE);
             txtTitle.setError("Report description too short");

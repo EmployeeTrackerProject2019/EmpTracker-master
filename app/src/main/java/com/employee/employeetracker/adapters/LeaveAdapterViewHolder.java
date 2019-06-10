@@ -1,6 +1,8 @@
 package com.employee.employeetracker.adapters;
 
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +37,7 @@ public class LeaveAdapterViewHolder extends FirebaseRecyclerAdapter<Leave,
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ShowLeaveViewHolder holder, int position, @NonNull Leave model) {
+    protected void onBindViewHolder(@NonNull ShowLeaveViewHolder holder, int position, @NonNull final Leave model) {
 
         String getAdapterPostion = getRef(position).getKey();
 
@@ -47,6 +49,21 @@ public class LeaveAdapterViewHolder extends FirebaseRecyclerAdapter<Leave,
         holder.btnView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                new AlertDialog.Builder(v.getContext())
+                        .setTitle(model.getLeaveResponse())
+                        .setIcon(v.getContext().getResources().getDrawable(R.drawable.sorry))
+                        .setMessage(model.getLeaveMsg())
+                        .setCancelable(false)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+
+
+                            }
+                        }).create().show();
+
 
             }
         });

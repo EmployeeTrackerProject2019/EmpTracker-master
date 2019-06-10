@@ -22,8 +22,10 @@ import com.employee.employeetracker.R;
 import com.employee.employeetracker.utils.GetDateTime;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class RequestALeaveBottomSheet extends BottomSheetDialogFragment implements View.OnClickListener {
     private static final String TAG = "RequestALeaveBottomShee";
@@ -41,6 +43,7 @@ public class RequestALeaveBottomSheet extends BottomSheetDialogFragment implemen
     private Button btnSubmit, btnStartDate, btnEndDate;
     private View view;
     private Date date, convertStartDate, convertEndDate;
+    SimpleDateFormat sfd;
 
     @Nullable
     @Override
@@ -58,6 +61,10 @@ public class RequestALeaveBottomSheet extends BottomSheetDialogFragment implemen
         date = calendar.getTime();
         convertEndDate = new Date();
         convertStartDate = new Date();
+
+
+        sfd = new SimpleDateFormat("EEE dd-MMMM-yyyy ",
+                Locale.US);
 
         Log.i(TAG, "onCreateView: " + GetDateTime.getFormattedDate(new Date(String.valueOf(date))));
 
@@ -151,7 +158,7 @@ public class RequestALeaveBottomSheet extends BottomSheetDialogFragment implemen
 
 
                     } else if (date.after(new Date(startDateSelected))) {
-                        // Log.i(TAG, "onDateSet: " + " today: " + date + " date selected: " + currentDate);
+                        //Log.i(TAG, "onDateSet: " + " today: " + date + " date selected: " + currentDate);
                         displayErrorOnStartDateSelected();
                     }
 
@@ -173,9 +180,10 @@ public class RequestALeaveBottomSheet extends BottomSheetDialogFragment implemen
 
     //checks corresponding date from the user and allows them to proceed
     void checkSuccessSelectStartDate() {
+
         txtStartDate.setError("");
         txtStartDate.setErrorEnabled(false);
-        txtStartDate.getEditText().setText(GetDateTime.getFormattedDate(new Date(startDateSelected)));
+        txtStartDate.getEditText().setText(sfd.format(new Date(startDateSelected)));
         getStartDate = txtStartDate.getEditText().getText().toString();
         Log.i(TAG, "checkSuccessSelectStartDate: " + getStartDate);
     }
@@ -191,7 +199,7 @@ public class RequestALeaveBottomSheet extends BottomSheetDialogFragment implemen
     void checkSuccessEndDate() {
         txtEndDate.setError("");
         txtEndDate.setErrorEnabled(false);
-        txtEndDate.getEditText().setText(GetDateTime.getFormattedDate(new Date(endDateSelected)));
+        txtEndDate.getEditText().setText(sfd.format(new Date(endDateSelected)));
         getEndDate = txtStartDate.getEditText().getText().toString();
         Log.i(TAG, "checkSuccessEndDate: " + getEndDate);
     }
@@ -216,74 +224,70 @@ public class RequestALeaveBottomSheet extends BottomSheetDialogFragment implemen
 */
 
 //FIRST condition to check if the both dates selected are not the same
-        if (!startDateSelected.equals(endDateSelected)) {
-
-            try {
-                btnSubmit.setEnabled(true);
-                String getLeaveMsg = txtLeaveMsg.getEditText().getText().toString();
-
-                //        check and validate inputs
-                if (!TextUtils.isEmpty(getLeaveMsg) && (!TextUtils.isEmpty(txtStartDate.getEditText().getText().toString())) && (!TextUtils.isEmpty(txtEndDate.getEditText().getText().toString())) && getLeaveMsg.length() > 10) {
-                    txtLeaveMsg.setErrorEnabled(false);
-                    requestLeaveListener.onButtonClicked(getLeaveMsg, getStartDate, getEndDate);
-                    loading.setVisibility(View.VISIBLE);
-
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            loading.setVisibility(View.INVISIBLE);
-                            dismiss();
 
 
-                        }
-                    }, 2000);
-                } else if (TextUtils.isEmpty(getLeaveMsg)) {
+        try {
+            btnSubmit.setEnabled(true);
+            String getLeaveMsg = txtLeaveMsg.getEditText().getText().toString();
 
-                    loading.setVisibility(View.GONE);
-                    txtLeaveMsg.setError("Required");
-                    txtLeaveMsg.setErrorEnabled(true);
+            //        check and validate inputs
+            if (!TextUtils.isEmpty(getLeaveMsg) && (!TextUtils.isEmpty(txtStartDate.getEditText().getText().toString()))
+                    && (!TextUtils.isEmpty(txtEndDate.getEditText().getText().toString()))
+                    && getLeaveMsg.length() > 30) {
+                txtLeaveMsg.setErrorEnabled(false);
+                requestLeaveListener.onButtonClicked(getLeaveMsg, getStartDate, getEndDate);
+                loading.setVisibility(View.VISIBLE);
 
-                } else if (TextUtils.isEmpty(getStartDate)) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
 
-                    loading.setVisibility(View.GONE);
-                    txtStartDate.setError("You must select a start date");
-                    txtStartDate.setErrorEnabled(true);
+                        loading.setVisibility(View.INVISIBLE);
+                        dismiss();
 
-                } else if (TextUtils.isEmpty(getEndDate)) {
 
-                    loading.setVisibility(View.GONE);
-                    txtEndDate.setError("You must select an end date");
-                    txtEndDate.setErrorEnabled(true);
+                    }
+                }, 2000);
+            } else if (TextUtils.isEmpty(getLeaveMsg)) {
 
-                } else if (getLeaveMsg.length() <= 5) {
+                loading.setVisibility(View.GONE);
+                txtLeaveMsg.setError("Required");
+                txtLeaveMsg.setErrorEnabled(true);
 
-                    loading.setVisibility(View.GONE);
-                    txtLeaveMsg.setError("Message too short");
-                    txtLeaveMsg.setErrorEnabled(true);
+            } else if (TextUtils.isEmpty(getStartDate)) {
 
-                } else if (getLeaveMsg.matches("[-+]?\\d+(\\.\\d+)?")) {
+                loading.setVisibility(View.GONE);
+                txtStartDate.setError("You must select a start date");
+                txtStartDate.setErrorEnabled(true);
 
-                    loading.setVisibility(View.GONE);
-                    txtLeaveMsg.setError("Invalid inputs");
-                    txtLeaveMsg.setErrorEnabled(true);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            } else if (TextUtils.isEmpty(getEndDate)) {
+
+                loading.setVisibility(View.GONE);
+                txtEndDate.setError("You must select an end date");
+                txtEndDate.setErrorEnabled(true);
+
+            } else if (getLeaveMsg.length() < 30) {
+
+                loading.setVisibility(View.GONE);
+                txtLeaveMsg.setError("Message too short");
+                txtLeaveMsg.setErrorEnabled(true);
+
+            } else if (getLeaveMsg.matches("[-+]?\\d+(\\.\\d+)?")) {
+
+                loading.setVisibility(View.GONE);
+                txtLeaveMsg.setError("Invalid inputs");
+                txtLeaveMsg.setErrorEnabled(true);
             }
-
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+
+
         /*compare start date and end date
          *compute the difference
          * prompt user when the end date is less than the start date
          */
-        else {
-            //txtEndDate.setErrorEnabled(true);
-            txtEndDate.setError("Sorry You can not start leave and end the same day!");
-
-            // btnSubmit.setEnabled(false);
-        }
 
 
     }

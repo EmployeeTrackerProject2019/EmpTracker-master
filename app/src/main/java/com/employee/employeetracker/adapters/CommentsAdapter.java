@@ -10,11 +10,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.employee.employeetracker.R;
 import com.employee.employeetracker.models.Report;
-import com.employee.employeetracker.utils.GetDateTime;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -78,10 +79,11 @@ public class CommentsAdapter extends FirebaseRecyclerAdapter<Report, CommentsAda
         void showDate(Long date) {
 
             TextView time = view.findViewById(R.id.commentDate);
-//            SimpleDateFormat sfd = new SimpleDateFormat();
+            SimpleDateFormat sfd = new SimpleDateFormat("EEE dd-MMMM-yyyy '@' hh:mm aa ",
+                    Locale.US);
 
             try {
-                time.setText(GetDateTime.getFormattedDate((new Date(date))));
+                time.setText(sfd.format((new Date(date))));
             } catch (Exception e) {
                 e.printStackTrace();
             }

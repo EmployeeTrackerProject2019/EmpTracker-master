@@ -13,7 +13,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Gravity;
@@ -27,7 +26,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.employee.employeetracker.R;
 import com.employee.employeetracker.activities.SplashScreenActivity;
-import com.employee.employeetracker.bottomsheets.PhoneNumberBottomSheet;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -76,7 +74,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
     private String getEmail, mVerificationCode;
     private Uri resultUri;
     private StorageReference mStorageReferenceForPhoto;
-    private TextInputLayout txtfirstName, txtLastName, txtPhoneNumber, txtAbout;
+    private TextInputLayout txtfirstName, txtLastName, txtAbout;
     private ProgressDialog progressDialog;
     private String getImageUri, log = "History", fullName;
     private StringBuilder historyBuilder;
@@ -142,14 +140,13 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         btnSave = view.findViewById(R.id.btnSaveProfile);
         txtfirstName = view.findViewById(R.id.textInputLayoutFirstName);
         txtLastName = view.findViewById(R.id.textInputLayoutLastName);
-        txtPhoneNumber = view.findViewById(R.id.textInputLayoutPhone);
         txtAbout = view.findViewById(R.id.textInputLayoutAbout);
         progressDialog = new ProgressDialog(getActivity());
 
         history = new HashMap<>();
         historyBuilder = new StringBuilder();
 
-
+/*
         view.findViewById(R.id.txtEditPhoneNumber).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,6 +159,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
 
             }
         });
+        */
     }
 
     private void initListeners() {
@@ -191,7 +189,6 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
                         String showFirstName = (String) dataSnapshot.child("firstName").getValue();
                         String showLastName = (String) dataSnapshot.child("lastName").getValue();
                         String showAbout = (String) dataSnapshot.child("about").getValue();
-                        String showNumber = (String) dataSnapshot.child("phone").getValue();
 
 
                         //display the values into the required fields
@@ -200,16 +197,10 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
                         //display the values into the required fields
                         txtfirstName.getEditText().setText(showFirstName);
                         txtLastName.getEditText().setText(showLastName);
-                        txtPhoneNumber.getEditText().setText(String.valueOf(showNumber));
                         txtAbout.getEditText().setText(showAbout);
                         Glide.with(getActivity().getApplicationContext()).load(showImage).into(userImage);
 
-                        if (!dataSnapshot.child("phone").exists() || (dataSnapshot.child("phone").getValue()).equals(" ")) {
-                            txtPhoneNumber.setVisibility(View.GONE);
-                        } else {
-                            txtPhoneNumber.setVisibility(View.VISIBLE);
 
-                        }
 
                     }
                 } catch (NullPointerException e) {
