@@ -219,7 +219,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         LatLng placeBoundary = new LatLng(5.596091, -0.223362);//gtuc
         mMap.addCircle(new CircleOptions()
                 .center(placeBoundary)
-                .radius(150) //150 meters from the center of the school
+                .radius(130) //130 meters from the center of the school
                 .strokeColor(Color.GREEN)
                 .fillColor(0x220000FF)
                 .strokeWidth(5.0f)
@@ -287,7 +287,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             Log.i(TAG, "displayLocation: " + latitude + " " + longitude);
 
             Log.i(TAG, "displayLocation: " + latitude + " " + longitude);
-            if (marker != null) mMap.clear();
+            if (marker != null) marker.remove();
             marker = mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(latitude, longitude))
                     .snippet(getDuty + " on " + getShift)

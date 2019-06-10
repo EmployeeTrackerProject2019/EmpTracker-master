@@ -141,6 +141,16 @@ public class MainActivity extends AppCompatActivity implements MakeReportListene
 
         assert mFirebaseUser != null;
         userId = mFirebaseUser.getUid();
+
+        usersDbRef = FirebaseDatabase.getInstance().getReference().child("Employee").child(userId);
+        usersDbRef.keepSynced(true);
+        //Reports database
+        reportDbRef = FirebaseDatabase.getInstance().getReference("Reports");
+        reportDbRef.keepSynced(true);
+        //Leave database
+        leaveDbRef = FirebaseDatabase.getInstance().getReference("Leaves");
+        leaveDbRef.keepSynced(true);
+
         float[] results = new float[1];
         Location.distanceBetween(5.594759, -0.223371, 5.596091, -0.223362, results);
         float distanceInMeters = results[0];
@@ -212,14 +222,7 @@ public class MainActivity extends AppCompatActivity implements MakeReportListene
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                usersDbRef = FirebaseDatabase.getInstance().getReference().child("Employee").child(userId);
-                usersDbRef.keepSynced(true);
-                //Reports database
-                reportDbRef = FirebaseDatabase.getInstance().getReference("Reports");
-                reportDbRef.keepSynced(true);
-                //Leave database
-                leaveDbRef = FirebaseDatabase.getInstance().getReference("Leaves");
-                leaveDbRef.keepSynced(true);
+
 
                 //update users time stamp per log in
                 Map<String, Object> lastSeen = new HashMap<>();

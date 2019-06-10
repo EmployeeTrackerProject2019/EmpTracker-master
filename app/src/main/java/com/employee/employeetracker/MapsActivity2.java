@@ -226,7 +226,7 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
             longitude = mLastLocation.getLongitude();
 
             Log.i(TAG, "displayLocation: " + latitude + " " + longitude);
-            if (marker != null) mMap.clear();
+            if (marker != null) marker.remove();
             marker = mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(latitude, longitude))
                     .title(username));
@@ -351,6 +351,11 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
         UiSettings uiSettings = mMap.getUiSettings();
         uiSettings.setZoomControlsEnabled(false);
         uiSettings.setAllGesturesEnabled(true);
+        uiSettings.isIndoorLevelPickerEnabled();
+        uiSettings.isRotateGesturesEnabled();
+        uiSettings.isIndoorLevelPickerEnabled();
+        uiSettings.isTiltGesturesEnabled();
+        uiSettings.setIndoorLevelPickerEnabled(true);
 
 
         Log.d(TAG, "onMapReady: Successful");
@@ -361,7 +366,7 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
 
         mMap.addCircle(new CircleOptions()
                 .center(placeBoundary)
-                .radius(150) //150 meters from the center of the school
+                .radius(130) //130 meters from the center of the school
                 .strokeColor(Color.GREEN)
                 .fillColor(0x220000FF)
                 .strokeWidth(5.0f)
