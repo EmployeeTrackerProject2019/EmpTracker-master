@@ -3,6 +3,7 @@ package com.employee.employeetracker.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -23,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.employee.employeetracker.R;
+import com.employee.employeetracker.activities.MainActivity;
 import com.employee.employeetracker.adapters.ReportViewHolderAdapter;
 import com.employee.employeetracker.bottomsheets.MakeAReportBottomSheet;
 import com.employee.employeetracker.models.Report;
@@ -41,6 +43,8 @@ import com.google.firebase.database.ValueEventListener;
  * A simple {@link Fragment} subclass.
  */
 public class ReportFragment extends Fragment {
+
+
     private static final String TAG = "ReportFragment";
     private DatabaseReference reportDb;
     private View view;
@@ -75,9 +79,16 @@ public class ReportFragment extends Fragment {
         view.findViewById(R.id.to_makeReport).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (SystemClock.elapsedRealtime() - MainActivity.mLastClickTime < 1000) {
+                    return;
+                }
 
+                MainActivity.mLastClickTime = SystemClock.elapsedRealtime();
                 MakeAReportBottomSheet makeAReportBottomSheet = new MakeAReportBottomSheet();
                 makeAReportBottomSheet.show(fm, "makeReport");
+
+
+
 
             }
         });

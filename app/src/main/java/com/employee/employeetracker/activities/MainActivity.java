@@ -73,7 +73,8 @@ public class MainActivity extends AppCompatActivity implements MakeReportListene
     private static final int ACCESS_FINE_LOCATION_INTENT_ID = 3;
     private static final String BROADCAST_ACTION = "android.location.PROVIDERS_CHANGED";
     private static GoogleApiClient mGoogleApiClient;
-
+    public static int INTERVAL = 3000;
+    public static long mLastClickTime = 0;
 
     // fragments here
     private final FragmentManager fragmentManager = getSupportFragmentManager();

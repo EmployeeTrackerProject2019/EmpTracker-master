@@ -2,6 +2,7 @@ package com.employee.employeetracker.fragments;
 
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -17,7 +18,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.employee.employeetracker.R;
+import com.employee.employeetracker.activities.MainActivity;
 import com.employee.employeetracker.adapters.LeaveAdapterViewHolder;
+import com.employee.employeetracker.bottomsheets.MakeAReportBottomSheet;
 import com.employee.employeetracker.bottomsheets.RequestALeaveBottomSheet;
 import com.employee.employeetracker.models.Leave;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -66,9 +69,17 @@ public class LeaveFragment extends Fragment {
         view.findViewById(R.id.to_requestLeave).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (SystemClock.elapsedRealtime() - MainActivity.mLastClickTime < 1000) {
+                    return;
+                }
+
+                MainActivity.mLastClickTime = SystemClock.elapsedRealtime();
+
                 RequestALeaveBottomSheet requestALeaveBottomSheet = new RequestALeaveBottomSheet();
                 assert getFragmentManager() != null;
                 requestALeaveBottomSheet.show(getFragmentManager(), "requestLeave");
+
+
             }
         });
 
