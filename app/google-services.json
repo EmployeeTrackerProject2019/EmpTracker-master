@@ -8,110 +8,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:342992167439:android:8f15691627ce4c86",
-        "android_client_info": {
-          "package_name": "com.del.myapplication"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "342992167439-okb6hvknofh8t2t4uf2k8empjd2kn7jr.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.del.myapplication",
-            "certificate_hash": "8e736816de8fbeb6f44886a6396a94dc2eda5259"
-          }
-        },
-        {
-          "client_id": "342992167439-09ucvnhthe6dvl0rb5m76pjh5hlkuqor.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDk_H7A0j0opgbsiq95TneSc79HdZwER0g"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "342992167439-09ucvnhthe6dvl0rb5m76pjh5hlkuqor.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:342992167439:android:0ec30f3f42fe3429",
-        "android_client_info": {
-          "package_name": "com.del.tabactivity"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "342992167439-lkbfmv6h6dhp53e16qu2cbsm85v2g5ul.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.del.tabactivity",
-            "certificate_hash": "8e736816de8fbeb6f44886a6396a94dc2eda5259"
-          }
-        },
-        {
-          "client_id": "342992167439-09ucvnhthe6dvl0rb5m76pjh5hlkuqor.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDk_H7A0j0opgbsiq95TneSc79HdZwER0g"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "342992167439-09ucvnhthe6dvl0rb5m76pjh5hlkuqor.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:342992167439:android:146f0c44619a51fa",
         "android_client_info": {
           "package_name": "com.employee.administratoremployeetracker"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "342992167439-j2m4f5n8algpq3mvl1ua4s1knjha8d72.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.employee.administratoremployeetracker",
-            "certificate_hash": "82b4402c06e4f557b70a2d6e48e162ab9786e52b"
-          }
-        },
-        {
-          "client_id": "342992167439-e048ip213hsbh8161n2rc5iq1h4g92qg.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.employee.administratoremployeetracker",
-            "certificate_hash": "b8ede90a0859ca29bc3e227b8cc6b09ad00d43ac"
-          }
-        },
-        {
-          "client_id": "342992167439-4itvco696cc4hgb6v80ccn6hn542nchn.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.employee.administratoremployeetracker",
-            "certificate_hash": "8e736816de8fbeb6f44886a6396a94dc2eda5259"
-          }
-        },
         {
           "client_id": "342992167439-09ucvnhthe6dvl0rb5m76pjh5hlkuqor.apps.googleusercontent.com",
           "client_type": 3
@@ -141,30 +43,6 @@
         }
       },
       "oauth_client": [
-        {
-          "client_id": "342992167439-j2crgbrovu59gmm66mbatrmbioqpmvb7.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.employee.employeetracker",
-            "certificate_hash": "82b4402c06e4f557b70a2d6e48e162ab9786e52b"
-          }
-        },
-        {
-          "client_id": "342992167439-jasi5lj9vv3n26lnjpambl0nsssr0ho8.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.employee.employeetracker",
-            "certificate_hash": "b8ede90a0859ca29bc3e227b8cc6b09ad00d43ac"
-          }
-        },
-        {
-          "client_id": "342992167439-hcgg3mah1adlclgre6ilh062n6eamq4k.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.employee.employeetracker",
-            "certificate_hash": "8e736816de8fbeb6f44886a6396a94dc2eda5259"
-          }
-        },
         {
           "client_id": "342992167439-09ucvnhthe6dvl0rb5m76pjh5hlkuqor.apps.googleusercontent.com",
           "client_type": 3
