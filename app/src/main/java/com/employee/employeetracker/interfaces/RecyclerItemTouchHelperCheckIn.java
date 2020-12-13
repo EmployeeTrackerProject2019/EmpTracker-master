@@ -2,18 +2,19 @@ package com.employee.employeetracker.interfaces;
 
 
 import android.graphics.Canvas;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.employee.employeetracker.fragments.CheckInFragment;
 import com.employee.employeetracker.fragments.CheckInFragment.ShowAttendanceViewHolder;
 
 public class RecyclerItemTouchHelperCheckIn extends ItemTouchHelper.SimpleCallback {
-    private RecyclerItemTouchHelperListenerCheckIn listener;
+    private final RecyclerItemTouchHelperListenerCheckIn listener;
 
 
     public RecyclerItemTouchHelperCheckIn(int dragDirs, int swipeDirs,

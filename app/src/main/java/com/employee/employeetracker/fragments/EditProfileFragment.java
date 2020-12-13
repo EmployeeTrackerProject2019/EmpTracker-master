@@ -9,11 +9,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -23,12 +18,18 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+
 import com.bumptech.glide.Glide;
 import com.employee.employeetracker.R;
 import com.employee.employeetracker.activities.SplashScreenActivity;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -76,7 +77,9 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
     private StorageReference mStorageReferenceForPhoto;
     private TextInputLayout txtfirstName, txtLastName, txtAbout;
     private ProgressDialog progressDialog;
-    private String getImageUri, log = "History", fullName;
+    private final String log = "History";
+    private String getImageUri;
+    private String fullName;
     private StringBuilder historyBuilder;
     private Map<String, Object> history;
 

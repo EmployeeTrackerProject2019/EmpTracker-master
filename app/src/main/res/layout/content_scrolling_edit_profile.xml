@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/scrollProfile"
     android:layout_width="match_parent"
@@ -7,7 +7,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -27,7 +27,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0">
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -45,7 +45,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_person_ash" />
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputLayoutFirstName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
                     app:layout_constraintStart_toEndOf="@+id/imgPersonIcon"
                     app:layout_constraintTop_toTopOf="@+id/imgPersonIcon">
 
-                    <android.support.design.widget.TextInputEditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/inputEditFirstName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -68,9 +68,9 @@
                         android:inputType="textPersonName"
                         android:selectAllOnFocus="true"
                         android:singleLine="true" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputLayoutLastName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -84,13 +84,13 @@
                     app:layout_constraintStart_toEndOf="@+id/imgPersonIcon"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayoutFirstName">
 
-                    <android.support.design.widget.TextInputEditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/inputEditLastName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/last_name"
                         android:inputType="textPersonName" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <ImageView
                     android:id="@+id/imgEmail"
@@ -102,7 +102,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayoutLastName"
                     app:srcCompat="@drawable/ic_email_ash" />
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputLayoutEmail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -117,14 +117,14 @@
                     app:layout_constraintStart_toEndOf="@+id/imgEmail"
                     app:layout_constraintTop_toTopOf="@+id/imgEmail">
 
-                    <android.support.design.widget.TextInputEditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/email"
                         android:inputType="textEmailAddress"
                         android:selectAllOnFocus="true"
                         android:singleLine="true" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <ImageView
                     android:id="@+id/imgPhoneNumber"
@@ -136,7 +136,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEmail"
                     app:srcCompat="@drawable/ic_phone_ash" />
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputLayoutPhone"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -150,14 +150,14 @@
                     app:layout_constraintStart_toStartOf="@+id/ccp"
                     app:layout_constraintTop_toBottomOf="@+id/ccp">
 
-                    <android.support.design.widget.TextInputEditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/inputEditPhone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/mobile_number"
                         android:inputType="phone"
                         android:singleLine="true" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <com.hbb20.CountryCodePicker
                     android:id="@+id/ccp"
@@ -190,7 +190,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPhone"
                     app:srcCompat="@drawable/ic_location_ash" />
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputLayoutAbout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -202,7 +202,7 @@
                     app:layout_constraintStart_toStartOf="@+id/textInputLayoutPhone"
                     app:layout_constraintTop_toTopOf="@+id/imgLocation">
 
-                    <android.support.design.widget.TextInputEditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/inputEditAbout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -210,7 +210,7 @@
                         android:inputType="textMultiLine"
                         android:selectAllOnFocus="true"
                         android:singleLine="false" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
                     android:id="@+id/btnSaveProfile"
@@ -224,9 +224,9 @@
                     app:layout_constraintStart_toStartOf="@+id/textInputLayoutAbout"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayoutAbout" />
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

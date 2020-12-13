@@ -1,15 +1,16 @@
 package com.employee.employeetracker.interfaces;
 
 import android.graphics.Canvas;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.employee.employeetracker.fragments.CheckOutFragment.ShowAttendanceViewHolder;
 
 public class RecyclerItemTouchHelperCheckOut extends ItemTouchHelper.SimpleCallback {
-    private RecyclerItemTouchHelperListenerCheckOut listener;
+    private final RecyclerItemTouchHelperListenerCheckOut listener;
 
     public RecyclerItemTouchHelperCheckOut(int dragDirs, int swipeDirs, RecyclerItemTouchHelperListenerCheckOut listener) {
         super(dragDirs, swipeDirs);

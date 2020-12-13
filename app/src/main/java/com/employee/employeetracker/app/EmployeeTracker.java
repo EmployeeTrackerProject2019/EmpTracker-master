@@ -2,8 +2,9 @@ package com.employee.employeetracker.app;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.multidex.MultiDex;
-import android.support.v7.app.AppCompatDelegate;
+
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.multidex.MultiDex;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.FirebaseDatabase;

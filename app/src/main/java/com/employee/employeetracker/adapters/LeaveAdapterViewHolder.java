@@ -1,15 +1,16 @@
 package com.employee.employeetracker.adapters;
 
 import android.content.DialogInterface;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.employee.employeetracker.R;
@@ -27,7 +28,7 @@ public class LeaveAdapterViewHolder extends FirebaseRecyclerAdapter<Leave,
 
 
     /**
-     * Initialize a {@link android.support.v7.widget.RecyclerView.Adapter} that listens to a Firebase query. See
+     * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
      * {@link com.firebase.ui.database.FirebaseRecyclerOptions} for configuration options.
      *
      * @param options
@@ -78,8 +79,8 @@ public class LeaveAdapterViewHolder extends FirebaseRecyclerAdapter<Leave,
 
     //an inner class to hold the views to be inflated
     public class ShowLeaveViewHolder extends RecyclerView.ViewHolder {
-        private View view;
-        private Button btnView;
+        private final View view;
+        private final Button btnView;
 
 
         ShowLeaveViewHolder(@NonNull View itemView) {

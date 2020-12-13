@@ -5,10 +5,6 @@ import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,8 +14,13 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.employee.employeetracker.R;
 import com.employee.employeetracker.utils.GetDateTime;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -32,9 +33,9 @@ public class RequestALeaveBottomSheet extends BottomSheetDialogFragment implemen
     private final Calendar calendar = Calendar.getInstance();
     private RequestLeaveListener requestLeaveListener;
     private DatePickerDialog datePicker;
-    private int year = calendar.get(Calendar.YEAR);
-    private int month = calendar.get(Calendar.MONTH);
-    private int day = calendar.get(Calendar.DAY_OF_MONTH);
+    private final int year = calendar.get(Calendar.YEAR);
+    private final int month = calendar.get(Calendar.MONTH);
+    private final int day = calendar.get(Calendar.DAY_OF_MONTH);
     private String getStartDate;
     private String getEndDate;
     private String startDateSelected, endDateSelected;

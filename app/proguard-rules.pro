@@ -26,3 +26,4 @@
   **[] $VALUES;
   public *;
   }
+-keepattributes LineNumberTable,SourceFile

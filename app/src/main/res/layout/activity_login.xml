@@ -8,12 +8,12 @@
     android:layout_height="wrap_content"
     android:fillViewport="true">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context=".activities.LoginActivity">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolBarLogin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
             app:title=" " />
 
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtEmailLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolBarLogin">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/enter_email"
@@ -53,9 +53,9 @@
                 android:singleLine="true" />
 
             <requestFocus />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtPasswordLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -75,13 +75,13 @@
             app:layout_constraintTop_toBottomOf="@+id/txtEmailLayout"
             app:passwordToggleEnabled="true">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/enter_password"
                 android:inputType="textPassword" />
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnLoginUser"
@@ -150,6 +150,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

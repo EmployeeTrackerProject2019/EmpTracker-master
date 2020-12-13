@@ -5,18 +5,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.support.v7.widget.helper.ItemTouchHelper.SimpleCallback;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +13,19 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.employee.employeetracker.R;
 import com.employee.employeetracker.bottomsheets.CheckOutDetailsBottomSheet;
@@ -311,8 +312,8 @@ public class CheckOutFragment extends Fragment implements RecyclerItemTouchHelpe
     public class ShowAttendanceViewHolder extends RecyclerView.ViewHolder {
         RelativeLayout viewBackground;
         public ConstraintLayout viewForeground;
-        private View view;
-        private TextView txtViewMore;
+        private final View view;
+        private final TextView txtViewMore;
 
 
         ShowAttendanceViewHolder(@NonNull View itemView) {

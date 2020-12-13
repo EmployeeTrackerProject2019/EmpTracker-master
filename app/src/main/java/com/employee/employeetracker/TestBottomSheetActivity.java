@@ -1,11 +1,14 @@
 package com.employee.employeetracker;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.os.SystemClock;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.employee.employeetracker.activities.MainActivity;
 import com.employee.employeetracker.bottomsheets.PhoneNumberBottomSheet;
 import com.employee.employeetracker.bottomsheets.PhoneNumberBottomSheet.PhoneNumberBottomSheetListener;
 
@@ -22,6 +25,13 @@ public class TestBottomSheetActivity extends AppCompatActivity implements PhoneN
         findViewById(R.id.btnShowMsg).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (SystemClock.elapsedRealtime() - MainActivity.mLastClickTime < 1000) {
+                    return;
+                }
+
+                MainActivity.mLastClickTime = SystemClock.elapsedRealtime();
+
                 PhoneNumberBottomSheet phoneNumberBottomSheet = new PhoneNumberBottomSheet();
                 phoneNumberBottomSheet.show(getSupportFragmentManager(), "phoneNumber");
 

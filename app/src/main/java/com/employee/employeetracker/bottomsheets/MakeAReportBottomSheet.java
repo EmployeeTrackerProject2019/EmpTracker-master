@@ -3,10 +3,6 @@ package com.employee.employeetracker.bottomsheets;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +10,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.employee.employeetracker.R;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class MakeAReportBottomSheet extends BottomSheetDialogFragment {
     private TextInputLayout txtTitle, txtDescription;

@@ -11,11 +11,6 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -23,6 +18,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.employee.employeetracker.R;
@@ -54,7 +55,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CheckInActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "CheckInActivity";
-    private String checkIn = "CheckIn";
+    private final String checkIn = "CheckIn";
     private String datePosted = "", dayOfTheWeek, fullDay, getImageUri;
     private WifiManager wifiManager;
     private Button btnCheckIn;
@@ -163,7 +164,7 @@ public class CheckInActivity extends AppCompatActivity implements View.OnClickLi
             public void run() {
 
                 builder.setTitle("Warning")
-                        .setMessage("Make sure you are connected to your organisations\'s WiFi before you check in or check out.\nIf not please go back and connect")
+                        .setMessage("Make sure you are connected to your organisations's WiFi before you check in or check out.\nIf not please go back and connect")
                         .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

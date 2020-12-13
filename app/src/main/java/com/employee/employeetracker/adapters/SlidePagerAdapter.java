@@ -1,14 +1,15 @@
 package com.employee.employeetracker.adapters;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.viewpager.widget.PagerAdapter;
 
 import com.employee.employeetracker.R;
 
@@ -19,7 +20,7 @@ public class SlidePagerAdapter extends PagerAdapter {
     //object of the Context class to allow views to be passed into another activity
     private final Context context;
     //Array of type int to display the descriptions that moves on the screen
-    private int[] slideImages = {R.drawable.b, R.drawable.bb, R.drawable.bbb, R.drawable.bbbb, R.drawable.bbbbb, R.drawable.bbbbbb};
+    private final int[] slideImages = {R.drawable.b, R.drawable.bb, R.drawable.bbb, R.drawable.bbbb, R.drawable.bbbbb, R.drawable.bbbbbb};
 
     //Constructor to initialize objects
     public SlidePagerAdapter(Context context) {

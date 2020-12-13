@@ -4,8 +4,9 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class CheckInAndOutActivity extends AppCompatActivity {
     private static final String TAG = "CheckInAndOutActivity";
@@ -29,7 +30,7 @@ public class CheckInAndOutActivity extends AppCompatActivity {
             public void run() {
 
                 builder.setTitle("Warning")
-                        .setMessage("Make sure you are connected to your organisations\'s WiFi before you check in or check out.\nIf not please go back and connect")
+                        .setMessage("Make sure you are connected to your organisations's WiFi before you check in or check out.\nIf not please go back and connect")
                         .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

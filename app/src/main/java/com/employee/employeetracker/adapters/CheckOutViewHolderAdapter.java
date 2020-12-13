@@ -3,14 +3,15 @@ package com.employee.employeetracker.adapters;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.employee.employeetracker.R;
@@ -32,7 +33,7 @@ public class CheckOutViewHolderAdapter extends FirebaseRecyclerAdapter<Employee,
 
 
     /**
-     * Initialize a {@link android.support.v7.widget.RecyclerView.Adapter} that listens to a Firebase query. See
+     * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
      * {@link com.firebase.ui.database.FirebaseRecyclerOptions} for configuration options.
      *
      * @param options
@@ -95,8 +96,8 @@ public class CheckOutViewHolderAdapter extends FirebaseRecyclerAdapter<Employee,
 
     //an inner class to hold the views to be inflated
     public class ShowCheckOutAttendanceViewHolder extends RecyclerView.ViewHolder {
-        private View view;
-        private TextView txtViewMore;
+        private final View view;
+        private final TextView txtViewMore;
 
 
         ShowCheckOutAttendanceViewHolder(@NonNull View itemView) {

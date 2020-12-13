@@ -8,12 +8,12 @@
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context=".activities.EditProfileActivity">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarEditProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbarEditProfile" />
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabAddPhoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
             app:useCompatPadding="true" />
 
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutFirstName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fabAddPhoto">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputEditFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -100,9 +100,9 @@
                 android:inputType="textPersonName"
                 android:selectAllOnFocus="true"
                 android:singleLine="true" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutLastName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutFirstName">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputEditLastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -132,9 +132,9 @@
                 android:hint="@string/last_name"
                 android:imeOptions="actionNext"
                 android:inputType="textPersonName" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutEmail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -152,7 +152,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutLastName">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_email_ash"
@@ -165,9 +165,9 @@
                 android:inputType="textEmailAddress"
                 android:selectAllOnFocus="true"
                 android:singleLine="true" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutPhone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -185,7 +185,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtEditPhoneNumber">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputEditPhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -197,9 +197,9 @@
                 android:imeOptions="actionNext"
                 android:inputType="phone"
                 android:singleLine="true" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutAbout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -217,7 +217,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPhone">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputEditAbout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -229,7 +229,7 @@
                 android:inputType="textMultiLine"
                 android:selectAllOnFocus="true"
                 android:singleLine="false" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnSaveProfile"
@@ -277,5 +277,5 @@
             app:layout_constraintStart_toStartOf="@+id/textInputLayoutEmail"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEmail" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
