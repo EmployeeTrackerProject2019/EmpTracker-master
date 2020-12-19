@@ -27,6 +27,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.employee.employeetracker.R;
+import com.employee.employeetracker.app.BaseActivity;
 import com.employee.employeetracker.bottomsheets.CheckInDetailsBottomSheet.CheckInDetailsListener;
 import com.employee.employeetracker.bottomsheets.CheckOutDetailsBottomSheet.CheckOutDetailsListener;
 import com.employee.employeetracker.bottomsheets.MakeAReportBottomSheet.MakeReportListener;
@@ -65,7 +66,7 @@ import java.util.Map;
 
 
 @SuppressWarnings("ALL")
-public class MainActivity extends AppCompatActivity implements MakeReportListener,
+public class MainActivity extends BaseActivity implements MakeReportListener,
         RequestLeaveListener, CheckInDetailsListener, CheckOutDetailsListener,
         PhoneNumberBottomSheetListener {
 
