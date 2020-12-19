@@ -27,3 +27,4 @@
   public *;
   }
 -keepattributes LineNumberTable,SourceFile
+-keep public class * extends java.lang.Exception

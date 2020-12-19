@@ -6,50 +6,56 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.employee.employeetracker.R;
-import com.employee.employeetracker.app.BaseActivity;
 import com.employee.employeetracker.bottomsheets.CheckInDetailsBottomSheet.CheckInDetailsListener;
 import com.employee.employeetracker.bottomsheets.CheckOutDetailsBottomSheet.CheckOutDetailsListener;
 import com.employee.employeetracker.bottomsheets.MakeAReportBottomSheet.MakeReportListener;
 import com.employee.employeetracker.bottomsheets.PhoneNumberBottomSheet.PhoneNumberBottomSheetListener;
 import com.employee.employeetracker.bottomsheets.RequestALeaveBottomSheet.RequestLeaveListener;
+import com.employee.employeetracker.constants.Constants;
 import com.employee.employeetracker.fragments.DutyRosterFragment;
 import com.employee.employeetracker.fragments.EditProfileFragment;
 import com.employee.employeetracker.fragments.EmployeeCheckInFragment;
 import com.employee.employeetracker.fragments.LeaveFragment;
 import com.employee.employeetracker.fragments.ReportFragment;
+import com.employee.employeetracker.utils.DisplayViewUI;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -66,7 +72,7 @@ import java.util.Map;
 
 
 @SuppressWarnings("ALL")
-public class MainActivity extends BaseActivity implements MakeReportListener,
+public class MainActivity extends AppCompatActivity implements MakeReportListener,
         RequestLeaveListener, CheckInDetailsListener, CheckOutDetailsListener,
         PhoneNumberBottomSheetListener {
 
@@ -99,6 +105,35 @@ public class MainActivity extends BaseActivity implements MakeReportListener,
     private FirebaseAuth mAuth;
 
 
+    private FusedLocationProviderClient mFusedLocationClient;
+    /**
+     * Provides access to the Location Settings API.
+     */
+    private SettingsClient mSettingsClient;
+    /**
+     * Stores parameters for requests to the FusedLocationProviderApi.
+     */
+    private LocationRequest mLocationRequest;
+    /**
+     * Stores the types of location services the client is interested in using. Used for checking
+     * settings to determine if the device has optimal location settings.
+     */
+    private LocationSettingsRequest mLocationSettingsRequest;
+    /**
+     * Callback for Location events.
+     */
+    private LocationCallback mLocationCallback;
+    /**
+     * Represents a geographical location.
+     */
+    private Location mCurrentLocation;
+    /**
+     * Tracks the status of the location updates request. Value changes when the user presses the
+     * Start Updates and Stop Updates buttons.
+     */
+    private Boolean mRequestingLocationUpdates;
+
+
     //Run on UI
     private Runnable sendUpdatesToUI = new Runnable() {
         public void run() {
@@ -116,7 +151,7 @@ public class MainActivity extends BaseActivity implements MakeReportListener,
                 LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
                 //Check if GPS is turned ON or OFF
                 if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    Log.e("About GPS", "GPS is Enabled in your device");
+
 //                    updateGPSStatus("GPS is Enabled in your device");
                 } else {
                     //If GPS turned OFF show Location Dialog
@@ -170,10 +205,19 @@ public class MainActivity extends BaseActivity implements MakeReportListener,
 
         Log.i(TAG, "onLocationChanged --- distance in meters: " + distanceInMeters);
 
+// Update values using data stored in the Bundle.
+        updateValuesFromBundle(savedInstanceState);
 
         retrieveDetails();
-        initGoogleAPIClient();//Init Google API Client
-        checkPermissions();//Check Permission
+        //  initGoogleAPIClient();//Init Google API Client
+        // checkPermissions();//Check Permission
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        mSettingsClient = LocationServices.getSettingsClient(this);
+        mRequestingLocationUpdates = false;
+        if (checkPermissions()) {
+            createLocationCallback();
+            createLocationRequest();
+        }
 
         BottomNavigationView mBottomNavigationView = findViewById(R.id.bottomNavigationView);
 
@@ -220,6 +264,62 @@ public class MainActivity extends BaseActivity implements MakeReportListener,
 
     }
 
+    private void updateValuesFromBundle(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            // Update the value of mRequestingLocationUpdates from the Bundle, and make sure that
+            // the Start Updates and Stop Updates buttons are correctly enabled or disabled.
+            if (savedInstanceState.keySet().contains(Constants.KEY_REQUESTING_LOCATION_UPDATES)) {
+                mRequestingLocationUpdates = savedInstanceState.getBoolean(
+                        Constants.KEY_REQUESTING_LOCATION_UPDATES);
+            }
+
+            // Update the value of mCurrentLocation from the Bundle and update the UI to show the
+            // correct latitude and longitude.
+            if (savedInstanceState.keySet().contains(Constants.KEY_LOCATION)) {
+                // Since KEY_LOCATION was found in the Bundle, we can be sure that mCurrentLocation
+                // is not null.
+                mCurrentLocation = savedInstanceState.getParcelable(Constants.KEY_LOCATION);
+            }
+
+        }
+    }
+
+
+    private void createLocationRequest() {
+        mLocationRequest = new LocationRequest();
+
+        // Sets the desired interval for active location updates. This interval is
+        // inexact. You may not receive updates at all if no location sources are available, or
+        // you may receive them slower than requested. You may also receive updates faster than
+        // requested if other applications are requesting location at a faster interval.
+        mLocationRequest.setInterval(Constants.UPDATE_INTERVAL_IN_MILLISECONDS);
+
+        // Sets the fastest rate for active location updates. This interval is exact, and your
+        // application will never receive updates faster than this value.
+        mLocationRequest.setFastestInterval(Constants.FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS);
+
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
+    private void createLocationCallback() {
+        mLocationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                super.onLocationResult(locationResult);
+
+                mCurrentLocation = locationResult.getLastLocation();
+                //updateLocationUI();
+            }
+        };
+    }
+
+
+    private void buildLocationSettingsRequest() {
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
+        builder.addLocationRequest(mLocationRequest);
+        mLocationSettingsRequest = builder.build();
+    }
+
     private void retrieveDetails() {
 
         runOnUiThread(new Runnable() {
@@ -260,48 +360,101 @@ public class MainActivity extends BaseActivity implements MakeReportListener,
         mGoogleApiClient.connect();
     }
 
-    private void showWarningDialog() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
 
-                builder.setTitle("Warning")
-                        .setMessage("Make sure you are connected to your organisations\'s WiFi before you check in or check out.\nIf not please go back and connect")
-                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-
-                builder.create();
-                builder.show();
-
-
-            }
-        }, 3000);
-
-
-        SharedPreferences prefs = this.getSharedPreferences("loader", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean("firstStart", false);
-        editor.apply();
-
+    private boolean checkPermissions() {
+        int permissionState = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+        return permissionState == PackageManager.PERMISSION_GRANTED;
     }
 
-    /* Check Location Permission for Marshmallow Devices */
-    private void checkPermissions() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            if (ContextCompat.checkSelfPermission(MainActivity.this,
-                    android.Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED)
-                requestLocationPermission();
-            else
-                showSettingDialog();
-        } else
-            showSettingDialog();
+    private void requestPermissions() {
+        boolean shouldProvideRationale =
+                ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.ACCESS_FINE_LOCATION);
 
+        // Provide an additional rationale to the user. This would happen if the user denied the
+        // request previously, but didn't check the "Don't ask again" checkbox.
+        if (shouldProvideRationale) {
+            Log.i(TAG, "Displaying permission rationale to provide additional context.");
+            DisplayViewUI.displayAlertDialog(MainActivity.this,
+                    getString(R.string.grantPerm),
+                    getString(R.string.permission_rationale), getString(R.string.ok), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+// Request permission
+                            ActivityCompat.requestPermissions(MainActivity.this,
+                                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                    Constants.REQUEST_PERMISSIONS_REQUEST_CODE);
+                        }
+                    });
+
+        } else {
+            Log.i(TAG, "Requesting permission");
+            // Request permission. It's possible this can be auto answered if device policy
+            // sets the permission in a given state or the user denied the permission
+            // previously and checked "Never ask again".
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    Constants.REQUEST_PERMISSIONS_REQUEST_CODE);
+        }
+    }
+
+    /**
+     * Requests location updates from the FusedLocationApi. Note: we don't call this unless location
+     * runtime permission has been granted.
+     */
+    private void startLocationUpdates() {
+        // Begin by checking if the device has the necessary location settings.
+        mSettingsClient.checkLocationSettings(mLocationSettingsRequest)
+                .addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
+                    @Override
+                    public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
+                        Log.i(TAG, "All location settings are satisfied.");
+
+                        //noinspection MissingPermission
+                        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                                != PackageManager.PERMISSION_GRANTED) {
+                            return;
+                        }
+                        if (mLocationCallback != null) {
+                            mFusedLocationClient.requestLocationUpdates(mLocationRequest,
+                                    mLocationCallback, Looper.myLooper());
+                        }
+
+
+                        //updateUI();
+                    }
+                })
+                .addOnFailureListener(this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        int statusCode = ((ApiException) e).getStatusCode();
+                        switch (statusCode) {
+                            case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                                Log.i(TAG, "Location settings are not satisfied. Attempting to upgrade " +
+                                        "location settings ");
+
+                                try {
+                                    // Show the dialog by calling startResolutionForResult(), and check the
+                                    // result in onActivityResult().
+                                    ResolvableApiException rae = (ResolvableApiException) e;
+                                    rae.startResolutionForResult(MainActivity.this, Constants.REQUEST_CHECK_SETTINGS);
+
+                                } catch (IntentSender.SendIntentException sie) {
+                                    Log.i(TAG, "PendingIntent unable to execute request.");
+                                }
+
+                                break;
+                            case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                                String errorMessage = MainActivity.this.getString(R.string.errMsg) + MainActivity.this.getString(R.string.fixIn);
+                                Log.e(TAG, errorMessage);
+                                DisplayViewUI.displayToast(MainActivity.this, errorMessage);
+                                mRequestingLocationUpdates = false;
+                        }
+
+                    }
+                });
     }
 
 
@@ -556,8 +709,12 @@ public class MainActivity extends BaseActivity implements MakeReportListener,
     @Override
     protected void onResume() {
         super.onResume();
-//        registerReceiver(gpsLocationReceiver, new IntentFilter(BROADCAST_ACTION));//Register
-// broadcast receiver to check the status of GPS
+        if (!checkPermissions()) {
+            requestPermissions();
+        } else {
+            buildLocationSettingsRequest();
+            startLocationUpdates();
+        }
     }
 
     @Override
