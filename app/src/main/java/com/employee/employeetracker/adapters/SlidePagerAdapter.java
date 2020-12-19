@@ -16,11 +16,11 @@ import com.employee.employeetracker.R;
 public class SlidePagerAdapter extends PagerAdapter {
 
     //Array of type String to display the descriptions that moves on the screen
-    public final String[] slideDescriptions = {"Dummy Txt1", "Dummy Txt2", "Dummy Txt3", "Dummy Txt4", "Dummy Txt5", "Dummy Txt5"};
+    public final String[] slideDescriptions = {"Real time attendance", "Send reports after work", "Submit leave", "Check in and out"};
     //object of the Context class to allow views to be passed into another activity
     private final Context context;
     //Array of type int to display the descriptions that moves on the screen
-    private final int[] slideImages = {R.drawable.b, R.drawable.bb, R.drawable.bbb, R.drawable.bbbb, R.drawable.bbbbb, R.drawable.bbbbbb};
+    private final int[] slideImages = {R.drawable.b, R.drawable.bb, R.drawable.bbb, R.drawable.bbbb};
 
     //Constructor to initialize objects
     public SlidePagerAdapter(Context context) {
