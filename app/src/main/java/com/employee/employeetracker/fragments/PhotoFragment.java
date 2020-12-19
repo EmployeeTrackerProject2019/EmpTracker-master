@@ -155,8 +155,6 @@ public class PhotoFragment extends Fragment implements View.OnClickListener {
                 insertDetailsIntoDatabase();
                 break;
             case R.id.imageViewEditFragmentPhoto:
-                openGallery();
-                break;
             case R.id.fabAddFragmentPhoto:
                 openGallery();
                 break;

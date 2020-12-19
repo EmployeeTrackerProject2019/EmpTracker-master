@@ -74,7 +74,7 @@ public class ShowAttendanceRecyclerAdapter extends FirebaseRecyclerAdapter<Emplo
         return position;
     }
 
-    public class ShowAttendanceAdapter extends RecyclerView.ViewHolder {
+    public static class ShowAttendanceAdapter extends RecyclerView.ViewHolder {
         View view;
         TextView txtName, txtViewCheckIn, txtViewCheckOut, txtDutyPost, txtShift;
         Button checkOut;

@@ -206,33 +206,15 @@ public class CheckInActivity extends AppCompatActivity implements View.OnClickLi
         assert ssid != null;
         switch (ssid) {
             case "\"GTUC-HOTSPOT\"":
-                Log.d(TAG, "Connected: " + " yES " + "why?? " + ssid);
-                Toast.makeText(this, "Wifi successfully connected", Toast.LENGTH_SHORT).show();
-                btnCheckIn.setEnabled(true);
-                break;
+            case "\"HOTSPOT\"":
             case "\"GTUC-STAFF-WIFI\"":
                 Log.d(TAG, "Connected: " + " yES " + "why?? " + ssid);
                 Toast.makeText(this, "Wifi successfully connected", Toast.LENGTH_SHORT).show();
                 btnCheckIn.setEnabled(true);
                 break;
-            case "\"HOTSPOT\"":
-                Log.d(TAG, "Connected: " + " yES " + "why?? " + ssid);
-                Toast.makeText(this, "Wifi successfully connected", Toast.LENGTH_SHORT).show();
-                btnCheckIn.setEnabled(true);
-                break;
             case "\"Hack Me If You Can\"":
-
-                Toast.makeText(this, "Wifi successfully connected", Toast.LENGTH_SHORT).show();
-                btnCheckIn.setEnabled(true);
-                Log.d(TAG, "Connected: " + " yES " + "why?? " + "SSID = " + ssid + " button = enabled");
-                break;
-            case "\"VodafoneMobileWiFi-89FC35\"":
-
-                Toast.makeText(this, "Wifi successfully connected", Toast.LENGTH_SHORT).show();
-                btnCheckIn.setEnabled(true);
-                Log.d(TAG, "Connected: " + " yES " + "why?? " + "SSID = " + ssid + " button = enabled");
-                break;
             case "\"AndroidWifi\"":
+            case "\"VodafoneMobileWiFi-89FC35\"":
 
                 Toast.makeText(this, "Wifi successfully connected", Toast.LENGTH_SHORT).show();
                 btnCheckIn.setEnabled(true);
@@ -254,8 +236,6 @@ public class CheckInActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageViewCheckIn:
-                openCamera();
-                break;
             case R.id.circleImageViewCheckInPhoto:
                 openCamera();
                 break;

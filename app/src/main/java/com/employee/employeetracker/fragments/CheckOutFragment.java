@@ -309,7 +309,7 @@ public class CheckOutFragment extends Fragment implements RecyclerItemTouchHelpe
     }
 
     //an inner class to hold the views to be inflated
-    public class ShowAttendanceViewHolder extends RecyclerView.ViewHolder {
+    public static class ShowAttendanceViewHolder extends RecyclerView.ViewHolder {
         RelativeLayout viewBackground;
         public ConstraintLayout viewForeground;
         private final View view;

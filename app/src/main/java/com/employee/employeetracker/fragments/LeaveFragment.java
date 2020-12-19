@@ -33,6 +33,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,11 +43,12 @@ public class LeaveFragment extends Fragment {
     private static final String TAG = "LeaveFragment";
     private DatabaseReference leaveDb;
     private LeaveAdapterViewHolder leaveAdapterViewHolder;
-    //  private FirebaseRecyclerAdapter<Leave, ShowLeaveViewHolder> adapter;
-    private View view;
-    private int childCount = 0;
+    RecyclerView recyclerView;
     private ConstraintLayout mShowEmptyLayout;
     private TextView txtDescription;
+    //  private FirebaseRecyclerAdapter<Leave, ShowLeaveViewHolder> adapter;
+    //private View view;
+    private int childCount = 0;
 
 
     public LeaveFragment() {
@@ -56,13 +59,33 @@ public class LeaveFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_leave, container, false);
+        View view = inflater.inflate(R.layout.fragment_leave, container, false);
+        recyclerView = view.findViewById(R.id.recyclerViewLeave);
+        recyclerView.setVisibility(View.VISIBLE);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+
+        //item animator
+        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
+        itemAnimator.setAddDuration(1000);
+        itemAnimator.setRemoveDuration(1000);
+        recyclerView.setItemAnimator(itemAnimator);
+        recyclerView.setLayoutManager(layoutManager);
+
+        DividerItemDecoration itemDecoration =
+                new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+
+        //add decorator
+        recyclerView.addItemDecoration(itemDecoration);
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.view = view;
+        // this.view = view;
         mShowEmptyLayout = view.findViewById(R.id.showEmptyLayoutMsg);
         txtDescription = view.findViewById(R.id.txtDescription);
 
@@ -87,47 +110,33 @@ public class LeaveFragment extends Fragment {
     }
 
     private void setUpRecycler() {
-        Log.d(TAG, "setUpRecycler: completed");
-        final RecyclerView recyclerView = view.findViewById(R.id.recyclerViewLeave);
-        recyclerView.setVisibility(View.VISIBLE);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setReverseLayout(true);
-        layoutManager.setStackFromEnd(true);
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
 
-        //item animator
-        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
-        itemAnimator.setAddDuration(1000);
-        itemAnimator.setRemoveDuration(1000);
-        recyclerView.setItemAnimator(itemAnimator);
-        recyclerView.setLayoutManager(layoutManager);
+            leaveDb = FirebaseDatabase.getInstance().getReference().child("Leaves");
+            leaveDb.keepSynced(true);
 
-        DividerItemDecoration itemDecoration =
-                new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+            FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+            assert mUser != null;
+            //A unique id that will differentiate each attendance made
+            String getUsersId = mUser.getUid();
 
-        leaveDb = FirebaseDatabase.getInstance().getReference().child("Leaves");
-        leaveDb.keepSynced(true);
+            //querying the database base of the time posted
+            Query query = leaveDb.orderByChild("userId").equalTo(getUsersId);
 
-        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
-        assert mUser != null;
-        //A unique id that will differentiate each attendance made
-        String getUsersId = mUser.getUid();
+            checkEmptyDb();
 
-        //querying the database base of the time posted
-        Query query = leaveDb.orderByChild("userId").equalTo(getUsersId);
+            FirebaseRecyclerOptions<Leave> options =
+                    new FirebaseRecyclerOptions.Builder<Leave>().setQuery(query, Leave.class).build();
 
-        checkEmptyDb();
+            leaveAdapterViewHolder = new LeaveAdapterViewHolder(options);
 
-        FirebaseRecyclerOptions<Leave> options =
-                new FirebaseRecyclerOptions.Builder<Leave>().setQuery(query, Leave.class).build();
 
-        leaveAdapterViewHolder = new LeaveAdapterViewHolder(options);
+            //set adapter to recycler
+            recyclerView.setAdapter(leaveAdapterViewHolder);
+            leaveAdapterViewHolder.notifyDataSetChanged();
 
-        //add decorator
-        recyclerView.addItemDecoration(itemDecoration);
-        //set adapter to recycler
-        recyclerView.setAdapter(leaveAdapterViewHolder);
-        leaveAdapterViewHolder.notifyDataSetChanged();
+
+        });
 
 
     }
@@ -166,7 +175,10 @@ public class LeaveFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        leaveAdapterViewHolder.startListening();
+        if (leaveAdapterViewHolder != null) {
+            leaveAdapterViewHolder.startListening();
+        }
+
     }
 
     @Override

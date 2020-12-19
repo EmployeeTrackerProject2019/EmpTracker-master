@@ -191,15 +191,13 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.imageViewEditPhoto:
+
+            case R.id.fabAddPhoto:
                 openGallery();
                 break;
 
             case R.id.btnSaveProfile:
                 saveUserDetailsEdited();
-                break;
-
-            case R.id.fabAddPhoto:
-                openGallery();
                 break;
 
 

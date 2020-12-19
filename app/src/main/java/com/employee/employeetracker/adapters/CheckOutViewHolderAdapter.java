@@ -95,7 +95,7 @@ public class CheckOutViewHolderAdapter extends FirebaseRecyclerAdapter<Employee,
 
 
     //an inner class to hold the views to be inflated
-    public class ShowCheckOutAttendanceViewHolder extends RecyclerView.ViewHolder {
+    public static class ShowCheckOutAttendanceViewHolder extends RecyclerView.ViewHolder {
         private final View view;
         private final TextView txtViewMore;
 

@@ -47,7 +47,7 @@ public class CommentsAdapter extends FirebaseRecyclerAdapter<Report, CommentsAda
                 .inflate(R.layout.layout_comment_list_items, viewGroup, false));
     }
 
-    public class ShowCommentsHolder extends RecyclerView.ViewHolder {
+    public static class ShowCommentsHolder extends RecyclerView.ViewHolder {
         View view;
 
         ShowCommentsHolder(@NonNull View itemView) {

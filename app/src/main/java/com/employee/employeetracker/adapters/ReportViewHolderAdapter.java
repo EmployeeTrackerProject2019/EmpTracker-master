@@ -88,7 +88,7 @@ public class ReportViewHolderAdapter extends FirebaseRecyclerAdapter<Report, Sho
     }
 
     //an inner class to hold the views to be inflated
-    public class ShowReportViewHolder extends RecyclerView.ViewHolder {
+    public static class ShowReportViewHolder extends RecyclerView.ViewHolder {
         View view;
         ImageButton imgEditReport;
         TextView txtComment;

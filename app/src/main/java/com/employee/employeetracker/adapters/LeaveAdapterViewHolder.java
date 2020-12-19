@@ -78,7 +78,7 @@ public class LeaveAdapterViewHolder extends FirebaseRecyclerAdapter<Leave,
     }
 
     //an inner class to hold the views to be inflated
-    public class ShowLeaveViewHolder extends RecyclerView.ViewHolder {
+    public static class ShowLeaveViewHolder extends RecyclerView.ViewHolder {
         private final View view;
         private final Button btnView;
 

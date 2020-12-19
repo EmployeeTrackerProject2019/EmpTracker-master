@@ -136,7 +136,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 workShift = (String) dataSnapshot.child("typeOfShift").getValue();
                 timeStamp = (long) dataSnapshot.child("timeStamp").getValue();
 
-                SimpleDateFormat sfd = new SimpleDateFormat("'You signed in on ' dd-MM-yyyy '@' " +
+                SimpleDateFormat sfd = new SimpleDateFormat("'you signed in on ' dd-MM-yyyy '@' " +
                         "HH:mm:ss",
                         Locale.US);
 
@@ -205,8 +205,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageViewCheckOut:
-                openCamera();
-                break;
             case R.id.circleImageViewCheckOut:
                 openCamera();
                 break;

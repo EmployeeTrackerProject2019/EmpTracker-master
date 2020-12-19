@@ -87,7 +87,7 @@ public class EmployeeDutyAdapter extends RecyclerView.Adapter<EmployeeDutyAdapte
 //
 //    }
 
-    public class ShowDutyViewHolder extends RecyclerView.ViewHolder {
+    public static class ShowDutyViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView txtDuty;
         private final TextView txtShift;

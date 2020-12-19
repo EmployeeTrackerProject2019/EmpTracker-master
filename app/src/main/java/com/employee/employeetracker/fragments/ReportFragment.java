@@ -48,7 +48,7 @@ public class ReportFragment extends Fragment {
 
     private static final String TAG = "ReportFragment";
     private DatabaseReference reportDb;
-    private View view;
+    // private View view;
     private ReportViewHolderAdapter adapter;
     private RecyclerView recyclerView;
     private int childCount = 0;
@@ -63,14 +63,35 @@ public class ReportFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_report, container, false);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_report, container, false);
+
+        recyclerView = view.findViewById(R.id.recyclerViewForReport);
+        recyclerView.setVisibility(View.VISIBLE);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(layoutManager);
+        //item animator
+        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
+        itemAnimator.setAddDuration(500);
+        itemAnimator.setRemoveDuration(500);
+        recyclerView.setItemAnimator(itemAnimator);
+
+        DividerItemDecoration itemDecoration =
+                new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+//add decorator
+        recyclerView.addItemDecoration(itemDecoration);
+
+        return view;
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.view = view;
+        // this.view = view;
         mShowEmptyLayout = view.findViewById(R.id.showEmptyLayoutMsg);
         txtDescription = view.findViewById(R.id.txtDescription);
 
@@ -87,8 +108,6 @@ public class ReportFragment extends Fragment {
                 MainActivity.mLastClickTime = SystemClock.elapsedRealtime();
                 MakeAReportBottomSheet makeAReportBottomSheet = new MakeAReportBottomSheet();
                 makeAReportBottomSheet.show(fm, "makeReport");
-
-
 
 
             }
@@ -130,23 +149,12 @@ public class ReportFragment extends Fragment {
 
 
     private void setUpRecycler() {
-        Log.d(TAG, "setUpRecycler: completed");
-        recyclerView = view.findViewById(R.id.recyclerViewForReport);
-        recyclerView.setVisibility(View.VISIBLE);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setReverseLayout(true);
-        layoutManager.setStackFromEnd(true);
-        //item animator
-        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
-        itemAnimator.setAddDuration(500);
-        itemAnimator.setRemoveDuration(500);
-        recyclerView.setItemAnimator(itemAnimator);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
 
-        recyclerView.setLayoutManager(layoutManager);
-
-        DividerItemDecoration itemDecoration =
-                new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+            }
+        });
 
 
         reportDb = FirebaseDatabase.getInstance().getReference().child("Reports");
@@ -169,8 +177,7 @@ public class ReportFragment extends Fragment {
 
         swipeToDelete();
 
-        //add decorator
-        recyclerView.addItemDecoration(itemDecoration);
+
         //set adapter to recycler
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -203,7 +210,10 @@ public class ReportFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        adapter.startListening();
+        if (adapter != null) {
+            adapter.startListening();
+        }
+
     }
 
     @Override

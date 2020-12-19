@@ -24,6 +24,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,7 +34,8 @@ public class DutyRosterFragment extends Fragment {
     // private DutyTableAdapter adapter;
     private EmployeeDutyAdapter adapter;
     private ArrayList<Employee> arrayList;
-    private View view;
+    // private View view;
+    private RecyclerView recyclerView;
 
     public DutyRosterFragment() {
         // Required empty public constructor
@@ -43,62 +45,67 @@ public class DutyRosterFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_duty_roster, container, false);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_duty_roster, container, false);
+        recyclerView = view.findViewById(R.id.recyDuty);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.view = view;
+        // this.view = view;
 
-        arrayList = new ArrayList<>();
-        usersDbRef =
-                FirebaseDatabase.getInstance().getReference().child("Employee");
-        usersDbRef.keepSynced(true);
 
         setUpRecycler();
     }
 
     private void setUpRecycler() {
-        final RecyclerView recyclerView = view.findViewById(R.id.recyDuty);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
+        arrayList = new ArrayList<>();
+        usersDbRef =
+                FirebaseDatabase.getInstance().getReference().child("Employee");
+        usersDbRef.keepSynced(true);
         final DividerItemDecoration itemDecoration =
                 new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
 
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+            //querying the database base of the name to find the users
+            Query query = usersDbRef
+                    .orderByChild("fullName");
 
-        //querying the database base of the name to find the users
-        Query query = usersDbRef
-                .orderByChild("fullName");
+            //add a value event listener
+            query.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.hasChildren()) {
 
-        //add a value event listener
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChildren()) {
+                        arrayList.clear();
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            Employee attendance = ds.getValue(Employee.class);
+                            arrayList.add(attendance);
+                        }
 
-                    arrayList.clear();
-                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        Employee attendance = ds.getValue(Employee.class);
-                        arrayList.add(attendance);
+                        adapter = new EmployeeDutyAdapter(getContext(), arrayList);
+                        //add decorator
+                        recyclerView.addItemDecoration(itemDecoration);
+                        //set adapter to recycler
+                        recyclerView.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+
                     }
+                }
 
-                    adapter = new EmployeeDutyAdapter(getContext(), arrayList);
-                    //add decorator
-                    recyclerView.addItemDecoration(itemDecoration);
-                    //set adapter to recycler
-                    recyclerView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
-            }
+            });
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
         });
 
 

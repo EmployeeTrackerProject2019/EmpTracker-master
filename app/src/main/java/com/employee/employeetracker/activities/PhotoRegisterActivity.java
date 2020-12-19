@@ -198,8 +198,6 @@ public class PhotoRegisterActivity extends AppCompatActivity implements View.OnC
 
                 break;
             case R.id.imageViewEditFragmentPhoto:
-                openGallery();
-                break;
             case R.id.fabAddFragmentPhoto:
                 openGallery();
                 break;
