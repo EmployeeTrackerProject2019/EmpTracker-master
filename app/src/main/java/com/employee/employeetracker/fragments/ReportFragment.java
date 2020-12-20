@@ -53,6 +53,7 @@ public class ReportFragment extends Fragment {
     private int childCount = 0;
     private ConstraintLayout mShowEmptyLayout;
     private TextView txtDescription;
+    Query query;
 
     public ReportFragment() {
         // Required empty public constructor
@@ -93,6 +94,17 @@ public class ReportFragment extends Fragment {
         // this.view = view;
         mShowEmptyLayout = view.findViewById(R.id.showEmptyLayoutMsg);
         txtDescription = view.findViewById(R.id.txtDescription);
+
+        reportDb = FirebaseDatabase.getInstance().getReference().child("Reports");
+        reportDb.keepSynced(true);
+
+        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert mUser != null;
+        //A unique id that will differentiate each attendance made
+        String getUsersId = mUser.getUid();
+
+        //querying the database base of the time posted
+        query = reportDb.orderByChild("userId").equalTo(getUsersId);
 
         final FragmentManager fm = getFragmentManager();
         assert fm != null;
@@ -145,38 +157,22 @@ public class ReportFragment extends Fragment {
 
 
     private void setUpRecycler() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
+        getActivity().runOnUiThread(() -> {
+            checkEmptyDb();
+            FirebaseRecyclerOptions<Report> options =
+                    new FirebaseRecyclerOptions.Builder<Report>().setQuery(query, Report.class).build();
 
-            }
+            adapter = new ReportViewHolderAdapter(options);
+
+            swipeToDelete();
+
+
+            //set adapter to recycler
+            recyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+
+
         });
-
-
-        reportDb = FirebaseDatabase.getInstance().getReference().child("Reports");
-        reportDb.keepSynced(true);
-
-        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
-        assert mUser != null;
-        //A unique id that will differentiate each attendance made
-        String getUsersId = mUser.getUid();
-
-        //querying the database base of the time posted
-        Query query = reportDb.orderByChild("userId").equalTo(getUsersId);
-
-        checkEmptyDb();
-
-        FirebaseRecyclerOptions<Report> options =
-                new FirebaseRecyclerOptions.Builder<Report>().setQuery(query, Report.class).build();
-
-        adapter = new ReportViewHolderAdapter(options);
-
-        swipeToDelete();
-
-
-        //set adapter to recycler
-        recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 
 
     }

@@ -49,7 +49,7 @@ public class LeaveFragment extends Fragment {
     //  private FirebaseRecyclerAdapter<Leave, ShowLeaveViewHolder> adapter;
     //private View view;
     private int childCount = 0;
-
+    Query query;
 
     public LeaveFragment() {
         // Required empty public constructor
@@ -89,21 +89,29 @@ public class LeaveFragment extends Fragment {
         mShowEmptyLayout = view.findViewById(R.id.showEmptyLayoutMsg);
         txtDescription = view.findViewById(R.id.txtDescription);
 
-        view.findViewById(R.id.to_requestLeave).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (SystemClock.elapsedRealtime() - MainActivity.mLastClickTime < 1000) {
-                    return;
-                }
+        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert mUser != null;
+        //A unique id that will differentiate each attendance made
+        String getUsersId = mUser.getUid();
 
-                MainActivity.mLastClickTime = SystemClock.elapsedRealtime();
-
-                RequestALeaveBottomSheet requestALeaveBottomSheet = new RequestALeaveBottomSheet();
-                assert getFragmentManager() != null;
-                requestALeaveBottomSheet.show(getFragmentManager(), "requestLeave");
+        //querying the database base of the time posted
+        leaveDb = FirebaseDatabase.getInstance().getReference().child("Leaves");
+        leaveDb.keepSynced(true);
+        query = leaveDb.orderByChild("userId").equalTo(getUsersId);
 
 
+        view.findViewById(R.id.to_requestLeave).setOnClickListener(v -> {
+            if (SystemClock.elapsedRealtime() - MainActivity.mLastClickTime < 1000) {
+                return;
             }
+
+            MainActivity.mLastClickTime = SystemClock.elapsedRealtime();
+
+            RequestALeaveBottomSheet requestALeaveBottomSheet = new RequestALeaveBottomSheet();
+            assert getFragmentManager() != null;
+            requestALeaveBottomSheet.show(getFragmentManager(), "requestLeave");
+
+
         });
 
         setUpRecycler();
@@ -112,24 +120,12 @@ public class LeaveFragment extends Fragment {
     private void setUpRecycler() {
         Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
 
-            leaveDb = FirebaseDatabase.getInstance().getReference().child("Leaves");
-            leaveDb.keepSynced(true);
-
-            FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
-            assert mUser != null;
-            //A unique id that will differentiate each attendance made
-            String getUsersId = mUser.getUid();
-
-            //querying the database base of the time posted
-            Query query = leaveDb.orderByChild("userId").equalTo(getUsersId);
-
             checkEmptyDb();
 
             FirebaseRecyclerOptions<Leave> options =
                     new FirebaseRecyclerOptions.Builder<Leave>().setQuery(query, Leave.class).build();
 
             leaveAdapterViewHolder = new LeaveAdapterViewHolder(options);
-
 
             //set adapter to recycler
             recyclerView.setAdapter(leaveAdapterViewHolder);
