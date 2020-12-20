@@ -37,14 +37,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CommentsActivity extends AppCompatActivity {
     private static final String TAG = "CommentsActivity";
-    private CircleImageView mUserImage;
-    private TextView txtName, txtContent;
     private TextInputLayout edtComment;
     private CommentsAdapter adapter;
     private DatabaseReference reportsDbRef, commentsDbRef;
-    //Firebase
-    private FirebaseAuth mAuth;
-    private FirebaseUser mFirebaseUser;
     private String uid, getName, getImage;
 
     @Override
@@ -68,8 +63,9 @@ public class CommentsActivity extends AppCompatActivity {
 
     private void initViews() {
 
-        mAuth = FirebaseAuth.getInstance();
-        mFirebaseUser = mAuth.getCurrentUser();
+        //Firebase
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser mFirebaseUser = mAuth.getCurrentUser();
         if (mAuth.getCurrentUser() == null) {
             return;
         }
@@ -82,9 +78,9 @@ public class CommentsActivity extends AppCompatActivity {
         getName = getIntent().getStringExtra("name");//name of user
         String getContent = getIntent().getStringExtra("description");//content of the report
 
-        mUserImage = findViewById(R.id.imageViewComment);
-        txtName = findViewById(R.id.txtShowCommentName);
-        txtContent = findViewById(R.id.txtShowContent);
+        CircleImageView mUserImage = findViewById(R.id.imageViewComment);
+        TextView txtName = findViewById(R.id.txtShowCommentName);
+        TextView txtContent = findViewById(R.id.txtShowContent);
         edtComment = findViewById(R.id.edtUserComment);
 
         txtName.setText(getName);

@@ -34,7 +34,6 @@ public class EditReportActivity extends AppCompatActivity {
     private DatabaseReference reportDbRef;
     private String mTitle, mContent;
     private TextInputLayout txtTitle, txtContent;
-    private TextInputEditText mGetTitle, mGetContent;
     private ProgressDialog progressDialog;
 
     @Override
@@ -60,8 +59,8 @@ public class EditReportActivity extends AppCompatActivity {
 
         txtTitle = findViewById(R.id.inputReportTitle);
         txtContent = findViewById(R.id.inputReportContent);
-        mGetTitle = findViewById(R.id.reportTitle);
-        mGetContent = findViewById(R.id.reportContent);
+        TextInputEditText mGetTitle = findViewById(R.id.reportTitle);
+        TextInputEditText mGetContent = findViewById(R.id.reportContent);
         CircleImageView userImage = findViewById(R.id.imgEditReportPhoto);
 
         txtTitle.getEditText().setText(getTitle);

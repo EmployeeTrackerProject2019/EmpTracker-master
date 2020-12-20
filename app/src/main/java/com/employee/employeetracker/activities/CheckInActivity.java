@@ -56,20 +56,18 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class CheckInActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "CheckInActivity";
     private final String checkIn = "CheckIn";
-    private String datePosted = "", dayOfTheWeek, fullDay, getImageUri;
+    private String fullDay;
+    private String getImageUri;
     private WifiManager wifiManager;
     private Button btnCheckIn;
     private Spinner spinnerDutyPost, spinnerWorkShift;
     private ImageView imgPostImage;
     private CircleImageView checkInUserPhoto;
-    private StorageReference mcheckInStorageReference;
     private StorageTask mStorageTask;
-    private Uri uri = null;
     private Bitmap photo;
     private ProgressDialog loading;
     private String uid, username, userPhoto;
     private DatabaseReference mUserDbRef, mAttendance, historyDbRef;
-    private String getTypeOfShiftSelected, getTypeOfDutyPostSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +105,7 @@ public class CheckInActivity extends AppCompatActivity implements View.OnClickLi
         uid = mFirebaseUser.getUid();
 
 //creates a storage like data for check in photos to be stored into
-        mcheckInStorageReference = FirebaseStorage.getInstance().getReference("AttendancePhotos");
+        StorageReference mcheckInStorageReference = FirebaseStorage.getInstance().getReference("AttendancePhotos");
 
 //creates a node for check in
         // mAttendance = FirebaseDatabase.getInstance().getReference("CheckIn");
@@ -303,7 +301,7 @@ public class CheckInActivity extends AppCompatActivity implements View.OnClickLi
 
             if (resultCode == RESULT_OK) {
                 assert result != null;
-                uri = result.getUri();
+                Uri uri = result.getUri();
                 //  userImage.setImageURI(uri);
 
                 Glide.with(getApplicationContext()).load(uri).into(checkInUserPhoto);
@@ -328,15 +326,15 @@ public class CheckInActivity extends AppCompatActivity implements View.OnClickLi
 
 
     private void checkInUser() {
-        getTypeOfShiftSelected = spinnerWorkShift.getSelectedItem().toString();
-        getTypeOfDutyPostSelected = spinnerDutyPost.getSelectedItem().toString();
+        String getTypeOfShiftSelected = spinnerWorkShift.getSelectedItem().toString();
+        String getTypeOfDutyPostSelected = spinnerDutyPost.getSelectedItem().toString();
 
 
         Calendar calendar = Calendar.getInstance();
         Date today = calendar.getTime();
 //                SimpleDateFormat sfd = new SimpleDateFormat("EEEE dd/MMMM/yyyy", Locale.US);
-        datePosted = GetDateTime.getFormattedDate(today);
-        dayOfTheWeek = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(System.currentTimeMillis());
+        String datePosted = GetDateTime.getFormattedDate(today);
+        String dayOfTheWeek = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(System.currentTimeMillis());
 
 
         loading.setMessage("please wait...It may take a moment");

@@ -34,8 +34,6 @@ import java.util.Locale;
  */
 public class SaturdayFragment extends Fragment {
     private static final String TAG = "SaturdayFragment";
-    private FirebaseAuth mAuth;
-    private FirebaseUser mFirebaseUser;
     private DatabaseReference checkedInDb;
     private ShowAttendanceRecyclerAdapter adapter;
     private View view;
@@ -61,8 +59,8 @@ public class SaturdayFragment extends Fragment {
 
         this.view = view;
         //firebase
-        mAuth = FirebaseAuth.getInstance();
-        mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if (mAuth.getCurrentUser() == null) {
             return;
         }

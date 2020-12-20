@@ -50,6 +50,11 @@ public class DutyRosterFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyDuty);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        //add decorator
+        final DividerItemDecoration itemDecoration =
+                new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+
+        recyclerView.addItemDecoration(itemDecoration);
 
 
         return view;
@@ -66,32 +71,32 @@ public class DutyRosterFragment extends Fragment {
 
     private void setUpRecycler() {
         arrayList = new ArrayList<>();
+        adapter = new EmployeeDutyAdapter(getContext(), arrayList);
+
         usersDbRef =
                 FirebaseDatabase.getInstance().getReference().child("Employee");
         usersDbRef.keepSynced(true);
-        final DividerItemDecoration itemDecoration =
-                new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
 
         Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
             //querying the database base of the name to find the users
             Query query = usersDbRef
                     .orderByChild("fullName");
 
-            //add a value event listener
-            query.addValueEventListener(new ValueEventListener() {
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.hasChildren()) {
 
                         arrayList.clear();
                         for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            Employee attendance = ds.getValue(Employee.class);
-                            arrayList.add(attendance);
+                            if (ds.exists() && ds.hasChildren()) {
+                                Employee attendance = ds.getValue(Employee.class);
+                                arrayList.add(attendance);
+                            }
+
                         }
 
-                        adapter = new EmployeeDutyAdapter(getContext(), arrayList);
-                        //add decorator
-                        recyclerView.addItemDecoration(itemDecoration);
+
                         //set adapter to recycler
                         recyclerView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
@@ -100,7 +105,7 @@ public class DutyRosterFragment extends Fragment {
                 }
 
                 @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+                public void onCancelled(@NonNull DatabaseError error) {
 
                 }
             });

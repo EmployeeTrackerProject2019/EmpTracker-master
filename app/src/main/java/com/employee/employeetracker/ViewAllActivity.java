@@ -29,7 +29,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ViewAllActivity extends AppCompatActivity {
     private static final String TAG = "Employee ";
-    private DatabaseReference mAttendanceDbRef;
     String getUsersId;
     FirebaseUser mUser;
     private FirebaseRecyclerAdapter<Employee, ShowAttendanceViewHolder> adapter;
@@ -68,8 +67,7 @@ public class ViewAllActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        mAttendanceDbRef =
-                FirebaseDatabase.getInstance().getReference().child("Employee").child("CheckIn");
+        DatabaseReference mAttendanceDbRef = FirebaseDatabase.getInstance().getReference().child("Employee").child("CheckIn");
         mAttendanceDbRef.keepSynced(true);
 
 

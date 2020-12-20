@@ -74,8 +74,6 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
     private GoogleMap mMap;
     public static final int UPDATE_INTERVAL = 1000;
     public static final int FAST_INTERVAL = 1000;
-    private DatabaseReference reference;
-    private GeoFire geoFire;
     private Marker marker;
     public static final int PLAYSERVICES_RESOLUTION = 101;
     private Location mLastLocation;
@@ -105,8 +103,8 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
         mapFragment.getMapAsync(this);
 
 
-        reference = FirebaseDatabase.getInstance().getReference("Location");
-        geoFire = new GeoFire(reference);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Location");
+        GeoFire geoFire = new GeoFire(reference);
 
 
         setUpLocation();

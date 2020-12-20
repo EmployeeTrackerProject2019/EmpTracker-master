@@ -7,7 +7,6 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -98,19 +97,16 @@ public class ReportFragment extends Fragment {
         final FragmentManager fm = getFragmentManager();
         assert fm != null;
         fm.beginTransaction().commit();
-        view.findViewById(R.id.to_makeReport).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (SystemClock.elapsedRealtime() - MainActivity.mLastClickTime < 1000) {
-                    return;
-                }
-
-                MainActivity.mLastClickTime = SystemClock.elapsedRealtime();
-                MakeAReportBottomSheet makeAReportBottomSheet = new MakeAReportBottomSheet();
-                makeAReportBottomSheet.show(fm, "makeReport");
-
-
+        view.findViewById(R.id.to_makeReport).setOnClickListener(v -> {
+            if (SystemClock.elapsedRealtime() - MainActivity.mLastClickTime < 1000) {
+                return;
             }
+
+            MainActivity.mLastClickTime = SystemClock.elapsedRealtime();
+            MakeAReportBottomSheet makeAReportBottomSheet = new MakeAReportBottomSheet();
+            makeAReportBottomSheet.show(fm, "makeReport");
+
+
         });
 
         setUpRecycler();

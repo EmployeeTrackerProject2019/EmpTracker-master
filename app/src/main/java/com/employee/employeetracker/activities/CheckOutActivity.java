@@ -62,7 +62,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     private static final String TAG = "CheckOutActivity";
     private String datePosted = "";
     private final String checkOut = "CheckOut";
-    private final String log = "History";
     private String getImageUri;
     private Button btnCheckOut;
     private ImageView imgPostImage;
@@ -122,6 +121,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 FirebaseDatabase.getInstance().getReference().child("Employee");
         checkOutDbRef.keepSynced(true);
 
+        String log = "History";
         historyDbRef = FirebaseDatabase.getInstance().getReference().child(log);
 //        historyDbRef.keepSynced(true);
 

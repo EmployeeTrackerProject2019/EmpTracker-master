@@ -29,8 +29,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CheckInDetailsBottomSheet extends BottomSheetDialogFragment {
     private static final String TAG = "CheckIn BottomSheet";
-    private Bundle bundle;
-    private String getPositionBundle;
     private View view;
     private DatabaseReference attendanceDbRef;
     private TextView txtName, txtDutyPost, txtCheckInTime, txtWorkShift, txtLocation;
@@ -52,9 +50,9 @@ public class CheckInDetailsBottomSheet extends BottomSheetDialogFragment {
 
         this.view = view;
 
-        bundle = getArguments();
+        Bundle bundle = getArguments();
         assert bundle != null;
-        getPositionBundle = bundle.getString("position");
+        String getPositionBundle = bundle.getString("position");
 
         attendanceDbRef =
                 FirebaseDatabase.getInstance().getReference().child("Employee").child("CheckIn").child(getPositionBundle);

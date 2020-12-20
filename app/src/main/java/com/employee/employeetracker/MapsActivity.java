@@ -61,22 +61,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public static final int PLAYSERVICES_RESOLUTION = 101;
     public static final int UPDATE_INTERVAL = 1000;
     public static final int FAST_INTERVAL = 1000;
-    private CircleImageView userPhoto;
     public static final int DISPLACEMENT = 10;
     private static final String TAG = "MapsActivity";
-    private Intent intent;
     private static GoogleApiClient googleApiClient;
-    private DatabaseReference dbCheckOut, reference, historyDbRef;
+    private DatabaseReference dbCheckOut;
+    private DatabaseReference historyDbRef;
     private GoogleMap mMap;
-    private TextView txtName, txtDutyPost, txtShift, txtCheckInTime, txtWarning;
-    private String uid, getName, getDuty, getShift, getCheckInTime, getPhoto, adapterPosition;
+    private TextView txtWarning;
+    private String getName;
+    private String getDuty;
+    private String getShift;
     private Marker marker;
-    private GeoFire geoFire;
     private Location mLastLocation;
-    private double latitude, longitude;
     private LocationRequest locationRequest;
     private FloatingActionButton bar;
-    private String dateCheckOut = "", dayOfTheWeek;
     private ProgressDialog loading;
 
     @Override
@@ -89,8 +87,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
-        reference = FirebaseDatabase.getInstance().getReference("Location");
-        geoFire = new GeoFire(reference);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Location");
+        GeoFire geoFire = new GeoFire(reference);
 
         initViews();
         initListener();
@@ -109,26 +107,26 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             return;
         }
         assert mFirebaseUser != null;
-        uid = mFirebaseUser.getUid();
+        String uid = mFirebaseUser.getUid();
 
 
-        intent = getIntent();
-        txtName = findViewById(R.id.checkOutName);
-        txtDutyPost = findViewById(R.id.txtShhDutyPost);
-        txtShift = findViewById(R.id.txtShhShift);
-        txtCheckInTime = findViewById(R.id.txtShhCheckInTime);
-        userPhoto = findViewById(R.id.checkInPhoto);
+        Intent intent = getIntent();
+        TextView txtName = findViewById(R.id.checkOutName);
+        TextView txtDutyPost = findViewById(R.id.txtShhDutyPost);
+        TextView txtShift = findViewById(R.id.txtShhShift);
+        TextView txtCheckInTime = findViewById(R.id.txtShhCheckInTime);
+        CircleImageView userPhoto = findViewById(R.id.checkInPhoto);
         bar = findViewById(R.id.checkOutFab);
         txtWarning = findViewById(R.id.txtShowWarning);
         loading = new ProgressDialog(this);
 
         if (intent != null) {
-            adapterPosition = intent.getStringExtra("position");
+            String adapterPosition = intent.getStringExtra("position");
             getName = intent.getStringExtra("name");
             getDuty = intent.getStringExtra("dutyPost");
             getShift = intent.getStringExtra("shift");
-            getPhoto = intent.getStringExtra("photo");
-            getCheckInTime = intent.getStringExtra("checkInTime");
+            String getPhoto = intent.getStringExtra("photo");
+            String getCheckInTime = intent.getStringExtra("checkInTime");
 
             txtName.setText(getName);
             txtDutyPost.setText(getDuty);
@@ -136,7 +134,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             txtCheckInTime.setText(getCheckInTime);
             Glide.with(this).load(getPhoto).into(userPhoto);
 
-            dayOfTheWeek = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(System.currentTimeMillis());
+            String dayOfTheWeek = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(System.currentTimeMillis());
             //attendance
             dbCheckOut = FirebaseDatabase.getInstance().getReference("Attendance").child(dayOfTheWeek).child(adapterPosition);
             //create the history database
@@ -282,8 +280,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mLastLocation = LocationServices.FusedLocationApi
                 .getLastLocation(googleApiClient);
         if (mLastLocation != null) {
-            latitude = mLastLocation.getLatitude();
-            longitude = mLastLocation.getLongitude();
+            double latitude = mLastLocation.getLatitude();
+            double longitude = mLastLocation.getLongitude();
 
             Log.i(TAG, "displayLocation: " + latitude + " " + longitude);
 
@@ -340,7 +338,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             Calendar calendar = Calendar.getInstance();
             Date today = calendar.getTime();
-            dateCheckOut = GetDateTime.getFormattedDate(today);
+            String dateCheckOut = GetDateTime.getFormattedDate(today);
 
 //The constructor can equally be used as this
             Map<String, Object> checkOutDetails = new HashMap<>();

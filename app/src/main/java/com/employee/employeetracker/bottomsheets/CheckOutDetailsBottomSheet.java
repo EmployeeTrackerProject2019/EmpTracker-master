@@ -30,8 +30,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CheckOutDetailsBottomSheet extends BottomSheetDialogFragment implements View.OnClickListener {
     private static final String TAG = "CheckOut BottomSheet";
-    private Bundle bundle;
-    private String getPositionBundle;
     private View view;
     private DatabaseReference attendanceDbRef;
     private TextView txtName, txtDutyPost, txtCheckOutTime, txtWorkShift, txtLocation;
@@ -51,9 +49,9 @@ public class CheckOutDetailsBottomSheet extends BottomSheetDialogFragment implem
         super.onViewCreated(view, savedInstanceState);
         this.view = view;
 
-        bundle = getArguments();
+        Bundle bundle = getArguments();
         assert bundle != null;
-        getPositionBundle = bundle.getString("position");
+        String getPositionBundle = bundle.getString("position");
 
         attendanceDbRef =
                 FirebaseDatabase.getInstance().getReference().child("Employee").child("CheckOut").child(getPositionBundle);

@@ -35,7 +35,6 @@ public class PhoneNumberAuthenticationActivity extends AppCompatActivity {
     private String mVerificationCode;
     private TextInputLayout txtVerifyCode;
     private DatabaseReference userDbRef;
-    private FirebaseAuth mAuth;
     private final PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
         @Override
         public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
@@ -98,7 +97,7 @@ public class PhoneNumberAuthenticationActivity extends AppCompatActivity {
         TextView showNumberOnToolBar = findViewById(R.id.txtShowVerificationNumber);
         showNumberOnToolBar.setText(String.format("Verify %s", getIntentPhoneNumber));
 
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if (mAuth.getCurrentUser() == null) {
             return;

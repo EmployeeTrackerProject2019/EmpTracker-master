@@ -43,7 +43,7 @@ public class RequestALeaveBottomSheet extends BottomSheetDialogFragment implemen
     private ProgressBar loading;
     private Button btnSubmit, btnStartDate, btnEndDate;
     private View view;
-    private Date date, convertStartDate, convertEndDate;
+    private Date date;
     SimpleDateFormat sfd;
 
     @Nullable
@@ -60,8 +60,8 @@ public class RequestALeaveBottomSheet extends BottomSheetDialogFragment implemen
         btnEndDate = view.findViewById(R.id.btnEndDate);
 
         date = calendar.getTime();
-        convertEndDate = new Date();
-        convertStartDate = new Date();
+        Date convertEndDate = new Date();
+        Date convertStartDate = new Date();
 
 
         sfd = new SimpleDateFormat("EEE dd-MMMM-yyyy ",
