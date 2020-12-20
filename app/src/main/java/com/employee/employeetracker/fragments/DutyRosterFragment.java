@@ -24,7 +24,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -77,40 +76,42 @@ public class DutyRosterFragment extends Fragment {
                 FirebaseDatabase.getInstance().getReference().child("Employee");
         usersDbRef.keepSynced(true);
 
-        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
-            //querying the database base of the name to find the users
-            Query query = usersDbRef
-                    .orderByChild("fullName");
+        Query query = usersDbRef
+                .orderByChild("fullName");
 
-            query.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.hasChildren()) {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChildren()) {
 
-                        arrayList.clear();
-                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            if (ds.exists() && ds.hasChildren()) {
-                                Employee attendance = ds.getValue(Employee.class);
-                                arrayList.add(attendance);
-                            }
+                    arrayList.clear();
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        if (ds.exists() && ds.hasChildren()) {
 
+                            Employee attendance = ds.getValue(Employee.class);
+                            String name = attendance.getFullName();
+                            String duty = attendance.getDutyPost();
+                            String shift = attendance.getTypeOfShift();
+
+                            arrayList.add(new Employee(name, duty, shift));
+
+                            //arrayList.add(attendance);
                         }
 
-
-                        //set adapter to recycler
-                        recyclerView.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
-
                     }
+
+
+                    //set adapter to recycler
+                    recyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+
                 }
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                }
-            });
-
-
+            }
         });
 
 

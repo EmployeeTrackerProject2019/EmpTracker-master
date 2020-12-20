@@ -33,8 +33,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Objects;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -118,21 +116,18 @@ public class LeaveFragment extends Fragment {
     }
 
     private void setUpRecycler() {
-        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
-
-            checkEmptyDb();
-
-            FirebaseRecyclerOptions<Leave> options =
-                    new FirebaseRecyclerOptions.Builder<Leave>().setQuery(query, Leave.class).build();
-
-            leaveAdapterViewHolder = new LeaveAdapterViewHolder(options);
-
-            //set adapter to recycler
-            recyclerView.setAdapter(leaveAdapterViewHolder);
-            leaveAdapterViewHolder.notifyDataSetChanged();
 
 
-        });
+        checkEmptyDb();
+
+        FirebaseRecyclerOptions<Leave> options =
+                new FirebaseRecyclerOptions.Builder<Leave>().setQuery(query, Leave.class).build();
+
+        leaveAdapterViewHolder = new LeaveAdapterViewHolder(options);
+
+        //set adapter to recycler
+        recyclerView.setAdapter(leaveAdapterViewHolder);
+        leaveAdapterViewHolder.notifyDataSetChanged();
 
 
     }

@@ -1,18 +1,34 @@
 package com.employee.employeetracker.models;
 
 
-public class Leave {
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
+public class Leave implements Serializable {
 
     private String userId;
+    @SerializedName("firstName")
     private String firstName;
+    @SerializedName("lastName")
     private String lastName;
+    @SerializedName("fullName")
     private String fullName;
+    @SerializedName("email")
     private String email;
+    @SerializedName("image")
     private String image;
+    @SerializedName("phone")
     private String phone;
+    @SerializedName("startDate")
     private String startDate;
+    @SerializedName("endDate")
     private String endDate;
-    private String leaveMsg, leaveResponse;
+    @SerializedName("leaveMsg")
+    private String leaveMsg;
+    @SerializedName("leaveResponse")
+    private String leaveResponse;
+    @SerializedName("timeStamp")
     private Long timeStamp;
 
     public Leave() {

@@ -8,17 +8,19 @@ android {
         applicationId "com.employee.employeetracker"
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 5
-        versionName "5.0"
+        versionCode 8
+        versionName "8.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
+        android.defaultConfig.ndk.debugSymbolLevel = 'FULL'
     }
 
 
 
     buildTypes {
         release {
+            shrinkResources true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

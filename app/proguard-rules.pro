@@ -28,3 +28,8 @@
   }
 -keepattributes LineNumberTable,SourceFile
 -keep public class * extends java.lang.Exception
+-keep public class com.employee.employeetracker.models.Employee
+-keep public class com.employee.employeetracker.models.Report
+-keep public class com.employee.employeetracker.models.Leave
+-keep public class com.employee.employeetracker.models.Users
+-keepclassmembers class com.employee.employeetracker.models** { *; }

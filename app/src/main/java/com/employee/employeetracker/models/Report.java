@@ -1,13 +1,24 @@
 package com.employee.employeetracker.models;
 
 
-public class Report {
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
+public class Report implements Serializable {
+    @SerializedName("userId")
     private String userId;
+    @SerializedName("fullName")
     private String fullName;
+    @SerializedName("image")
     private String image;
+    @SerializedName("timeStamp")
     private Long timeStamp;
+    @SerializedName("title")
     private String title;
+    @SerializedName("description")
     private String description;
+    @SerializedName("comments")
     private String comments;
 
     public Report() {

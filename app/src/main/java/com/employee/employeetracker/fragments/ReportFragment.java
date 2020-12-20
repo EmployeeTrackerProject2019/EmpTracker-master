@@ -157,8 +157,8 @@ public class ReportFragment extends Fragment {
 
 
     private void setUpRecycler() {
-        getActivity().runOnUiThread(() -> {
-            checkEmptyDb();
+
+        checkEmptyDb();
             FirebaseRecyclerOptions<Report> options =
                     new FirebaseRecyclerOptions.Builder<Report>().setQuery(query, Report.class).build();
 
@@ -172,7 +172,6 @@ public class ReportFragment extends Fragment {
             adapter.notifyDataSetChanged();
 
 
-        });
 
 
     }

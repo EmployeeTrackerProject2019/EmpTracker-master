@@ -1,25 +1,59 @@
 package com.employee.employeetracker.models;
 
-public class Employee {
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
+public class Employee implements Serializable {
+    @SerializedName("email")
+    String email;
+    @SerializedName("phone")
+    String phone;
+    @SerializedName("image")
+    String image;
+    @SerializedName("history")
+    String history;
+    @SerializedName("userId")
     private String userId;
+    @SerializedName("userName")
     private String userName;
+    @SerializedName("checkInTimeStamp")
     private String checkInTimeStamp;
+    @SerializedName("checkInPhoto")
     private String checkInPhoto;
+    @SerializedName("checkOutTimeStamp")
     private String checkOutTimeStamp;
+    @SerializedName("checkOutPhoto")
     private String checkOutPhoto;
+    @SerializedName("typeOfShift")
     private String typeOfShift;
+    @SerializedName("dutyPost")
     private String dutyPost;
+    @SerializedName("location")
     private String location;
+    @SerializedName("date")
     private String date;
-    private String fullName, email, phone, image, history;
+    @SerializedName("fullName")
+    private String fullName;
+    @SerializedName("lastName")
     private String lastName;
+    @SerializedName("firstName")
     private String firstName;
+    @SerializedName("lastSeen")
     private long lastSeen;
+    @SerializedName("getCheckInCount")
     private long getCheckInCount;
+    @SerializedName("getCheckOutCount")
     private long getCheckOutCount;
 
 
     public Employee() {
+    }
+
+    public Employee(String name, String duty, String shift) {
+        this.fullName = name;
+        this.dutyPost = duty;
+        this.typeOfShift = shift;
     }
 
     public String getUserId() {

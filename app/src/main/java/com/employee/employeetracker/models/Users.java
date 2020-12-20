@@ -1,24 +1,47 @@
 package com.employee.employeetracker.models;
 
 
-public class Users {
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
+public class Users implements Serializable {
+    @SerializedName("userId")
     private String userId;
+    @SerializedName("firstName")
     private String firstName;
+    @SerializedName("lastName")
     private String lastName;
+    @SerializedName("fullName")
     private String fullName;
+    @SerializedName("email")
     private String email;
+    @SerializedName("pass")
     private String pass;
+    @SerializedName("occupation")
     private String occupation;
+    @SerializedName("image")
     private String image;
+    @SerializedName("phone")
     private String phone;
+    @SerializedName("latitude")
     private double latitude;
+    @SerializedName("longitude")
     private double longitude;
+    @SerializedName("about")
     private String about;
+    @SerializedName("reference")
     private String reference;
+    @SerializedName("timeStamp")
     private long timeStamp;
+    @SerializedName("dutyPost")
     private String dutyPost;
+    @SerializedName("typeOfShift")
     private String typeOfShift;
 
+    public Users() {
+
+    }
 
     public Users(String userId, String firstName, String lastName, String fullName, String email,
                  String phone, String about, String image) {
